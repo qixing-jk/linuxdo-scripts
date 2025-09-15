@@ -1204,3 +1204,23 @@ body.body-preview #main-outlet-wrapper {
 #reply-control .discard-button {
   margin-left: auto;
 }
+
+#linuxDoLevelPopupContent table {
+  border-collapse: collapse;
+}
+
+#linuxDoLevelPopupContent table td {
+  padding: 4px 10px;
+}
+
+#linuxDoLevelPopupContent table tr:nth-child(even) {
+  background-color: #ddd;
+}
+
+#linuxDoLevelPopupContent .text-green-500 {
+  color: rgb(16, 185, 129);
+}
+
+#linuxDoLevelPopupContent .text-red-500 {
+  color: rgb(239, 68, 68);
+}
