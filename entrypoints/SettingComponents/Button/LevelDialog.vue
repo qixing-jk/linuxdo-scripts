@@ -5,16 +5,35 @@
     </div>
     <div v-if="!isMinimized" id="linuxDoLevelPopupContent">
       <div v-html="content"></div>
-      <input v-model="username" autocomplete="off" type="text" placeholder="请输入用户名..." id="linuxDoUserSearch" />
-      <button @click="handleSearch" class="btn btn-icon-text" type="button">
-        <span class="d-button-label">搜索</span>
-      </button>
+      <input
+        v-model="username"
+        autocomplete="off"
+        type="text"
+        placeholder="请输入用户名..."
+        id="linuxDoUserSearch"
+      />
+
+      <!-- 按钮组 -->
+      <div class="button-group">
+        <button @click="handleSearch" class="btn btn-primary" type="button">
+          <span class="d-button-label">查询等级（不限）</span>
+        </button>
+        <button @click="fetchConnectData" class="btn btn-connect" type="button">
+          <span class="d-button-label">Connect 数据（本人）</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
+import {
+  fetchConnectData,
+  getConnectHome,
+  testConnectConnection,
+} from "../../utilities/connectApi.js";
+
 export default {
   data() {
     return {
@@ -49,21 +68,123 @@ export default {
         },
       },
       usernameTimer: null,
+      // Connect API 相关数据
+      connectTableData: null,
     };
   },
   methods: {
+    // 获取 Connect API 数据并提取 table 标签
+    async fetchConnectData() {
+      try {
+        this.content = "正在获取 Connect 数据...";
+
+        const response = await fetchConnectData("/");
+
+        if (response.success) {
+          // 从返回的 HTML 中提取 table 标签和第二个 p 标签
+          const extractedData = this.extractTableFromHtml(response.data);
+
+          if (extractedData) {
+            this.connectTableData = extractedData;
+
+            // 构建显示内容
+            let displayContent = "";
+
+            if (extractedData.table) {
+              displayContent += `<div>
+                ${extractedData.table.html}
+              </div>`;
+            }
+
+            if (extractedData.secondP && extractedData.secondP.content) {
+              displayContent += `<div>
+                <span class="text-green-500">${extractedData.secondP.content}</span>
+              </div>`;
+            }
+
+            this.content = displayContent;
+            console.log("Connect 提取的数据：", extractedData);
+          } else {
+            this.handleSearch();
+          }
+        } else {
+          this.handleSearch();
+        }
+      } catch (error) {
+        this.handleSearch();
+      }
+    },
+
+    // 从 HTML 字符串中提取 table 标签及其后面第二个 p 标签的内容
+    extractTableFromHtml(htmlString) {
+      try {
+        // 创建一个临时的 DOM 解析器
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, "text/html");
+
+        // 查找所有 table 标签
+        const tables = doc.querySelectorAll("table");
+
+        if (tables.length > 0) {
+          // 取第一个 table 标签
+          const firstTable = tables[0];
+          const rows = firstTable.querySelectorAll("tr");
+
+          // 查找 table 后面的 p 标签
+          let secondPTag = null;
+          let secondPContent = null;
+
+          // 获取 table 后面的所有兄弟元素
+          let currentElement = firstTable.nextElementSibling;
+          let pTagCount = 0;
+
+          while (currentElement && pTagCount < 2) {
+            if (currentElement.tagName && currentElement.tagName.toLowerCase() === "p") {
+              pTagCount++;
+              if (pTagCount === 2) {
+                secondPTag = currentElement;
+                secondPContent =
+                  currentElement.textContent || currentElement.innerText || "";
+                break;
+              }
+            }
+            currentElement = currentElement.nextElementSibling;
+          }
+
+          return {
+            table: {
+              html: firstTable.outerHTML,
+              rows: rows.length,
+              element: firstTable,
+            },
+            secondP: {
+              html: secondPTag ? secondPTag.outerHTML : null,
+              content: secondPContent,
+              element: secondPTag,
+            },
+            allTables: Array.from(tables).map((table) => ({
+              html: table.outerHTML,
+              rows: table.querySelectorAll("tr").length,
+            })),
+          };
+        }
+
+        return null;
+      } catch (error) {
+        console.error("解析 HTML 时出错：", error);
+        return null;
+      }
+    },
     async fetchAboutData() {
       try {
-        const baseUrl = window.location.origin;
-        const response = await fetch(`${baseUrl}/about.json`, {
+        const response = await fetch(`https://linux.do/about.json`, {
           headers: {
             Accept: "application/json",
             "User-Agent": "Mozilla/5.0",
           },
           method: "GET",
         });
-        if (!response.ok)
-          throw new Error(`HTTP 错误！状态：${response.status}`);
+        if (!response.ok) throw new Error(`HTTP 错误！状态：${response.status}`);
         return await response.json();
       } catch (error) {
         console.error("获取关于页面数据失败：", error);
@@ -73,16 +194,14 @@ export default {
     },
     async fetchUserData(username) {
       try {
-        const baseUrl = window.location.origin;
-        const response = await fetch(`${baseUrl}/u/${username}/summary.json`, {
+        const response = await fetch(`https://linux.do/u/${username}/summary.json`, {
           headers: {
             Accept: "application/json",
             "User-Agent": "Mozilla/5.0",
           },
           method: "GET",
         });
-        if (!response.ok)
-          throw new Error(`HTTP 错误！状态：${response.status}`);
+        if (!response.ok) throw new Error(`HTTP 错误！状态：${response.status}`);
         return await response.json();
       } catch (error) {
         console.error("获取用户数据失败：", error);
@@ -109,8 +228,9 @@ export default {
     },
     updatePopupContent(userSummary, user, status) {
       if (userSummary && user) {
-        let content = `<strong>信任等级：</strong>${this.levelDescriptions[user.trust_level]
-          }<br><strong>升级进度：</strong><br>`;
+        let content = `<strong>信任等级：</strong>${
+          this.levelDescriptions[user.trust_level]
+        }<br><strong>升级进度：</strong><br>`;
 
         if (user.trust_level === 3) {
           content += `联系管理员以升级到领导者<br>`;
@@ -165,7 +285,7 @@ export default {
         clearInterval(this.usernameTimer);
         this.usernameTimer = null;
       }
-    }
+    },
   },
   created() {
     this.usernameTimer = setInterval(() => {
@@ -229,8 +349,8 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 90px;
-  width: 300px;
-  height: auto;
+  width: 100%;
+  max-width: 450px;
   background-color: var(--secondary);
   padding: 20px;
   z-index: 10000;
@@ -241,7 +361,7 @@ export default {
   border: 1px solid var(--primary-low);
   box-sizing: border-box;
 
-  *{
+  * {
     box-sizing: border-box;
   }
 
@@ -259,7 +379,7 @@ export default {
   border-radius: 8px;
   font-size: 14px;
   transition: all 0.3s ease;
-  
+
   &:focus {
     outline: none;
     border-color: var(--primary);
@@ -267,51 +387,54 @@ export default {
   }
 }
 
-.btn {
-  width: 100%;
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-medium) 100%);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.2);
-  position: relative;
-  overflow: hidden;
+// 按钮组样式
+.button-group {
+  display: flex;
+  gap: 8px;
   margin-top: 10px;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.3);
-    
-    &::before {
-      opacity: 1;
-    }
-  }
-  
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 10px rgba(var(--primary-rgb), 0.2);
-  }
-  
-  .d-button-label {
+
+  .btn {
+    flex: 1;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    z-index: 1;
+    overflow: hidden;
+
+    .d-button-label {
+      position: relative;
+      z-index: 1;
+    }
+
+    &.btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-medium) 100%);
+      box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.2);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+      }
+    }
+
+    &.btn-connect {
+      color: #fff;
+      background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+      box-shadow: 0 2px 8px rgba(23, 162, 184, 0.2);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 }
 
@@ -330,7 +453,7 @@ export default {
   height: 32px;
   color: var(--primary);
   transition: all 0.3s ease;
-  
+
   &:hover {
     background: var(--primary-low);
   }

@@ -6,7 +6,7 @@ const browserAPI = (typeof browser !== 'undefined' ? browser : chrome);
 // 根据用户偏好切换点击扩展图标时的打开行为（sidepanel 或 popup）
 const CLICK_BEHAVIOR_KEY = 'clickOpenTarget'; // 'sidepanel' | 'popup'
 
-async function applyClickBehavior(target) {
+async function applyClickBehavior(target: string) {
   const isSidePanel = target === 'sidepanel';
   try {
     if (browserAPI.sidePanel && browserAPI.sidePanel.setPanelBehavior) {
@@ -46,10 +46,12 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // 查询所有打开的标签页
     browserAPI.tabs.query({ url: '*://linux.do/*' }, (tabs) => {
       tabs.forEach((tab) => {
-        browserAPI.tabs.sendMessage(tab.id, {
-          action: 'setData',
-          data: request.data
-        });
+        if (tab.id) {
+          browserAPI.tabs.sendMessage(tab.id, {
+            action: 'setData',
+            data: request.data
+          });
+        }
       });
     });
   }
@@ -58,7 +60,7 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // 进入 bookmark 收藏夹
 browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'open_bookmark_page') {
-    const bookmarkPageURL = browserAPI.runtime.getURL('bookmark.html');
+    const bookmarkPageURL = browserAPI.runtime.getURL('/bookmark.html');
     browserAPI.tabs.create({ url: bookmarkPageURL });
   }
 });
@@ -66,7 +68,7 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // 进入 share 分享页面
 browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'open_share_page') {
-    const extensionURL = browserAPI.runtime.getURL('share.html');
+    const extensionURL = browserAPI.runtime.getURL('/share.html');
     browserAPI.tabs.create({ url: extensionURL });
   }
 });
@@ -93,6 +95,66 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
         error: error.message
       });
     });
+    
+    return true; // 保持消息通道打开
+  }
+});
+
+// 获取 connect.linux.do 接口数据的事件监听器
+browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'fetch_connect_data') {
+    const { endpoint = '', options = {} } = request;
+    const connectUrl = `https://connect.linux.do${endpoint}`;
+    
+    // 默认请求配置
+    const defaultOptions = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    };
+    
+    // 合并用户提供的选项
+    const fetchOptions = {
+      ...defaultOptions,
+      ...options,
+      headers: {
+        ...defaultOptions.headers,
+        ...(options.headers || {})
+      }
+    };
+    
+    // 在 background script 中发起请求，绕过 CORS 限制
+    fetch(connectUrl, fetchOptions)
+      .then(async response => {
+        let responseData;
+        const contentType = response.headers.get('content-type');
+        
+        if (contentType && contentType.includes('application/json')) {
+          responseData = await response.json();
+        } else {
+          responseData = await response.text();
+        }
+        
+        sendResponse({
+          success: true,
+          status: response.status,
+          statusText: response.statusText,
+          data: responseData,
+          headers: Object.fromEntries(response.headers.entries()),
+          url: connectUrl
+        });
+      })
+      .catch(error => {
+        console.error('Connect API 请求失败：', error);
+        sendResponse({
+          success: false,
+          error: error.message,
+          url: connectUrl
+        });
+      });
     
     return true; // 保持消息通道打开
   }
