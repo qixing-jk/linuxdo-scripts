@@ -68,7 +68,6 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 90px;
-  width: 100%;
   width: 450px;
   background-color: var(--secondary);
   padding: 20px 5px 20px 20px;

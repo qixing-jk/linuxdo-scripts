@@ -349,8 +349,7 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 90px;
-  width: 100%;
-  max-width: 450px;
+  width: 450px;
   background-color: var(--secondary);
   padding: 20px;
   z-index: 10000;
