@@ -24,7 +24,7 @@
       <p v-else>{{ nohotlist }}</p>
     </div>
     <div class="content" :class="{ act: activeTab === 'news' }">
-      <NewsPosts v-if="newslist.length > 0" :list="newslist" />
+      <NewsPosts v-if="newslist.length > 0" :list="newslist" @remove-item="removeNewsItem" />
       <p v-else>{{ nonewlist }}</p>
     </div>
     <div class="content" :class="{ act: activeTab === 'book' }">
@@ -124,6 +124,14 @@ export default {
       this.getHotPosts();
       this.getNewsPosts();
       localStorage.setItem("Timestamp", Date.now());
+    },
+
+    // 移除最新帖子项目
+    removeNewsItem(itemId) {
+      // 从当前列表中移除指定 ID 的项目
+      this.newslist = this.newslist.filter(item => item.id !== itemId);
+      // 更新 localStorage 缓存
+      localStorage.setItem("newslist", JSON.stringify(this.newslist));
     },
 
     // 当容器滚动时，记录当前位置
