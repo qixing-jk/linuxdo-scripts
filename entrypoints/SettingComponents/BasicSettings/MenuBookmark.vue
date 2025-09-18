@@ -1,15 +1,17 @@
 <template>
-  <div class="item">
-    <div class="tit">{{ sort }}. 是否开启收藏功能</div>
-    <input
-      type="checkbox"
-      :checked="modelValue"
-      @change="$emit('update:modelValue', $event.target.checked)"
-    />
-  </div>
-  <div class="item" v-if="modelValue">
-    <div class="tit">{{ sort }}.1 无感收藏 (不跳转收藏页)</div>
-    <input type="checkbox" :checked="silentBookmark" @change="toggleSilentBookmark" />
+  <div>
+    <div class="item">
+      <div class="tit">{{ sort }}. 是否开启收藏功能</div>
+      <input
+        type="checkbox"
+        :checked="modelValue"
+        @change="$emit('update:modelValue', $event.target.checked)"
+      />
+    </div>
+    <div class="item" v-if="modelValue">
+      <div class="tit">{{ sort }}.1 无感收藏 (不跳转收藏页)</div>
+      <input type="checkbox" :checked="silentBookmark" @change="toggleSilentBookmark" />
+    </div>
   </div>
 </template>
 
