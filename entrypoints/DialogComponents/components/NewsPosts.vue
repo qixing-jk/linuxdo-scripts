@@ -16,9 +16,11 @@
         <a
           :href="'https://linux.do/t/topic/' + item.id"
           target="_blank"
-          :title="item.title"
           @click="handleLinkClick(item.id)"
           class="news-link"
+          :ref="`link-${item.id}`"
+          @mouseenter="showTooltip($event, item.title)"
+          @mouseleave="hideTooltip"
         >
           {{ item.title }}
         </a>
@@ -27,12 +29,30 @@
     </li>
   </ul>
   <div class="nodata" v-else>暂无最新话题</div>
+
+  <!-- 自定义 tooltip -->
+  <div
+    v-if="tooltip.show"
+    class="custom-tooltip"
+    :style="tooltip.style"
+  >
+    {{ tooltip.text }}
+  </div>
 </template>
 
 <script>
 export default {
   props: ["list"],
   emits: ["remove-item"],
+  data() {
+    return {
+      tooltip: {
+        show: false,
+        text: '',
+        style: {}
+      }
+    }
+  },
   methods: {
     handleLinkClick(itemId) {
       // 点击链接时，向父组件发送移除事件
@@ -80,6 +100,40 @@ export default {
 
       // 添加到页面
       document.body.appendChild(iframe);
+    },
+
+    // 检测文字是否被截断
+    isTextTruncated(element) {
+      return element.scrollWidth > element.clientWidth;
+    },
+
+    // 显示 tooltip
+    showTooltip(event, text) {
+      const linkElement = event.target;
+
+      // 只有当文字被截断时才显示 tooltip
+      if (!this.isTextTruncated(linkElement)) {
+        return;
+      }
+
+      const rect = linkElement.getBoundingClientRect();
+
+      this.tooltip = {
+        show: true,
+        text: text,
+        style: {
+          position: 'fixed',
+          top: (rect.top - 35) + 'px',
+          left: rect.left + 'px',
+          maxWidth: '300px',
+          zIndex: 9999
+        }
+      };
+    },
+
+    // 隐藏 tooltip
+    hideTooltip() {
+      this.tooltip.show = false;
     }
   }
 };
@@ -147,5 +201,29 @@ export default {
   font-size: 12px;
   flex-shrink: 0;
   line-height: 1.2; /* 控制数字行高 */
+}
+
+.custom-tooltip {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
