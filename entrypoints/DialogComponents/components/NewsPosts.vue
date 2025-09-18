@@ -5,7 +5,7 @@
         <button
           class="preview-btn"
           @click="previewPost(item.id)"
-          title="后台预览（保持登录状态）"
+          title="设为已读"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -62,7 +62,7 @@ export default {
 
     previewPost(itemId) {
       // 后台预览帖子，保持用户登录状态
-      console.log('开始后台预览帖子:', itemId);
+      console.log('开始后台预览帖子：', itemId);
       this.loadPostInBackground(`https://linux.do/t/topic/${itemId}`);
       // 预览后也移除这条目
       this.$emit("remove-item", itemId);
@@ -81,7 +81,7 @@ export default {
 
       // 监听加载完成
       iframe.onload = () => {
-        console.log('后台预览完成:', url);
+        console.log('后台预览完成：', url);
         // 延迟移除 iframe，确保页面完全加载
         setTimeout(() => {
           if (iframe.parentNode) {
@@ -92,7 +92,7 @@ export default {
 
       // 错误处理
       iframe.onerror = () => {
-        console.error('后台预览失败:', url);
+        console.error('后台预览失败：', url);
         if (iframe.parentNode) {
           document.body.removeChild(iframe);
         }
@@ -159,8 +159,8 @@ export default {
   border: none;
   color: #666;
   cursor: pointer;
-  padding: 8px 6px; /* 增加垂直padding来扩大点击区域 */
-  margin: -6px -2px; /* 负margin抵消padding对布局的影响 */
+  padding: 8px 6px; /* 增加垂直 padding 来扩大点击区域 */
+  margin: -6px -2px; /* 负 margin 抵消 padding 对布局的影响 */
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -188,7 +188,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1.2; /* 控制文字行高 */
-  min-width: 0; /* 允许flex项目收缩到内容宽度以下 */
+  min-width: 0; /* 允许 flex 项目收缩到内容宽度以下 */
 }
 
 .news-link:hover {

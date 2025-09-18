@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="tit">{{ sort }}. 是否开启话题预览功能 (模态预览；与 7 互斥)</div>
+    <div class="tit">{{ sort }}. 是否开启话题模态预览功能 (与 2 互斥)</div>
     <input
       type="checkbox"
       :checked="modelValue"

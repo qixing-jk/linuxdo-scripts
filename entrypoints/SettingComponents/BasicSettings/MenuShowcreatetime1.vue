@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="tit">{{ sort }}. 将浏览量替换为创建时间（与 4 互斥，只可选择一个）</div>
+    <div class="tit">{{ sort }}. 将浏览量替换为创建时间（与 2 互斥，只可选择一个）</div>
     <input type="checkbox" :checked="modelValue" @change="$emit('update:modelValue', $event.target.checked)" />
   </div>
 </template>
@@ -12,8 +12,8 @@ export default {
   emits: ["update:modelValue"],
   data() {
     return {
-      updateIntervalId: null, // 添加变量存储更新定时器ID
-      pollingIntervalId: null // 添加变量存储轮询定时器ID
+      updateIntervalId: null, // 添加变量存储更新定时器 ID
+      pollingIntervalId: null // 添加变量存储轮询定时器 ID
     };
   },
   methods: {
@@ -44,7 +44,7 @@ export default {
     },
 
     convertToTimestamp(dateStr) {
-      // 处理中文格式：2025 年 7月 29 日 12:59
+      // 处理中文格式：2025 年 7 月 29 日 12:59
       const chinesePattern = /(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日\s*(\d{1,2}):(\d{2})/;
       const chineseMatch = dateStr.match(chinesePattern);
       
@@ -76,7 +76,7 @@ export default {
         const minutes = parseInt(englishMatch[5], 10);
         const ampm = englishMatch[6].toLowerCase();
         
-        // 处理12小时制
+        // 处理 12 小时制
         if (ampm === 'pm' && hours !== 12) {
           hours += 12;
         } else if (ampm === 'am' && hours === 12) {
@@ -169,12 +169,12 @@ export default {
       // 立即执行一次初始化
       this.setInitDate();
       
-      // 设置短间隔更新定时器 (1秒)
+      // 设置短间隔更新定时器 (1 秒)
       this.updateIntervalId = setInterval(() => {
         this.setInitDate();
       }, 1000);
       
-      // 设置长间隔轮询定时器 (10秒)，避免资源浪费
+      // 设置长间隔轮询定时器 (10 秒)，避免资源浪费
       this.pollingIntervalId = setInterval(() => {
         this.setInitDate();
       }, 10000);
