@@ -19,9 +19,9 @@
   <p>
     <a href="https://discord.gg/3wDmhCsVeU">Discord</a>
     ·
-    <a href="https://linuxdo-scripts.zishu.me">Documentation</a>
+    <a href="https://linuxdo-scripts.zishu.me">Usage Documentation</a>
     ·
-    <a href="https://github.com/anghunk/linuxdo-scripts/issues/new/choose">Report an Issue</a>
+    <a href="https://github.com/anghunk/linuxdo-scripts/issues/new/choose">Feedback</a>
     ·
     <a href="https://github.com/anghunk/linuxdo-scripts/releases/latest">Latest Release</a>
   </p>
@@ -36,24 +36,28 @@
 
 ## 📖 I. Project Introduction
 
-LinuxDo Scripts is a feature-rich browser extension designed to enhance your experience on the LinuxDo forum. It integrates a wide range of practical functionalities, from basic interface optimization to advanced AI assistance, making your forum browsing and interaction smoother and more efficient.
+LinuxDo Scripts is a feature-rich browser extension designed to enhance the user experience on the LinuxDo forum. It integrates a variety of practical features, from basic interface optimization to advanced AI assistance, making your forum browsing and interaction smoother and more efficient.
 
-Forum Discussion Thread: [linuxdo enhanced plugin, continuously updated, feedback welcome (browser extension, Tampermonkey is invalid and no longer updated) - LINUX DO](https://linux.do/t/topic/170951)
+> [!note]
+> Forum discussion thread: [linuxdo enhanced plugin, continuous updates welcome feedback - LINUX DO](https://linux.do/t/topic/170951)
+
+> [!note]
+> Compatibility has also been synchronized with the [idcflare.com](https://idcflare.com) website. (90% of features are compatible, with a few exceptions, such as: image generation for sharing.)
 
 ### 1. Core Highlights
 - 🎨 **Interface Beautification** - Multiple theme skins, personalized customization
 - 🤖 **AI Intelligence** - Topic summarization, intelligent reply generation
 - 📚 **Content Management** - Favorites, user tags, content filtering
-- ⚡ **Experience Optimization** - Quick operations, automation features
+- ⚡ **Experience Optimization** - Quick operations, automated functions
 - 🔧 **Highly Customizable** - Supports custom CSS, quick replies, etc.
 
 ![Main Image](https://github.com/user-attachments/assets/1b0039de-3f3e-420b-9a91-6bc651e8c8e5)
 
 <details>
-<summary>More Screenshots</summary>
+<summary>More Screenshot Demonstrations</summary>
   
-![Usage](https://github.com/user-attachments/assets/514b92b7-deb3-4eee-80cd-c2203f4661b8)
-![Favorites Enhancement](https://github.com/user-attachments/assets/0523929c-c825-40b8-817e-1f9ea06a01ea)
+![How to Use](https://github.com/user-attachments/assets/514b92b7-deb3-4eee-80cd-c2203f4661b8)
+![Favorite Enhancement](https://github.com/user-attachments/assets/0523929c-c825-40b8-817e-1f9ea06a01ea)
 ![Share Post](https://github.com/user-attachments/assets/07728ccc-4032-431d-bf70-e32b7a8e2289)
 
 </details>
@@ -62,11 +66,11 @@ Forum Discussion Thread: [linuxdo enhanced plugin, continuously updated, feedbac
 
 ### 1. Supported Browsers
 
-| Browser                         | Installation Link                                                                             | Notes         |
-| ------------------------------- | --------------------------------------------------------------------------------------------- | ------------- |
-| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended   |
-| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | Full Support  |
-| **Domestic Users**              | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)         | No VPN Needed |
+| Browser                          | Installation Link                                                                                     | Remarks |
+| -------------------------------- | --------------------------------------------------------------------------------------------- | -------- |
+| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended |
+| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | Full Support |
+| **Users in China**              | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)          | No VPN required |
 
 ### 2. Installation Steps
 1. Click the installation link for your browser above.
@@ -77,72 +81,72 @@ Forum Discussion Thread: [linuxdo enhanced plugin, continuously updated, feedbac
 ## ✨ III. Features
 
 <details>
-<summary>🔍 Browse Experience Optimization</summary>
+<summary>🔍 Browsing Experience Optimization</summary>
 
-- ⏰ Display creation time in the topic list
-- 🏢 Show floor count and original poster identifier
-- 🆕 Open topics in a new tab
-- 👀 Directly preview details and comments in the topic list
-- 📝 Optimize display of mixed Chinese and English text
-- 🖼️ Optimize signature image display to prevent corruption
-- 🌙 Automatically switch to dark mode
-- 📱 Optimize for ultra-wide displays
+- ⏰ Display creation time in topic list.
+- 🏢 Show floor number and author identifier.
+- 🆕 Open topics in a new tab.
+- 👀 Directly preview topic details and comments in the topic list.
+- 📝 Optimize display of mixed Chinese and English text.
+- 🖼️ Optimize signature image display to prevent corruption.
+- 🌙 Automatically switch to dark mode.
+- 📱 Optimize for ultra-wide displays.
 
 </details>
 
 <details>
 <summary>📚 Content Management</summary>
 
-- ⭐ Comprehensive favorites functionality
-- 🏷️ User tagging system
-- 🚫 Force block topics from specified users
-- 👑 Toggle "Show Original Poster Only"
-- 🔍 Keyword and tag filtering
-- 📅 Block old posts by time
+- ⭐ Comprehensive favorites functionality.
+- 🏷️ User tagging system.
+- 🚫 Force-block topics from specified users.
+- 👑 Toggle to view only the original poster's posts.
+- 🔍 Keyword and tag filtering.
+- 📅 Block old posts by time.
 
 </details>
 
 <details>
 <summary>💬 Interaction Enhancement</summary>
 
-- ⚡ Quick topic replies (supports custom templates)
-- 😊 Optimize reply box emojis
-- 📊 Query user level information
-- 👍 Quick like button
-- 🔄 Automatically expand replies
+- ⚡ Quick replies to topics (supports custom templates).
+- 😊 Optimized comment box emoticons.
+- 📊 Query user level information.
+- 👍 Quick "like" button.
+- 🔄 Automatically expand replies.
 
 </details>
 
 <details>
-<summary>🤖 AI Smart Assistant</summary>
+<summary>🤖 AI Intelligent Assistant</summary>
 
-- 📋 AI topic summarization
-- 💡 Intelligent reply generation
-- 🤝 AI-assisted posting
-- 🎯 Intelligent content analysis
+- 📋 AI topic summarization.
+- 💡 Intelligent reply generation.
+- 🤝 AI-assisted replying.
+- 🎯 Intelligent content analysis.
 
 </details>
 
 <details>
 <summary>🎨 Personalization</summary>
 
-- 🎭 Multiple forum theme skins
-- 😀 Switch forum emoji styles
-- 🎨 Support for custom CSS styles
-- ☁️ Cloud synchronization of settings
-- 🖼️ Customize forum Logo
-- 📑 Customize tab icons and titles
+- 🎭 Multiple forum theme skins.
+- 😀 Forum emoticon style switching.
+- 🎨 Support for custom CSS styles.
+- ☁️ Cloud synchronization of settings.
+- 🖼️ Customize forum logo.
+- 📑 Customize tab icon and title.
 
 </details>
 
 <details>
 <summary>🔧 Utility Tools</summary>
 
-- 📸 Convert topics to image shares
-- 📄 Export forum articles
-- ⬆️ Scroll to top / Jump to first post
-- 🔕 Quickly mute posts
-- 🎯 View your own reply floor
+- 📸 Convert topics to image for sharing.
+- 📄 Export forum articles.
+- ⬆️ Return to top / Go directly to the first floor.
+- 🔕 Quickly mute posts.
+- 🎯 View your own reply floor.
 
 </details>
 
@@ -167,17 +171,17 @@ npm run dev
 ```
 
 ### 3. Loading the Extension
-1. Open the browser's extension management page:
+1. Open your browser's extension management page:
    - Chrome: `chrome://extensions/`
    - Firefox: `about:addons`
 2. Enable "Developer mode".
 3. Click "Load unpacked extension".
-4. Select the `.output/chrome-mv3` folder in the project's root directory.
+4. Select the `.output/chrome-mv3` folder at the root of the project.
 
-### 4. Development Guidelines
-- 🧩 **Component-based Development**: Each feature as an independent component to avoid conflicts.
-- 🔄 **Commit Process**: PR → Code Review → Merge
-- 📚 **Documentation Update**: New features require synchronized documentation updates.
+### 4. Development Conventions
+- 🧩 **Component-based development**: Each feature is an independent component to avoid conflicts.
+- 🔄 **Submission process**: PR → Code review → Merge.
+- 📚 **Documentation update**: New features must be synchronized with documentation updates.
 
 ## 🤝 V. Contributing
 
@@ -192,7 +196,7 @@ npm run dev
 
 ### 3. Reference Projects
 
-- https://linux.do/t/topic/850824 - Shi Huang Jiang's emoji pack feature
+- https://linux.do/t/topic/850824 - Shi Huang Jiang's emoticon pack feature
 
 ## 📄 VI. Other Information
 
@@ -207,18 +211,18 @@ This project is licensed under the [Apache License 2.0](https://github.com/anghu
 **You are free to:**
 - ✅ Use, copy, modify, and distribute this software.
 - ✅ Use for commercial purposes.
-- ✅ Re-license under the terms of the license.
+- ✅ Re-license under the terms of the agreement.
 
-**However, you must:**
+**But you must:**
 - 📋 Retain the original copyright notice.
-- 📋 Indicate any modifications made to the original code.
+- 📋 Indicate modifications made to the original code.
 
 ### 3. Disclaimer
 
-- This project is **free and open-source**. It does not guarantee absolute perfection or error-freeness.
-- Please assess risks yourself before use and comply with relevant laws and regulations.
-- Any form of misuse is strictly prohibited.
-- For any infringement issues, please contact [@anghunk](https://github.com/anghunk) for prompt resolution.
+- This project is a **free and open-source** project and does not guarantee absolute perfection or error-freeness.
+- Please assess the risks yourself before use and comply with relevant laws and regulations.
+- Any form of abuse is strictly prohibited.
+- For any infringement issues, please contact [@anghunk](https://github.com/anghunk) for timely resolution.
 
 ---
 

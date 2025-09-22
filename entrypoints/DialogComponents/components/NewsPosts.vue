@@ -47,7 +47,7 @@ export default {
       // 阻止默认的链接行为
       event.preventDefault();
 
-      // 构建目标URL
+      // 构建目标 URL
       const targetUrl = `https://linux.do/t/topic/${itemId}`;
 
       try {
