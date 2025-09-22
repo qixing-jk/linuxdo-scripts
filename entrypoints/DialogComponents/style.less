@@ -105,7 +105,6 @@ a {
   li {
     padding: 2px 0;
     border-bottom: 1px solid #eee;
-    margin-bottom: 6px;
     display: flex;
     align-items: center;
     position: relative;
@@ -116,10 +115,10 @@ a {
       padding: 5px 0;
       border-radius: 3px;
       position: relative;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      overflow: hidden;
+      // display: -webkit-box;
+      // -webkit-box-orient: vertical;
+      // -webkit-line-clamp: 1;
+      // overflow: hidden;
 
       &:hover {
         text-decoration: underline;
@@ -131,7 +130,7 @@ a {
     em {
       font-style: normal;
       position: absolute;
-      top: 5px;
+      top: 10px;
       right: 0;
       border-radius: 30px;
       height: 20px;
@@ -180,4 +179,51 @@ a {
   100% {
     transform: rotate(360deg);
   }
+}
+
+
+.news-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  min-height: 20px;
+  /* 固定最小行高 */
+  width: 100%;
+  overflow: hidden;
+  /* 防止内容溢出 */
+}
+
+.preview-btn {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 8px 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  min-width: 30px;
+  position: absolute;
+  top: 6px;
+  right: 0;
+}
+
+.preview-btn:hover {
+  color: #1890ff;
+}
+
+.preview-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.news-item:hover .preview-btn {
+  display: flex;
+}
+
+.news-item:hover em {
+  display: none;
 }
