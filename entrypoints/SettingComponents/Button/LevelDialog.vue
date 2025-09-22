@@ -37,6 +37,7 @@ import {
 export default {
   data() {
     return {
+      url: "window.location.origin",
       isMinimized: true,
       content: "输入用户名查询等级信息",
       username: "",
@@ -177,7 +178,7 @@ export default {
     },
     async fetchAboutData() {
       try {
-        const response = await fetch(`https://linux.do/about.json`, {
+        const response = await fetch(`${this.url}/about.json`, {
           headers: {
             Accept: "application/json",
             "User-Agent": "Mozilla/5.0",
@@ -194,7 +195,7 @@ export default {
     },
     async fetchUserData(username) {
       try {
-        const response = await fetch(`https://linux.do/u/${username}/summary.json`, {
+        const response = await fetch(`${this.url}/u/${username}/summary.json`, {
           headers: {
             Accept: "application/json",
             "User-Agent": "Mozilla/5.0",

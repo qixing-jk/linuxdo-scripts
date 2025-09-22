@@ -1,1 +1,2 @@
-- feat: 新增快速插入 Obsidian Callouts #254
+- style: 调整 popup 页面已读功能及样式修改
+- feat: 兼容 idcflare.com 网站（90% 功能已经可以兼容使用，少量功能暂无法适配，如：图片生成分享图）

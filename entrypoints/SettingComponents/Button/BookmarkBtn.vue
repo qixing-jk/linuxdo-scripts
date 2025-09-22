@@ -44,7 +44,7 @@ export default {
         })
         .get();
       var bookmarkDataurl =
-        "https://linux.do" + $(".header-title .topic-link").attr("href");
+        window.location.origin + $(".header-title .topic-link").attr("href");
 
       var newBookmark = {
         url: bookmarkDataurl,

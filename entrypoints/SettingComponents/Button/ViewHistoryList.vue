@@ -15,7 +15,7 @@
       </div>
       <ul v-if="first20Topics.length > 0">
         <li v-for="item in first20Topics" :key="item.id">
-          <a :href="'https://linux.do/t/topic/' + item.id" target="_blank">
+          <a :href="`${this.url}/t/topic/` + item.id" target="_blank">
             {{ item.title }}
           </a>
         </li>
@@ -31,6 +31,7 @@
 export default {
   data() {
     return {
+      url: "window.location.origin",
       status: false,
       first20Topics: [],
     };
@@ -46,7 +47,8 @@ export default {
 
     // 获取历史已读记录数据
     getFirst20Topics() {
-      fetch("https://linux.do/read.json")
+      const url = window.location.origin;
+      fetch(`${url}/read.json`)
         .then((response) => response.json())
         .then((data) => {
           this.first20Topics = data.topic_list.topics.slice(0, 20);

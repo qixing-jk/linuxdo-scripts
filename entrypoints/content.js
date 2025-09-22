@@ -3,7 +3,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 
 export default defineContentScript({
-  matches: ['https://linux.do/*'],
+  matches: ['https://linux.do/*', 'https://idcflare.com/*'],
   cssInjectionMode: 'ui',
 
   async main(ctx) {

@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       silentBookmark: false,
-      bookmarkIntervalId: null, // 添加变量存储定时器ID
+      bookmarkIntervalId: null, // 添加变量存储定时器 ID
     }
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
               })
               .get();
             var bookmarkDataurl =
-              "https://linux.do" + $(".header-title .topic-link").attr("href");
+              window.location.origin + $(".header-title .topic-link").attr("href");
 
             var newBookmark = {
               url: bookmarkDataurl,
