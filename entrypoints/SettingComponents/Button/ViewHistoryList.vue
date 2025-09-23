@@ -31,7 +31,7 @@
 export default {
   data() {
     return {
-      url: "window.location.origin",
+      url: window.location.origin,
       status: false,
       first20Topics: [],
     };

@@ -37,7 +37,7 @@ import {
 export default {
   data() {
     return {
-      url: "window.location.origin",
+      url: window.location.origin,
       isMinimized: true,
       content: "输入用户名查询等级信息",
       username: "",
