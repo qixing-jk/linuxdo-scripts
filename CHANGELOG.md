@@ -1,1 +1,1 @@
-- fix: 修复等级查询报错 #260
+- chore: 优化编辑器插入 Obsidian Callouts 后新增默认换行

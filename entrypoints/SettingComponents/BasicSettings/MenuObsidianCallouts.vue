@@ -17,7 +17,9 @@ const emojiSet = [
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!note]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 2,
@@ -25,7 +27,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!abstract]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 3,
@@ -33,7 +37,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!info]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 4,
@@ -41,7 +47,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!todo]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 5,
@@ -49,7 +57,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!tip]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 6,
@@ -57,7 +67,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!success]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 7,
@@ -65,7 +77,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!question]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 8,
@@ -73,7 +87,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!warning]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 9,
@@ -81,7 +97,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!failure]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 10,
@@ -89,7 +107,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!danger]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 11,
@@ -97,7 +117,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!bug]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 12,
@@ -105,7 +127,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!example]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 13,
@@ -113,7 +137,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 Lorem ipsum dolor sit amet</p></div></blockquote>`,
     value: `> [!quote]
-> Lorem ipsum dolor sit amet`,
+> Lorem ipsum dolor sit amet
+
+`,
   },
   {
     id: 14,
@@ -121,7 +147,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content"><p>
 快折起来。</p></div></blockquote>`,
     value: `> [!warning]+ 别看了
-> 快折起来。`,
+> 快折起来。
+
+`,
   },
   {
     id: 15,
@@ -129,7 +157,9 @@ Lorem ipsum dolor sit amet</p></div></blockquote>`,
 <div class="callout-content" style="display: none;"><p>
 确实如此。</p></div></blockquote>`,
     value: `> [!success]- 非常成功
-> 确实如此。`,
+> 确实如此。
+
+`,
   },
 ];
 
