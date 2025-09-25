@@ -1,14 +1,15 @@
 <template>
   <ul class="list" v-if="this.list.length > 0">
-    <li v-for="item in list" :key="item.id">
+    <li v-for="item in list" :key="item.id" class="news-item hot">
       <div class="news-content">
         <a
           :href="'https://linux.do/t/topic/' + item.id"
           @click="handleLinkClick($event, item.id)"
-          class="news-link"
-        >
+          class="news-link">
           {{ item.title }}
         </a>
+      </div>
+      <div class="news-meta">
         <em>{{ item.highest_post_number }}</em>
       </div>
     </li>
@@ -18,8 +19,8 @@
 
 <script>
 export default {
-  props: ["list"],
-  emits: ["remove-item"],
+  props: ['list'],
+  emits: ['remove-item'],
   data() {
     return {};
   },
@@ -32,7 +33,7 @@ export default {
       const targetUrl = `https://linux.do/t/topic/${itemId}`;
 
       try {
-        const browserAPI = typeof browser !== "undefined" ? browser : chrome;
+        const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
 
         // 查询当前活动的标签页
         const tabs = await new Promise((resolve) => {
@@ -43,7 +44,7 @@ export default {
           const currentTab = tabs[0];
 
           // 检查当前活动标签页是否为 linux.do
-          if (currentTab.url && currentTab.url.includes("linux.do")) {
+          if (currentTab.url && currentTab.url.includes('linux.do')) {
             // 如果当前标签页是 linux.do，直接在当前标签页跳转
             browserAPI.tabs.update(currentTab.id, { url: targetUrl });
           } else {
@@ -55,14 +56,14 @@ export default {
           browserAPI.tabs.create({ url: targetUrl });
         }
       } catch (error) {
-        console.error("处理链接跳转失败：", error);
+        console.error('处理链接跳转失败：', error);
         // 出错时回退到新标签页打开
-        window.open(targetUrl, "_blank");
+        window.open(targetUrl, '_blank');
       }
 
       // 向父组件发送移除事件
-      this.$emit("remove-item", itemId);
-    },
-  },
+      this.$emit('remove-item', itemId);
+    }
+  }
 };
 </script>

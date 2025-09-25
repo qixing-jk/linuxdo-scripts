@@ -1,1 +1,2 @@
 - chore: 优化编辑器插入 Obsidian Callouts 后新增默认换行
+- chore: 优化弹窗最新列表中设置已读的逻辑
