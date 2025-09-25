@@ -1,2 +1,4 @@
 - chore: 优化编辑器插入 Obsidian Callouts 后新增默认换行
 - chore: 优化弹窗最新列表中设置已读的逻辑
+- fix: 修复等级查询在多站点获取数据逻辑错误
+- chore: 优化参数名 `linuxdoscriptssettingDMI`，全局保持统一并兼容旧参数名

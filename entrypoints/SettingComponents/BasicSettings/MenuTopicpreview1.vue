@@ -140,7 +140,7 @@ export default {
   created() {
     if (this.modelValue) {
       this.checked1 = JSON.parse(
-        localStorage.getItem("linxudoscriptssettingDMI")
+        localStorage.getItem("linuxdoscriptssettingDMI")
       ).checked1;
       
       this.mainTimer = setInterval(() => {

@@ -286,7 +286,7 @@ export default {
          </div>`
       );
 
-      const config = JSON.parse(localStorage.getItem("linxudoscriptssettingDMI")).gptdata;
+      const config = JSON.parse(localStorage.getItem("linuxdoscriptssettingDMI")).gptdata;
 
       return new Promise((resolve, reject) => {
         let str = $("#topic-title h1 a").text();
@@ -424,7 +424,7 @@ export default {
     async setAIRelpy() {
       $(".aireply-popup").show();
       $(".aireply-popup-text").html("AI 推荐回复正在生成中，请稍后。。。");
-      const config = JSON.parse(localStorage.getItem("linxudoscriptssettingDMI")).gptdata;
+      const config = JSON.parse(localStorage.getItem("linuxdoscriptssettingDMI")).gptdata;
 
       return new Promise((resolve, reject) => {
         const str = $("#topic-title h1 a").text() + $("#post_1 .cooked").text();
@@ -544,7 +544,7 @@ ${str}`;
         } else {
           topic_contentdata = $(".d-editor-preview").html();
         }
-        const config = JSON.parse(localStorage.getItem("linxudoscriptssettingDMI"))
+        const config = JSON.parse(localStorage.getItem("linuxdoscriptssettingDMI"))
           .gptdata;
         const prompt = `${config.prompt2}
 帖子内容如下：

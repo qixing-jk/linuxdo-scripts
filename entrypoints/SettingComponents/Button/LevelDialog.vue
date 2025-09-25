@@ -77,7 +77,7 @@ export default {
     // 获取 Connect API 数据并提取 table 标签
     async fetchConnectData() {
       try {
-        this.content = "正在获取 Connect 数据...";
+        this.content = "正在获取 Connect 数据，请勿进行其他操作...";
 
         const response = await fetchConnectData("/");
 
@@ -85,17 +85,15 @@ export default {
           // 从返回的 HTML 中提取 table 标签和第二个 p 标签
           const extractedData = this.extractTableFromHtml(response.data);
 
-          if (extractedData) {
+          if (extractedData && extractedData.table) {
             this.connectTableData = extractedData;
 
             // 构建显示内容
             let displayContent = "";
 
-            if (extractedData.table) {
-              displayContent += `<div>
-                ${extractedData.table.html}
-              </div>`;
-            }
+            displayContent += `<div>
+              ${extractedData.table.html}
+            </div>`;
 
             if (extractedData.secondP && extractedData.secondP.content) {
               displayContent += `<div>
@@ -106,13 +104,29 @@ export default {
             this.content = displayContent;
             console.log("Connect 提取的数据：", extractedData);
           } else {
-            this.handleSearch();
+            // Connect 中不存在 table 标签，给出提示并调用默认查询
+            this.content =
+              "<strong style='color: orange;'>Connect 数据中未找到表格信息，正在切换到常规查询模式...</strong>";
+            setTimeout(() => {
+              this.handleSearch();
+            }, 1000); // 1.5 秒后自动切换到常规查询
           }
         } else {
-          this.handleSearch();
+          // Connect API 请求失败，给出提示并调用默认查询
+          this.content =
+            "<strong style='color: red;'>Connect API 请求失败，正在切换到常规查询模式...</strong>";
+          setTimeout(() => {
+            this.handleSearch();
+          }, 1000);
         }
       } catch (error) {
-        this.handleSearch();
+        // 发生异常，给出提示并调用默认查询
+        console.error("Connect API 请求异常：", error);
+        this.content =
+          "<strong style='color: red;'>Connect API 请求异常，正在切换到常规查询模式...</strong>";
+        setTimeout(() => {
+          this.handleSearch();
+        }, 1000);
       }
     },
 
@@ -214,7 +228,7 @@ export default {
       if (this.username == "") {
         return false;
       }
-      this.content = "正在查询中，请稍后...";
+      this.content = "正在查询中，请勿进行其他操作...";
       const username = this.username.trim();
       if (username) {
         const aboutData = await this.fetchAboutData();
@@ -294,9 +308,16 @@ export default {
         const avatarImg = $("#toggle-current-user img.avatar");
         const src = avatarImg.length ? avatarImg.attr("src") : null;
         if (src) {
-          const match = src.match(/\/user_avatar\/linux\.do\/([^\/]+)/);
-          if (match && match[1]) {
-            this.username = match[1];
+          if (window.location.hostname === "linux.do") {
+            const match = src.match(/\/user_avatar\/linux\.do\/([^\/]+)/);
+            if (match && match[1]) {
+              this.username = match[1];
+            }
+          } else if (window.location.hostname === "idcflare.com") {
+            const match = src.match(/\/user_avatar\/idcflare\.com\/([^\/]+)/);
+            if (match && match[1]) {
+              this.username = match[1];
+            }
           }
         }
       }

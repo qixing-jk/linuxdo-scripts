@@ -135,7 +135,7 @@ export default {
         password: '',
         folder: 'linuxdo-scripts-backup/', // 默认文件夹
         filename: JSON.stringify(
-          localStorage.getItem('linxudoscriptssettingDMI')
+          localStorage.getItem('linuxdoscriptssettingDMI')
         ),
       },
       importing: false,
@@ -178,7 +178,7 @@ export default {
         await client.ensureDirectory(config.folder)
 
         // 获取要备份的数据
-        const data = localStorage.getItem('linxudoscriptssettingDMI')
+        const data = localStorage.getItem('linuxdoscriptssettingDMI')
         if (!data) {
           throw new Error('没有找到需要备份的数据')
         }
@@ -221,7 +221,7 @@ export default {
           // 验证数据格式
           JSON.parse(content)
           // 保存到本地
-          localStorage.setItem('linxudoscriptssettingDMI', content)
+          localStorage.setItem('linuxdoscriptssettingDMI', content)
           this.messageToast('数据导入成功')
           window.location.reload();
         } catch (e) {

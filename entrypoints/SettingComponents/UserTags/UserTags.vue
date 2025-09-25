@@ -49,7 +49,7 @@ export default {
     return {
       tableData: this.value,
       open: false,
-      userTagsIntervalId: null, // 添加变量存储定时器ID
+      userTagsIntervalId: null, // 添加变量存储定时器 ID
     };
   },
   watch: {
@@ -77,10 +77,10 @@ export default {
           // 如果不存在，新增对象
           this.tableData.push({ name: person, tags: tags });
         }
-        let settingData1 = localStorage.getItem("linxudoscriptssettingDMI");
+        let settingData1 = localStorage.getItem("linuxdoscriptssettingDMI");
         settingData1 = JSON.parse(settingData1);
         settingData1.usertags = this.tableData;
-        localStorage.setItem("linxudoscriptssettingDMI", JSON.stringify(settingData1));
+        localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(settingData1));
 
         this.$emit("update:value", this.tableData);
       }
@@ -90,20 +90,20 @@ export default {
       if (del == true) {
         this.tableData.splice(index, 1);
 
-        let settingData1 = localStorage.getItem("linxudoscriptssettingDMI");
+        let settingData1 = localStorage.getItem("linuxdoscriptssettingDMI");
         settingData1 = JSON.parse(settingData1);
         settingData1.usertags = this.tableData;
-        localStorage.setItem("linxudoscriptssettingDMI", JSON.stringify(settingData1));
+        localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(settingData1));
 
         this.$emit("update:value", this.tableData);
       }
     },
     // 快速开启
     fastOpen() {
-      let tempSettingData = localStorage.getItem("linxudoscriptssettingDMI");
+      let tempSettingData = localStorage.getItem("linuxdoscriptssettingDMI");
       tempSettingData = JSON.parse(tempSettingData);
       tempSettingData.isUserTags = true;
-      localStorage.setItem("linxudoscriptssettingDMI", JSON.stringify(tempSettingData));
+      localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(tempSettingData));
 
       // 创建一个消息提示元素
       const messageElement = document.createElement("div");
@@ -117,7 +117,7 @@ export default {
     },
   },
   created() {
-    let settingData = localStorage.getItem("linxudoscriptssettingDMI");
+    let settingData = localStorage.getItem("linuxdoscriptssettingDMI");
     settingData = JSON.parse(settingData);
 
     if (!settingData.usertags) {
@@ -157,7 +157,7 @@ export default {
             settingData.usertags.push({ name: person, tags: tags });
           }
 
-          localStorage.setItem("linxudoscriptssettingDMI", JSON.stringify(settingData));
+          localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(settingData));
         });
       }
 
@@ -166,10 +166,10 @@ export default {
         // 在 usertags 数组中查找对应的对象
         const userTag = settingData.usertags.find((user) => user.name === username);
         if (userTag) {
-          if ($(this).find(".linxudoscripts-tag").length < 1) {
+          if ($(this).find(".linuxdoscripts-tag").length < 1) {
             $(this)
               .find(".names")
-              .append(`<span class="linxudoscripts-tag"># ${userTag.tags}</span>`);
+              .append(`<span class="linuxdoscripts-tag"># ${userTag.tags}</span>`);
           }
         }
       });

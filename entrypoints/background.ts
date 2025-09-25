@@ -103,8 +103,33 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // 获取 connect.linux.do 接口数据的事件监听器
 browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'fetch_connect_data') {
-    const { endpoint = '', options = {} } = request;
-    const connectUrl = `https://connect.linux.do${endpoint}`;
+    const { endpoint = '', options = {}, hostname } = request;
+    
+    // 优先使用传递的 hostname，否则从调用页面的 URL 获取
+    let connectDomain = 'connect.linux.do'; // 默认值
+    
+    if (hostname) {
+      // 如果前端传递了 hostname 参数，直接使用
+      connectDomain = `connect.${hostname}`;
+    } else if (sender.tab?.url) {
+      try {
+        const tabUrl = new URL(sender.tab.url);
+        // 根据 hostname 动态设置 connect 前缀
+        if (tabUrl.hostname === 'linux.do') {
+          connectDomain = 'connect.linux.do';
+        } else if (tabUrl.hostname.endsWith('.linux.do')) {
+          // 如果是子域名，可能需要对应的 connect 子域名
+          connectDomain = `connect.${tabUrl.hostname}`;
+        } else {
+          // 其他情况可以根据需要定制
+          connectDomain = `connect.${tabUrl.hostname}`;
+        }
+      } catch (error) {
+        console.warn('无法解析调用页面的 URL:', error);
+      }
+    }
+    
+    const connectUrl = `https://${connectDomain}${endpoint}`;
     
     // 默认请求配置
     const defaultOptions = {

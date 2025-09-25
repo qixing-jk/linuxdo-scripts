@@ -16,7 +16,7 @@ export default {
   emits: ["update:modelValue"],
   data() {
     return {
-      exportBtnClass: "linxudoscripts-export-md",
+      exportBtnClass: "linuxdoscripts-export-md",
     };
   },
   methods: {
@@ -26,15 +26,15 @@ export default {
         const btn = $(`
           <button class="btn btn-icon-text ${this.exportBtnClass}" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-icon icon icon-tabler icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><polyline points="7 11 12 16 17 11" /><line x1="12" y1="4" x2="12" y2="16" /></svg>
-            <span class="d-button-label">导出为Markdown</span>
+            <span class="d-button-label">导出为 Markdown</span>
           </button>
         `);
-        $(".linxudoscripts-btn").append(btn);
+        $(".linuxdoscripts-btn").append(btn);
         btn.on("click", () => this.showExportDialog());
       }
     },
     showExportDialog() {
-      // 计算评论楼层数，使用.regular.contents的个数
+      // 计算评论楼层数，使用.regular.contents 的个数
       const commentCount = $(".regular.contents").length - 1;
 
       const pageTitle =
@@ -77,7 +77,7 @@ export default {
             <div id="comments-level-container" style="display:none;margin-top:16px;background:${
               styles.inputBg
             };border-radius:6px;padding:12px;border:1px solid ${styles.border};">
-              <label style="display:block;margin-bottom:10px;font-weight:500;">导出楼层数: <span id="selected-level" style="color:${
+              <label style="display:block;margin-bottom:10px;font-weight:500;">导出楼层数：<span id="selected-level" style="color:${
                 styles.primary
               };">${commentCount}</span></label>
               <div style="display:flex;align-items:center;margin-top:10px;">
@@ -124,7 +124,7 @@ export default {
 
       $("body").append(dialogHTML);
 
-      // 添加CSS悬停效果
+      // 添加 CSS 悬停效果
       const style = document.createElement("style");
       style.classList.add("linuxdoscripts-export-style");
       style.textContent = `
@@ -187,7 +187,7 @@ export default {
         this.exportMarkdown(includeComments, commentLevel, pageTitle);
       });
 
-      // 按ESC键关闭对话框
+      // 按 ESC 键关闭对话框
       $(document).on("keydown.exportDialog", (e) => {
         if (e.key === "Escape") {
           $(
@@ -317,7 +317,7 @@ export default {
       if (includeComments && commentLevel > 0) {
         const allContents = document.querySelectorAll(".regular.contents");
 
-        // 从第二个(索引1)开始才是评论
+        // 从第二个 (索引 1) 开始才是评论
         for (let i = 1; i <= commentLevel && i < allContents.length; i++) {
           allText += "\n\n---\n\n";
           allText += `### 第 ${i} 楼\n\n`;

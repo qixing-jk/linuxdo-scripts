@@ -1,5 +1,5 @@
 <template>
-  <p>欢迎使用 Linxudo Scripts 扩展！</p>
+  <p>欢迎使用 Linuxdo Scripts 扩展！</p>
   <p>
     鼠标移动到浏览器最左侧后点击设置按钮，
     <a href="https://linuxdo-scripts.zishu.me/" target="_blank"> 使用教程！ </a>

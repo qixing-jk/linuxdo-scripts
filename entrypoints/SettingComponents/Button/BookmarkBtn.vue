@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="el-button linxudoscripts-bookmark1" @click="bookmark" title="收藏">
+    <div class="el-button linuxdoscripts-bookmark1" @click="bookmark" title="收藏">
       收藏
     </div>
   </div>
