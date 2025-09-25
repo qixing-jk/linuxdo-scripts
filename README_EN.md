@@ -66,11 +66,11 @@ LinuxDo Scripts is a feature-rich browser extension designed to enhance the user
 
 ### 1. Supported Browsers
 
-| Browser                          | Installation Link                                                                                     | Remarks |
-| -------------------------------- | --------------------------------------------------------------------------------------------- | -------- |
-| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended |
-| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | Full Support |
-| **Users in China**              | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)          | No VPN required |
+| Browser                         | Installation Link                                                                             | Remarks         |
+| ------------------------------- | --------------------------------------------------------------------------------------------- | --------------- |
+| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended     |
+| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | Recommended     |
+| **Users in China**              | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)         | No VPN required |
 
 ### 2. Installation Steps
 1. Click the installation link for your browser above.

@@ -69,7 +69,7 @@ LinuxDo Scripts 是一个功能丰富的浏览器扩展，专为提升 LinuxDo �
 | 浏览器                          | 安装链接                                                                                      | 备注     |
 | ------------------------------- | --------------------------------------------------------------------------------------------- | -------- |
 | **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | 推荐     |
-| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | 完整支持 |
+| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | 推荐     |
 | **国内用户**                    | [Crx 商店](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)          | 无需翻墙 |
 
 ### 2. 安装步骤
