@@ -14,16 +14,22 @@
   </a-space>
 
   <a-divider />
-
+ 
   <div class="item">
-    <div class="label">开启该设置时，会关闭论坛中的设置按钮。</div>
+    <div class="label">1.开启该设置时，会“隐藏”论坛网站中的设置按钮。</div>
     <a-switch v-model="isShow" @change="ShowSettingConfig" />
+  </div>
+  <div style="height: 10px"></div>
+  <div class="item">
+    <div class="label">2.【最新】列表中是否将“已读”按钮放置在最前方。</div>
+    <a-switch v-model="isReadonlyBefore" @change="ReadonlyBefore" />
   </div>
 
   <a-divider />
 
   <div class="item">
-    <div class="label">点击扩展图标时打开
+    <div class="label">
+      点击扩展图标时打开
       <Question @click="showCompatibilityReminder" />
     </div>
     <a-radio-group v-model="clickTarget" type="button" @change="onClickTargetChange">
@@ -33,13 +39,16 @@
   </div>
   <!-- 兼容性提示 -->
   <div class="CompatibilityReminder" v-show="CompatibilityReminder">
-    <p>兼容性提示：如果你使用 Arc 等不支持浏览器侧边的第三方软件，可以直接引入下方链接作为侧边。</p>
+    <p>
+      兼容性提示：如果你使用 Arc
+      等不支持浏览器侧边的第三方软件，可以直接引入下方链接作为侧边。
+    </p>
     <a href="javascript:void(0)" target="_blank" @click="gosidepanel">点击显示侧边链接</a>
   </div>
 </template>
 
 <script>
-import Question from './SVG/Question.vue';
+import Question from "./SVG/Question.vue";
 
 export default {
   components: {
@@ -48,6 +57,7 @@ export default {
   data() {
     return {
       isShow: false,
+      isReadonlyBefore: false,
       clickTarget: "sidepanel",
       activeKey: ["1"],
       CompatibilityReminder: false,
@@ -110,13 +120,38 @@ export default {
     showCompatibilityReminder() {
       this.CompatibilityReminder = !this.CompatibilityReminder;
     },
-    
+
+    // 将已读按钮放在最前方
+    ReadonlyBefore() {
+      try {
+        localStorage.setItem("isReadonlyBefore", this.isReadonlyBefore);
+
+        // 触发自定义存储事件，通知其他组件
+        if (window && typeof window.dispatchEvent === "function") {
+          window.dispatchEvent(
+            new CustomEvent("readonlyBeforeChanged", {
+              detail: { isReadonlyBefore: this.isReadonlyBefore },
+            })
+          );
+        }
+
+        this.$message.success("设置已保存！");
+      } catch (error) {
+        console.error("保存设置失败：", error);
+        this.$message.error("设置保存失败，请重试！");
+      }
+    },
   },
   created() {
     const isShowSettingConfig = localStorage.getItem("isShowSettingConfig");
+    const isReadonlyBefore = localStorage.getItem("isReadonlyBefore");
 
     if (JSON.parse(isShowSettingConfig)) {
       this.isShow = JSON.parse(isShowSettingConfig);
+    }
+
+    if (isReadonlyBefore !== null) {
+      this.isReadonlyBefore = JSON.parse(isReadonlyBefore);
     }
 
     const browserAPI = typeof browser !== "undefined" ? browser : chrome;
