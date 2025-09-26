@@ -109,13 +109,13 @@ export default {
       margin-bottom: 5px;
 
       a {
-        color: #333;
+        color: var(--primary);
         text-decoration: none;
         display: block;
         padding: 2px 0;
 
         &:hover {
-          color: #000;
+          text-decoration: underline;
         }
       }
     }

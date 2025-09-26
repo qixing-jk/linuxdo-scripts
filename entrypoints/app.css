@@ -113,7 +113,7 @@
   margin-top: 10px;
   font-size: 13px;
   font-weight: 500;
-  color: #fff;
+  color: var(--secondary);
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-medium) 100%);
   border: none;
   cursor: pointer;
@@ -1215,6 +1215,7 @@ body.body-preview #main-outlet-wrapper {
 
 #linuxDoLevelPopupContent table tr:nth-child(even) {
   background-color: #ddd;
+  color: #333;
 }
 
 #linuxDoLevelPopupContent .text-green-500 {
