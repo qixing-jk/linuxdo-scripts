@@ -39,7 +39,7 @@
 LinuxDo Scripts 是一个功能丰富的浏览器扩展，专为提升 LinuxDo 论坛的使用体验而设计。它集成了从基础界面优化到高级 AI 辅助的多项实用功能，让您的论坛浏览和互动体验更加流畅高效。
 
 > [!note]
-> 论坛交流贴：[linuxdo 增强插件，持续更新欢迎反馈 - LINUX DO](https://linux.do/t/topic/170951)
+> 论坛交流贴：[linuxdo 增强插件，持续更新欢迎反馈 - LINUX DO](https://linux.do/t/topic/170951)，QQ 交流群：1035556246
 
 > [!note]
 > 已同步兼容性 [idcflare.com](https://idcflare.com) 网站。（90% 功能已经可以兼容使用，少量功能暂无法适配，如：图片生成分享图）
