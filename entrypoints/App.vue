@@ -99,18 +99,16 @@
             <MenuHideNewBluedot :sort="10" v-model="settingData.checked37" v-show="matchesSearch('隐藏新消息小蓝点')"/>
             <!-- gif 头像转静态图片 -->
             <MenuGifToPng :sort="11" v-model="settingData.checked38" v-show="matchesSearch('gif 头像转静态图片')"/>
-            <!-- 新增是否隐藏首页 banner 区域 -->
-            <MenuHideHomeBanner :sort="12" v-model="settingData.checked39" v-show="matchesSearch('隐藏首页 banner 区域')"/>
             <!-- 是否美化过长的昵称 -->
-            <MenuUsernameLength :sort="13" v-model="settingData.checked45" v-show="matchesSearch('美化过长的昵称')"/>
+            <MenuUsernameLength :sort="12" v-model="settingData.checked45" v-show="matchesSearch('美化过长的昵称')"/>
             <!-- 是否开启超长显示器宽度优化 -->
-            <MenuMonitorWidthOptimization :sort="14" v-model="settingData.checked46" v-show="matchesSearch('超长显示器宽度优化')"/>
+            <MenuMonitorWidthOptimization :sort="13" v-model="settingData.checked46" v-show="matchesSearch('超长显示器宽度优化')"/>
             <!-- 类别页优化 banner 显示 -->
-            <MenuCatePageOptimizeBanner :sort="15" v-model="settingData.checked47" v-show="matchesSearch('类别页优化 banner 显示')"/>
+            <MenuCatePageOptimizeBanner :sort="14" v-model="settingData.checked47" v-show="matchesSearch('类别页优化 banner 显示')"/>
             <!-- 是否自动隐藏"福利羊毛"中已领完的帖子 -->
-            <MenuHideWelfareDone :sort="16" v-model="settingData.checked42" v-show="matchesSearch('隐藏福利羊毛中已领完的帖子')"/>
+            <MenuHideWelfareDone :sort="15" v-model="settingData.checked42" v-show="matchesSearch('隐藏福利羊毛中已领完的帖子')"/>
             <!-- 是否自动加载新话题 -->
-            <MenuAutoLoadTopic :sort="17" v-model="settingData.checked55" v-show="matchesSearch('是否自动加载新话题')"/>
+            <MenuAutoLoadTopic :sort="16" v-model="settingData.checked55" v-show="matchesSearch('是否自动加载新话题')"/>
 
             <div class="group-line">功能点设置</div>
             <!-- 新标签页打开 -->
@@ -274,7 +272,6 @@ import MenuBackToOneFloor from "./SettingComponents/BasicSettings/MenuBackToOneF
 import MenuQuickLikeTopic from "./SettingComponents/BasicSettings/MenuQuickLikeTopic.vue";
 import MenuHideNewBluedot from "./SettingComponents/BasicSettings/MenuHideNewBluedot.vue";
 import MenuGifToPng from "./SettingComponents/BasicSettings/MenuGifToPng.vue";
-import MenuHideHomeBanner from "./SettingComponents/BasicSettings/MenuHideHomeBanner.vue";
 import MenuBookmark from "./SettingComponents/BasicSettings/MenuBookmark.vue";
 import MenuHideWelfareDone from "./SettingComponents/BasicSettings/MenuHideWelfareDone.vue";
 import MenuTopicToImages from "./SettingComponents/BasicSettings/MenuTopicToImages.vue";
@@ -404,7 +401,6 @@ export default {
     MenuQuickLikeTopic,
     MenuHideNewBluedot,
     MenuGifToPng,
-    MenuHideHomeBanner,
     MenuBookmark,
     MenuHideWelfareDone,
     MenuTopicToImages,
@@ -490,7 +486,6 @@ export default {
         checked35: false,
         checked37: false,
         checked38: false,
-        checked39: false,
         checked40: false,
         checked42: false,
         checked43: false,
