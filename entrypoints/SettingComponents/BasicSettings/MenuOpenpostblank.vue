@@ -12,7 +12,7 @@ export default {
   created() {
       if (this.modelValue) {
         function handleLinkClick(e) {
-          const linkSelector='.link-top-line a.title, .search-results a.search-link, .search-result-topic a.search-link'
+          const linkSelector='.link-top-line a.raw-link, .search-results a.search-link, .search-result-topic a.search-link'
           // 检查被点击的元素或其父元素是否是要找的<a>标签
           const link = e.target.closest(linkSelector);
           
