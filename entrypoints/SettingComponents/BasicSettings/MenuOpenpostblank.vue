@@ -10,58 +10,26 @@ export default {
   props: ["modelValue", "sort"],
   emits: ["update:modelValue"],
   created() {
-    if (this.modelValue) {
-
-      // 处理链接点击
-      function handleLinkClick(e) {
-        e.preventDefault();
-        e.stopPropagation(); // 阻止事件冒泡
-        e.stopImmediatePropagation(); // 阻止事件捕获和后续相同事件的处理
-        window.open(this.href, '_blank', 'noopener,noreferrer');
-      }
-
-      // 主要功能
-      function processLinks() {
-        // 查找所有帖子标题链接，扩展选择器以包含搜索页面的链接
-        const links = document.querySelectorAll('.link-top-line a.title:not([data-processed])');
-
-        links.forEach(link => {
-          // 标记该链接已处理
-          link.setAttribute('data-processed', 'true');
-          // 添加事件监听器
-          link.addEventListener('click', handleLinkClick);
-        });
-      }
-
-      // 监听 DOM 变化，处理动态加载的内容
-      const observer = new MutationObserver((mutations) => {
-        const hasNewLinks = mutations.some(mutation => {
-          return Array.from(mutation.addedNodes).some(node => {
-            return node.nodeType === 1 && (
-              node.classList.contains('link-top-line') ||
-              node.querySelector('.link-top-line') ||
-              node.classList.contains('search-results') ||
-              node.querySelector('.search-results')
-            );
-          });
-        });
-
-        if (hasNewLinks) {
-          processLinks();
+      if (this.modelValue) {
+        function handleLinkClick(e) {
+          const linkSelector='.link-top-line a.raw-link, .search-results a.search-link, .search-result-topic a.search-link'
+          // 检查被点击的元素或其父元素是否是要找的<a>标签
+          const link = e.target.closest(linkSelector);
+          
+          if (link && link.href) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            window.open(link.href, '_blank', 'noopener,noreferrer');
+          }
         }
-      });
-
-      // 开始观察
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-
-      // 初始处理
-      processLinks();
-
-    }
-  },
+        
+        // 使用事件委托，在 body 上监听一次即可，无需 MutationObserver
+        // 使用 { capture: true } 在捕获阶段拦截事件，确保最高优先级
+        document.body.addEventListener('click', handleLinkClick, { capture: true });
+      }
+    },
 
 };
 </script>
