@@ -135,6 +135,8 @@
 <script>
 import $ from "jquery";
 import { marked } from "marked";
+import storageCompat, { getSafeSettings } from "../../utilities/storageCompat.js";
+import dbStorage from "../../utilities/indexedDBStorage.js";
 export default {
   props: {
     value: {
@@ -177,6 +179,8 @@ export default {
   watch: {
     value(newValue) {
       this.localChecked = newValue;
+      // 当数据更新时，重新初始化按钮逻辑
+      this.reinitializeButtons();
     },
   },
   methods: {
@@ -269,15 +273,315 @@ export default {
     setCreatedBtn() {
       // 主贴总结按钮受"是否显示手动总结按钮"控制
       if (this.localChecked.btn && this.localChecked.value1) {
-        $("head").append("<style>.aicreated-btn{display:inline-flex!important}</style>");
+        $("head").append("<style>.aicreated-btn{display:inline-flex!important;visibility:visible!important}</style>");
       }
       // 回帖总结按钮不受"是否显示手动总结按钮"控制
       if (this.localChecked.summaryAll) {
         $("head").append(
-          "<style>.aicreated-all-btn{display:inline-flex!important}</style>"
+          "<style>.aicreated-all-btn{display:inline-flex!important;visibility:visible!important}</style>"
         );
       }
     },
+    
+    // 尝试多种方式插入按钮
+    tryInsertButton(buttonHtml, buttonClass) {
+      const selectors = [
+        "#topic-title",
+        ".topic-title",
+        "h1[data-topic-id]",
+        ".fancy-title",
+        ".topic-body .regular",
+        ".topic-header"
+      ];
+      
+      for (let selector of selectors) {
+        const $target = $(selector);
+        if ($target.length > 0) {
+          $target.after(buttonHtml);
+          return true;
+        }
+      }
+      
+      return false;
+    },
+    
+    // 等待数据加载完成
+    async waitForDataLoad() {
+      // 等待一段时间让父组件的数据传递过来
+      let attempts = 0;
+      const maxAttempts = 50; // 最多等待 5 秒
+      
+      while (attempts < maxAttempts) {
+        // 检查是否已经有真实的配置数据（不是默认值）
+        if (this.localChecked && (
+          this.localChecked.apikey || 
+          this.localChecked.value1 !== false || 
+          this.localChecked.value2 !== false ||
+          this.localChecked.summaryAll !== false
+        )) {
+          return true;
+        }
+        
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
+      }
+      
+      return false;
+    },
+    
+    // 重新初始化按钮逻辑
+    reinitializeButtons() {
+      // 清除现有的定时器
+      this.clearAllTimers();
+      
+      // 重新启动按钮插入逻辑
+      this.initializeButtonLogic();
+    },
+    
+    // 清除所有定时器
+    clearAllTimers() {
+      if (this.checkIntervalId) {
+        clearInterval(this.checkIntervalId);
+        this.checkIntervalId = null;
+      }
+      if (this.mainPostSummaryIntervalId) {
+        clearInterval(this.mainPostSummaryIntervalId);
+        this.mainPostSummaryIntervalId = null;
+      }
+      if (this.summaryIntervalId) {
+        clearInterval(this.summaryIntervalId);
+        this.summaryIntervalId = null;
+      }
+      if (this.allPostsSummaryIntervalId) {
+        clearInterval(this.allPostsSummaryIntervalId);
+        this.allPostsSummaryIntervalId = null;
+      }
+      if (this.titleGenerationIntervalId) {
+        clearInterval(this.titleGenerationIntervalId);
+        this.titleGenerationIntervalId = null;
+      }
+    },
+    
+    // ===== AI 总结缓存管理方法 =====
+    
+    // 获取缓存数据（优先从 IndexedDB，回退到 localStorage）
+    async getSummaryCache() {
+      try {
+        // 首先尝试从 IndexedDB 获取
+        const cache = await dbStorage.getSummaryCache();
+        if (cache && cache.length > 0) {
+          return cache;
+        }
+        
+        // 如果 IndexedDB 没有数据，尝试从 localStorage 获取并迁移
+        const localData = localStorage.getItem('summaryCacheData');
+        if (localData) {
+          const parsedData = JSON.parse(localData);
+          if (Array.isArray(parsedData) && parsedData.length > 0) {
+            // 迁移到 IndexedDB
+            await dbStorage.migrateSummaryCacheFromLocalStorage();
+            return await dbStorage.getSummaryCache();
+          }
+        }
+        
+        return [];
+      } catch (error) {
+        console.error('获取缓存数据失败：', error);
+        // 回退到 localStorage
+        try {
+          const localData = localStorage.getItem('summaryCacheData');
+          return localData ? JSON.parse(localData) : [];
+        } catch (fallbackError) {
+          console.error('回退到 localStorage 也失败：', fallbackError);
+          return [];
+        }
+      }
+    },
+    
+    // 保存缓存数据到 IndexedDB
+    async saveSummaryCache(cacheArray) {
+      try {
+        return await dbStorage.saveSummaryCache(cacheArray);
+      } catch (error) {
+        console.error('保存缓存到 IndexedDB 失败，回退到 localStorage：', error);
+        // 回退到 localStorage
+        try {
+          const limitedCache = Array.isArray(cacheArray) ? cacheArray.slice(-20) : [];
+          localStorage.setItem('summaryCacheData', JSON.stringify(limitedCache));
+          return true;
+        } catch (fallbackError) {
+          console.error('回退到 localStorage 也失败：', fallbackError);
+          return false;
+        }
+      }
+    },
+    
+    // 添加或更新单个缓存项
+    async addOrUpdateSummaryCache(topicUrl, summaryContent) {
+      try {
+        return await dbStorage.addOrUpdateSummaryCache(topicUrl, summaryContent);
+      } catch (error) {
+        console.error('添加/更新缓存失败，使用传统方法：', error);
+        // 回退到传统方法
+        try {
+          const cache = await this.getSummaryCache();
+          const existingIndex = cache.findIndex(item => item.name === topicUrl);
+          
+          const newItem = {
+            name: topicUrl,
+            value: summaryContent,
+            timestamp: Date.now()
+          };
+          
+          if (existingIndex !== -1) {
+            cache[existingIndex] = newItem;
+          } else {
+            cache.push(newItem);
+          }
+          
+          return await this.saveSummaryCache(cache);
+        } catch (fallbackError) {
+          console.error('传统方法也失败：', fallbackError);
+          return false;
+        }
+      }
+    },
+    
+    // 获取特定 URL 的缓存
+    async getSummaryCacheByUrl(topicUrl) {
+      try {
+        return await dbStorage.getSummaryCacheByUrl(topicUrl);
+      } catch (error) {
+        console.error('获取特定缓存失败，使用传统方法：', error);
+        // 回退到传统方法
+        try {
+          const cache = await this.getSummaryCache();
+          const found = cache.find(item => item.name === topicUrl);
+          return found ? found.value : null;
+        } catch (fallbackError) {
+          console.error('传统方法也失败：', fallbackError);
+          return null;
+        }
+      }
+    },
+    
+    // 初始化按钮插入逻辑
+    initializeButtonLogic() {
+      // AI 回复按钮
+      if (this.localChecked.value2) {
+        $("body").append(`
+          <div class="aireply-popup">
+            <textarea class="aireply-popup-text"></textarea>
+            <button class="aireply-popup-close">关闭</button>
+          </div>
+        `);
+
+        this.checkIntervalId = setInterval(() => {
+          if ($(".aireplay-btn").length < 1) {
+            const buttonHtml = `<button class="aireplay-btn" type="button" style="display:inline-flex!important;">AI 回复</button>`;
+            this.tryInsertButton(buttonHtml, "aireplay-btn");
+            $(".aireplay-btn").click(() => {
+              this.setAIRelpy();
+            });
+            $(".aireply-popup-close").click(() => {
+              $(".aireply-popup").hide();
+              $(".aireply-popup-text").html("AI 推荐回复正在生成中，请稍后。。。");
+            });
+          }
+        }, 1000);
+      }
+
+      // 主贴总结功能
+      if (this.localChecked.value1) {
+        this.mainPostSummaryIntervalId = setInterval(() => {
+          if (
+            $(".aicreated-btn").length < 1 &&
+            this.localChecked.btn // 只有当开启手动按钮时才显示
+          ) {
+            const buttonHtml = `<button class="aicreated-btn" type="button" style="display:inline-flex!important;">AI 总结主贴</button>`;
+            this.tryInsertButton(buttonHtml, "aicreated-btn");
+            $(".aicreated-btn").click(() => {
+              $(".gpt-summary-wrap").remove();
+              // 使用参数 false 表示只总结主贴
+              this.getPostContent(false);
+            });
+          }
+        }, 1000);
+
+        this.summaryIntervalId = setInterval(async () => {
+          if ($(".post-stream").length > 0) {
+            // 从 IndexedDB 获取缓存数据
+            if ($(".gpt-summary-wrap").length < 1) {
+              const regex = /^(https:\/\/linux\.do\/t\/topic\/\d+)(\/\d+)?$/;
+
+              // 确保 URL 匹配正确的格式
+              if (window.location.href.match(regex)) {
+                const match = window.location.href.match(regex)[1];
+
+                // 使用新的缓存管理方法
+                const cachedContent = await this.getSummaryCacheByUrl(match);
+
+                if (cachedContent) {
+                  $(".post-stream").before(
+                    `<div class="gpt-summary-wrap">
+<div class="gpt-summary">${marked.parse(cachedContent)}</div>
+</div>`
+                  );
+                }
+              }
+            }
+
+            if (!this.localChecked.btn) {
+              if ($(".gpt-summary-wrap").length < 1) {
+                // 使用参数 false 表示只总结主贴
+                this.getPostContent(false);
+              }
+            }
+          }
+        }, 1000);
+      }
+
+      // 回帖总结功能
+      if (this.localChecked.summaryAll) {
+        this.allPostsSummaryIntervalId = setInterval(() => {
+          if ($(".aicreated-all-btn").length < 1) {
+            const buttonHtml = `<button class="aicreated-all-btn" type="button" style="display:inline-flex!important;">AI 总结全部回帖</button>`;
+            this.tryInsertButton(buttonHtml, "aicreated-all-btn");
+            $(".aicreated-all-btn").click(() => {
+              $(".gpt-summary-wrap").remove();
+              // 使用参数 true 表示总结所有帖子
+              this.getPostContent(true);
+            });
+          }
+        }, 1000);
+      }
+
+      // 标题生成功能
+      if (this.localChecked.title) {
+        this.titleGenerationIntervalId = setInterval(() => {
+          if ($(".action-title").length > 0) {
+            if ($(".action-title").html().includes("创建新话题")) {
+              if ($(".aicreatenewtopictitle").length < 1) {
+                $(".action-title").append(
+                  '<span class="aicreatenewtopictitle">AI 生成标题</span>'
+                );
+
+                $(".aicreatenewtopictitle").click(() => {
+                  $("#reply-title").val("正在生成中，请稍后...");
+                  this.getCreateNewTopicTitle();
+                });
+              }
+            }
+          }
+        }, 1000);
+
+        // 清理过期的 AI 总结缓存记录
+        dbStorage.cleanExpiredSummaryCache().catch(error => {
+          console.error('清理缓存失败：', error);
+        });
+      }
+    },
+    
     // 获取帖子内容并生成总结
     async getPostContent(isSummaryAll = null) {
       $(".post-stream").before(
@@ -286,7 +590,8 @@ export default {
          </div>`
       );
 
-      const config = JSON.parse(localStorage.getItem("linuxdoscriptssettingDMI")).gptdata;
+      const settingsData = getSafeSettings();
+      const config = settingsData ? settingsData.gptdata : this.localChecked;
 
       return new Promise((resolve, reject) => {
         let str = $("#topic-title h1 a").text();
@@ -362,27 +667,14 @@ export default {
             const decoder = new TextDecoder();
             let fullContent = "";
 
-            function processStream({ done, value }) {
+            const processStream = async ({ done, value }) => {
               if (done) {
-                // 流结束时保存到 localStorage
-                let summaryCache =
-                  JSON.parse(localStorage.getItem("summaryCacheData")) || [];
+                // 流结束时保存到 IndexedDB
                 const regex = /^(https:\/\/linux\.do\/t\/topic\/\d+)(\/\d+)?$/;
                 const match = window.location.href.match(regex)[1];
 
-                let existingObject = summaryCache.find((item) => item.name == match);
-                let newObject = {
-                  name: match,
-                  value: fullContent,
-                };
-
-                if (existingObject) {
-                  existingObject.value = newObject.value;
-                } else {
-                  summaryCache.push(newObject);
-                }
-
-                localStorage.setItem("summaryCacheData", JSON.stringify(summaryCache));
+                // 使用新的缓存管理方法
+                await this.addOrUpdateSummaryCache(match, fullContent);
                 return resolve();
               }
 
@@ -424,7 +716,8 @@ export default {
     async setAIRelpy() {
       $(".aireply-popup").show();
       $(".aireply-popup-text").html("AI 推荐回复正在生成中，请稍后。。。");
-      const config = JSON.parse(localStorage.getItem("linuxdoscriptssettingDMI")).gptdata;
+      const settingsData = getSafeSettings();
+      const config = settingsData ? settingsData.gptdata : this.localChecked;
 
       return new Promise((resolve, reject) => {
         const str = $("#topic-title h1 a").text() + $("#post_1 .cooked").text();
@@ -544,8 +837,8 @@ ${str}`;
         } else {
           topic_contentdata = $(".d-editor-preview").html();
         }
-        const config = JSON.parse(localStorage.getItem("linuxdoscriptssettingDMI"))
-          .gptdata;
+        const settingsData = getSafeSettings();
+        const config = settingsData ? settingsData.gptdata : this.localChecked;
         const prompt = `${config.prompt2}
 帖子内容如下：
 ${topic_contentdata}`;
@@ -583,24 +876,24 @@ ${topic_contentdata}`;
           });
       });
     },
-    refreshAISummary() {
-      setTimeout(() => {
+    async refreshAISummary() {
+      setTimeout(async () => {
         $(".gpt-summary-wrap").remove();
 
         // 如果开启了主贴总结功能，重新获取缓存
         if (this.localChecked.value1 && $(".post-stream").length > 0) {
-          let summaryCache = JSON.parse(localStorage.getItem("summaryCacheData")) || [];
           const regex = /^(https:\/\/linux\.do\/t\/topic\/\d+)(\/\d+)?$/;
 
           if (window.location.href.match(regex)) {
             const match = window.location.href.match(regex)[1];
 
-            let existingObject = summaryCache.find((item) => item.name === match);
+            // 使用新的缓存管理方法
+            const cachedContent = await this.getSummaryCacheByUrl(match);
 
-            if (existingObject) {
+            if (cachedContent) {
               $(".post-stream").before(
                 `<div class="gpt-summary-wrap">
-<div class="gpt-summary">${marked.parse(existingObject.value)}</div>
+<div class="gpt-summary">${marked.parse(cachedContent)}</div>
 </div>`
               );
             } else if (!this.localChecked.btn) {
@@ -615,6 +908,37 @@ ${topic_contentdata}`;
   async created() {
     // 先调用 setCreatedBtn 确保样式正确应用
     this.setCreatedBtn();
+    
+    // 迁移 localStorage 中的缓存数据到 IndexedDB
+    try {
+      await dbStorage.migrateSummaryCacheFromLocalStorage();
+      console.log('✅ AI 总结缓存数据迁移完成');
+    } catch (error) {
+      console.error('❌ 迁移缓存数据失败：', error);
+    }
+    
+    // 添加强制显示按钮的样式
+    $("head").append(`
+      <style>
+        .aicreated-btn[style*="display:inline-flex"] { 
+          display: inline-flex !important; 
+          visibility: visible !important; 
+        }
+        .aireplay-btn[style*="display:inline-flex"] { 
+          display: inline-flex !important; 
+          visibility: visible !important; 
+        }
+        .aicreated-all-btn[style*="display:inline-flex"] { 
+          display: inline-flex !important; 
+          visibility: visible !important; 
+        }
+      </style>
+    `);
+    
+    await this.waitForDataLoad();
+    
+    // 使用加载完成的数据初始化按钮逻辑
+    this.initializeButtonLogic();
 
     this.boundRefreshAISummary = this.refreshAISummary.bind(this);
 
@@ -674,123 +998,7 @@ ${topic_contentdata}`;
       childList: true,
     });
 
-    if (this.localChecked.value2) {
-      $("body").append(`
-        <div class="aireply-popup">
-          <textarea class="aireply-popup-text"></textarea>
-          <button class="aireply-popup-close">关闭</button>
-        </div>
-      `);
 
-      // 将 setInterval 的返回值保存到 data 中
-      this.checkIntervalId = setInterval(() => {
-        if ($(".aireplay-btn").length < 1) {
-          $("#topic-title").after(
-            `<button class="aireplay-btn" type="button">AI 回复</button>`
-          );
-          $(".aireplay-btn").click(() => {
-            this.setAIRelpy();
-          });
-          $(".aireply-popup-close").click(() => {
-            $(".aireply-popup").hide();
-            $(".aireply-popup-text").html("AI 推荐回复正在生成中，请稍后。。。");
-          });
-        }
-      }, 1000);
-    }
-
-    // 主贴总结功能
-    if (this.localChecked.value1) {
-      this.mainPostSummaryIntervalId = setInterval(() => {
-        if (
-          $(".aicreated-btn").length < 1 &&
-          this.localChecked.btn // 只有当开启手动按钮时才显示
-        ) {
-          $("#topic-title").after(
-            `<button class="aicreated-btn" type="button">AI 总结主贴</button>`
-          );
-          $(".aicreated-btn").click(() => {
-            $(".gpt-summary-wrap").remove();
-            // 使用参数 false 表示只总结主贴
-            this.getPostContent(false);
-          });
-        }
-      }, 1000);
-
-      this.summaryIntervalId = setInterval(() => {
-        if ($(".post-stream").length > 0) {
-          // 从 localStorage 获取缓存数据
-          if ($(".gpt-summary-wrap").length < 1) {
-            let summaryCache = JSON.parse(localStorage.getItem("summaryCacheData")) || [];
-            const regex = /^(https:\/\/linux\.do\/t\/topic\/\d+)(\/\d+)?$/;
-
-            // 确保 URL 匹配正确的格式
-            if (window.location.href.match(regex)) {
-              const match = window.location.href.match(regex)[1];
-
-              let existingObject = summaryCache.find((item) => item.name === match);
-
-              if (existingObject) {
-                $(".post-stream").before(
-                  `<div class="gpt-summary-wrap">
-<div class="gpt-summary">${marked.parse(existingObject.value)}</div>
-</div>`
-                );
-              }
-            }
-          }
-
-          if (!this.localChecked.btn) {
-            if ($(".gpt-summary-wrap").length < 1) {
-              // 使用参数 false 表示只总结主贴
-              this.getPostContent(false);
-            }
-          }
-        }
-      }, 1000);
-    }
-
-    // 回帖总结功能
-    if (this.localChecked.summaryAll) {
-      this.allPostsSummaryIntervalId = setInterval(() => {
-        if ($(".aicreated-all-btn").length < 1) {
-          $("#topic-title").after(
-            `<button class="aicreated-all-btn" type="button">AI 总结全部回帖</button>`
-          );
-          $(".aicreated-all-btn").click(() => {
-            $(".gpt-summary-wrap").remove();
-            // 使用参数 true 表示总结所有帖子
-            this.getPostContent(true);
-          });
-        }
-      }, 1000);
-    }
-
-    if (this.localChecked.title) {
-      this.titleGenerationIntervalId = setInterval(() => {
-        if ($(".action-title").length > 0) {
-          if ($(".action-title").html().includes("创建新话题")) {
-            if ($(".aicreatenewtopictitle").length < 1) {
-              $(".action-title").append(
-                '<span class="aicreatenewtopictitle">AI 生成标题</span>'
-              );
-
-              $(".aicreatenewtopictitle").click(() => {
-                $("#reply-title").val("正在生成中，请稍后...");
-                this.getCreateNewTopicTitle();
-              });
-            }
-          }
-        }
-      }, 1000);
-
-      // 判断 AI 总结的缓存记录，只保留最近 20 个
-      let summaryCacheData = JSON.parse(localStorage.getItem("summaryCacheData")) || [];
-      if (summaryCacheData.length > 20) {
-        summaryCacheData = summaryCacheData.slice(-20);
-      }
-      localStorage.setItem("summaryCacheData", JSON.stringify(summaryCacheData));
-    }
   },
   beforeUnmount() {
     // 清理 MutationObserver
@@ -811,40 +1019,12 @@ ${topic_contentdata}`;
     );
 
     // 清除所有定时器
-    if (this.checkIntervalId) {
-      clearInterval(this.checkIntervalId);
-    }
-    if (this.mainPostSummaryIntervalId) {
-      clearInterval(this.mainPostSummaryIntervalId);
-    }
-    if (this.summaryIntervalId) {
-      clearInterval(this.summaryIntervalId);
-    }
-    if (this.allPostsSummaryIntervalId) {
-      clearInterval(this.allPostsSummaryIntervalId);
-    }
-    if (this.titleGenerationIntervalId) {
-      clearInterval(this.titleGenerationIntervalId);
-    }
+    this.clearAllTimers();
   },
   // Vue 2 兼容性
   beforeDestroy() {
     // 清除所有定时器
-    if (this.checkIntervalId) {
-      clearInterval(this.checkIntervalId);
-    }
-    if (this.mainPostSummaryIntervalId) {
-      clearInterval(this.mainPostSummaryIntervalId);
-    }
-    if (this.summaryIntervalId) {
-      clearInterval(this.summaryIntervalId);
-    }
-    if (this.allPostsSummaryIntervalId) {
-      clearInterval(this.allPostsSummaryIntervalId);
-    }
-    if (this.titleGenerationIntervalId) {
-      clearInterval(this.titleGenerationIntervalId);
-    }
+    this.clearAllTimers();
   },
 };
 </script>

@@ -26,6 +26,7 @@
 
 <script>
 import ManualBackup from './ManualBackup.vue'
+import settingsManager from '../../utilities/settingsManager.js'
 // WebDAVClient 类定义
 class WebDAVClient {
  
@@ -134,9 +135,6 @@ export default {
         username: '',
         password: '',
         folder: 'linuxdo-scripts-backup/', // 默认文件夹
-        filename: JSON.stringify(
-          localStorage.getItem('linuxdoscriptssettingDMI')
-        ),
       },
       importing: false,
       exporting: false,
@@ -152,14 +150,6 @@ export default {
       setTimeout(() => {
         messageElement.remove()
       }, 3000)
-    },
-    // 获取完整的文件路径
-    getFullPath() {
-      let folder = this.webdavConfig.folder.trim()
-      // 确保文件夹路径以/开头和结尾
-      if (!folder.startsWith('/')) folder = '/' + folder
-      if (!folder.endsWith('/')) folder = folder + '/'
-      return folder + this.webdavConfig.filename.trim()
     },
 
     async exportToWebDAV() {
@@ -177,15 +167,15 @@ export default {
         // 确保目录存在
         await client.ensureDirectory(config.folder)
 
-        // 获取要备份的数据
-        const data = localStorage.getItem('linuxdoscriptssettingDMI')
+        // 从 IndexedDB 获取要备份的数据
+        const data = await settingsManager.getSettings()
         if (!data) {
           throw new Error('没有找到需要备份的数据')
         }
 
         // 上传文件
         const filePath = config.folder + 'data.json'
-        await client.putFile(filePath, data)
+        await client.putFile(filePath, JSON.stringify(data, null, 2))
 
         this.messageToast('数据导出成功')
       } catch (err) {
@@ -196,7 +186,6 @@ export default {
       }
     },
 
-    // 同样需要修改导入方法
     async importFromWebDAV() {
       try {
         this.importing = true
@@ -218,13 +207,23 @@ export default {
         const content = await client.getFile(filePath)
 
         try {
-          // 验证数据格式
-          JSON.parse(content)
-          // 保存到本地
-          localStorage.setItem('linuxdoscriptssettingDMI', content)
-          this.messageToast('数据导入成功')
-          window.location.reload();
+          // 验证并解析数据格式
+          const data = JSON.parse(content)
+          
+          // 保存到 IndexedDB
+          const success = await settingsManager.saveSettings(data)
+          if (success) {
+            this.messageToast('数据导入成功，即将刷新页面')
+            setTimeout(() => {
+              window.location.reload()
+            }, 1500)
+          } else {
+            throw new Error('保存到数据库失败')
+          }
         } catch (e) {
+          if (e.message === '保存到数据库失败') {
+            throw e
+          }
           throw new Error('备份文件格式错误')
         }
       } catch (err) {

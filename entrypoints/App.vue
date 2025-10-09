@@ -49,8 +49,12 @@
           <Updates />
         </ul>
         <div class="menu-body">
-          <div class="menu-body-item" v-show="activeIndex == 0">
-            <div class="menu-about">
+           <div class="menu-body-item" v-show="activeIndex == 0">
+             <div v-if="!dataLoaded" style="text-align: center; padding: 20px;">
+               <p>正在加载设置数据...</p>
+             </div>
+             <div v-if="dataLoaded">
+             <div class="menu-about">
               <p>请注意，该设置面板数据全部保存在本地浏览器缓存中，注意备份。</p>
 
               <!-- 添加设置搜索框 -->
@@ -179,9 +183,10 @@
             <MenuBookmark :sort="1" v-model="settingData.checked40" v-show="matchesSearch('收藏功能')"/>
             <!-- 是否在右下角显示收藏按钮 -->
             <MenuBookmarkBtn :sort="2" v-model="settingData.checked52" v-show="matchesSearch('右下角显示收藏按钮')"/>
-            <!-- 是否显示跳转到文件夹按钮 -->
-            <MenuBookmarkFolderBtn :sort="3" v-model="settingData.checked53" v-show="matchesSearch('右下角显示收藏按钮')"/>
-          </div>
+             <!-- 是否显示跳转到文件夹按钮 -->
+             <MenuBookmarkFolderBtn :sort="3" v-model="settingData.checked53" v-show="matchesSearch('右下角显示收藏按钮')"/>
+             </div>
+           </div>
           <div class="menu-body-item" v-show="activeIndex == 1">
             <!-- 自定义论坛 logo -->
             <MenuLogoUrl :sort="1" v-model:value="settingData.logourl" />
@@ -234,6 +239,7 @@
 
 <script>
 import $ from "jquery";
+import settingsManager from "./utilities/settingsManager.js";
 
 // 基础设置
 import packageJson from "../package.json";
@@ -544,6 +550,7 @@ export default {
       showviewhistorylist: false,
       settingsSearchQuery: "", // 添加搜索查询字段
       observer: null,
+      dataLoaded: false, // 数据加载完成标志
 
       isMenuOpen: false,
     };
@@ -601,12 +608,24 @@ export default {
       this.opacity = false;
     },
     // 保存设置
-    save() {
-      localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(this.settingData));
-
-      this.messageToast("保存成功！");
-      this.showdialog = false;
-      this.opacity = false;
+    async save() {
+      try {
+        const success = await settingsManager.saveSettings(this.settingData);
+        if (success) {
+          this.messageToast("保存成功！");
+          this.showdialog = false;
+          this.opacity = false;
+        } else {
+          this.messageToast("保存失敗，請檢查控制台獲取詳細信息");
+        }
+      } catch (error) {
+        console.error('保存設置失敗：', error);
+        if (error.name === 'DataCloneError') {
+          this.messageToast("數據格式錯誤，請檢查設置內容");
+        } else {
+          this.messageToast("保存失敗，請重試！");
+        }
+      }
     },
     // 保存并刷新
     saveload() {
@@ -619,12 +638,17 @@ export default {
       this.activeIndex = index;
     },
     // 初始化设置
-    initialization() {
-      localStorage.removeItem("linuxdoscriptssettingDMI");
-      this.messageToast("初始化设置成功，即将自动刷新！");
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
+    async initialization() {
+      try {
+        await settingsManager.clearSettings();
+        this.messageToast("初始化设置成功，即将自动刷新！");
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      } catch (error) {
+        console.error('初始化設置失敗：', error);
+        this.messageToast("初始化失敗，請重試！");
+      }
     },
     // 搜索设置项
     matchesSearch(settingName) {
@@ -665,7 +689,7 @@ export default {
       this.observer.disconnect();
     }
   },
-  created() {
+  async created() {
     this.initObserver();
     const browserAPI = typeof browser !== "undefined" ? browser : chrome;
     $("body").append('<div id="messageToast"></div>');
@@ -675,38 +699,48 @@ export default {
       "padding: 2px 1px; color: #fff; background: #42c02e;"
     );
 
-    let linxudoscriptssettingDMI = localStorage.getItem("linxudoscriptssettingDMI"); // 错误写法（旧版本兼容）
-    let linuxdoscriptssettingDMI = localStorage.getItem("linuxdoscriptssettingDMI");
-    if (linxudoscriptssettingDMI && !linuxdoscriptssettingDMI) {
-      localStorage.setItem("linuxdoscriptssettingDMI", linxudoscriptssettingDMI); // 重新保存为正确的参数名
-      linuxdoscriptssettingDMI = linxudoscriptssettingDMI; // 赋值正确的参数名
-    }
-    if (linuxdoscriptssettingDMI) {
-      function deepMerge(target, source) {
-        for (const key in source) {
-          if (source[key] instanceof Object && key in target) {
-            target[key] = deepMerge(target[key], source[key]);
-          } else {
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      let existingData = JSON.parse(localStorage.getItem("linuxdoscriptssettingDMI"));
-      this.settingData = deepMerge(this.settingData, existingData);
-      localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(this.settingData));
 
-      this.showlookop = this.settingData.checked9;
-      this.showlevelsearch = this.settingData.checked12;
-      this.showreplybtn = this.settingData.checked25;
-      this.showbacktotop = this.settingData.checked34;
-      this.showbacktoonefloor = this.settingData.checked48;
-      this.showbookmarkbtn = this.settingData.checked52;
-      this.showbookmarkfolderbtn = this.settingData.checked53;
-      this.showviewhistorylist = this.settingData.checked56;
+    // 使用 IndexedDB 加载设置数据
+    try {
+      const existingData = await settingsManager.getSettings();
+
+      if (existingData) {
+        function deepMerge(target, source) {
+          for (const key in source) {
+            if (source[key] instanceof Object && key in target) {
+              target[key] = deepMerge(target[key], source[key]);
+            } else {
+              target[key] = source[key];
+            }
+          }
+          return target;
+        }
+        
+        this.settingData = deepMerge(this.settingData, existingData);
+        await settingsManager.saveSettings(this.settingData);
+
+        this.showlookop = this.settingData.checked9;
+        this.showlevelsearch = this.settingData.checked12;
+        this.showreplybtn = this.settingData.checked25;
+        this.showbacktotop = this.settingData.checked34;
+        this.showbacktoonefloor = this.settingData.checked48;
+        this.showbookmarkbtn = this.settingData.checked52;
+        this.showbookmarkfolderbtn = this.settingData.checked53;
+        this.showviewhistorylist = this.settingData.checked56;
+        
+      } else {
+        // 如果没有现有数据，保存默认设置
+        await settingsManager.saveSettings(this.settingData);
+      }
       
-    } else {
-      localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(this.settingData));
+      // 数据加载完成，可以渲染组件了
+      this.dataLoaded = true;
+    } catch (error) {
+      console.error('加載設置數據失敗:', error);
+      // 如果 IndexedDB 失敗，可以考慮回退到 localStorage 作為備用
+      this.messageToast("加載設置失敗，使用默認設置");
+      // 即使加载失败也要显示界面
+      this.dataLoaded = true;
     }
 
     browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {

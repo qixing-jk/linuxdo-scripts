@@ -38,6 +38,8 @@
 
 <script>
 import $ from "jquery";
+import storageCompat, { getSafeSettings, waitForSettings } from "../../utilities/storageCompat.js";
+import settingsManager from "../../utilities/settingsManager.js";
 export default {
   props: {
     value: {
@@ -62,7 +64,7 @@ export default {
       this.$emit("update:value", this.tableData);
     },
     // 修改标签
-    editTags(item) {
+    async editTags(item) {
       var tags = prompt(`对 @${item.name} 修改标签`, item.tags);
       if (tags == null) {
         return item.tags;
@@ -75,50 +77,77 @@ export default {
           existingPerson.tags = tags;
         } else {
           // 如果不存在，新增对象
-          this.tableData.push({ name: person, tags: tags });
+          this.tableData.push({ name: item.name, tags: tags });
         }
-        let settingData1 = localStorage.getItem("linuxdoscriptssettingDMI");
-        settingData1 = JSON.parse(settingData1);
-        settingData1.usertags = this.tableData;
-        localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(settingData1));
-
-        this.$emit("update:value", this.tableData);
+        
+        try {
+          await settingsManager.updateSettings({ usertags: this.tableData });
+          this.$emit("update:value", this.tableData);
+        } catch (error) {
+          console.error('更新用戶標籤失敗：', error);
+          // 如果更新失敗，恢復原來的數據
+          if (existingPerson) {
+            existingPerson.tags = item.tags;
+          } else {
+            this.tableData.pop();
+          }
+        }
       }
     },
-    delTags(item, index) {
+    async delTags(item, index) {
       var del = confirm(`是否确认删除${item.name}(${item.tags})！`);
       if (del == true) {
-        this.tableData.splice(index, 1);
+        const deletedItem = this.tableData.splice(index, 1)[0];
 
-        let settingData1 = localStorage.getItem("linuxdoscriptssettingDMI");
-        settingData1 = JSON.parse(settingData1);
-        settingData1.usertags = this.tableData;
-        localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(settingData1));
-
-        this.$emit("update:value", this.tableData);
+        try {
+          await settingsManager.updateSettings({ usertags: this.tableData });
+          this.$emit("update:value", this.tableData);
+        } catch (error) {
+          console.error('刪除用戶標籤失敗：', error);
+          // 如果刪除失敗，恢復數據
+          this.tableData.splice(index, 0, deletedItem);
+        }
       }
     },
     // 快速开启
-    fastOpen() {
-      let tempSettingData = localStorage.getItem("linuxdoscriptssettingDMI");
-      tempSettingData = JSON.parse(tempSettingData);
-      tempSettingData.isUserTags = true;
-      localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(tempSettingData));
-
-      // 创建一个消息提示元素
-      const messageElement = document.createElement("div");
-      messageElement.className = "messageToast-text";
-      messageElement.innerText = "开启用户标签功能成功，即将自动刷新！";
-      document.getElementById("messageToast").appendChild(messageElement);
-      setTimeout(() => {
-        messageElement.remove();
-        location.reload();
-      }, 1000);
+    async fastOpen() {
+      try {
+        await settingsManager.updateSettings({ isUserTags: true });
+        
+        // 创建一个消息提示元素
+        const messageElement = document.createElement("div");
+        messageElement.className = "messageToast-text";
+        messageElement.innerText = "开启用户标签功能成功，即将自动刷新！";
+        document.getElementById("messageToast").appendChild(messageElement);
+        setTimeout(() => {
+          messageElement.remove();
+          location.reload();
+        }, 1000);
+      } catch (error) {
+        console.error('開啟用戶標籤功能失敗：', error);
+        // 创建错误提示元素
+        const messageElement = document.createElement("div");
+        messageElement.className = "messageToast-text";
+        messageElement.innerText = "开启用户标签功能失败，请重试！";
+        messageElement.style.backgroundColor = "#f44336";
+        document.getElementById("messageToast").appendChild(messageElement);
+        setTimeout(() => {
+          messageElement.remove();
+        }, 3000);
+      }
     },
   },
-  created() {
-    let settingData = localStorage.getItem("linuxdoscriptssettingDMI");
-    settingData = JSON.parse(settingData);
+  async created() {
+    // 等待設置數據加載完成
+    await waitForSettings();
+    
+    let settingData = getSafeSettings();
+    if (!settingData) {
+      settingData = {
+        usertags: [],
+        isUserTags: false
+      };
+    }
 
     if (!settingData.usertags) {
       settingData.usertags = [];
@@ -138,7 +167,7 @@ export default {
           `<li><button class="btn addusertag" type="button">添加用户标签</button></li>`
         );
 
-        $(".addusertag").click(function () {
+        $(".addusertag").click(async function () {
           var person = $(".user-card .user-profile-link").attr("href").replace("/u/", "");
           var tags = prompt(`对 @${person} 设置标签（保存后刷新页面）`, "");
           if (tags == null) {
@@ -157,7 +186,12 @@ export default {
             settingData.usertags.push({ name: person, tags: tags });
           }
 
-          localStorage.setItem("linuxdoscriptssettingDMI", JSON.stringify(settingData));
+          try {
+            await settingsManager.updateSettings({ usertags: settingData.usertags });
+          } catch (error) {
+            console.error('添加用戶標籤失敗:', error);
+            alert('保存失敗，請重試！');
+          }
         });
       }
 

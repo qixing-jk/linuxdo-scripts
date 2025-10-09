@@ -12,6 +12,7 @@
 <script>
 import $ from "jquery";
 import { isMutedPostPage } from "../../utilities/post";
+import { getSafeSettings } from "../../utilities/storageCompat.js";
 export default {
   props: ["modelValue", "sort"],
   emits: ["update:modelValue"],
@@ -139,9 +140,9 @@ export default {
   },
   created() {
     if (this.modelValue) {
-      this.checked1 = JSON.parse(
-        localStorage.getItem("linuxdoscriptssettingDMI")
-      ).checked1;
+      // 使用新的 IndexedDB 存储系統
+      const settingsData = getSafeSettings();
+      this.checked1 = settingsData ? settingsData.checked1 : false;
       
       this.mainTimer = setInterval(() => {
         if (!isMutedPostPage()) {

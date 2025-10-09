@@ -1,1 +1,2 @@
-- fix: 修复配置图片 cdn 问题
+- fix: 修复搜索页新标签页打开问题 #269
+- refactor: 全面重构插件存储机制，配置页面由 localStorage 改为 IndexedDB 存储 #266
