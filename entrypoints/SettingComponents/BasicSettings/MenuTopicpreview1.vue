@@ -18,14 +18,16 @@ export default {
   emits: ["update:modelValue"],
   data() {
     return {
-      checked1: false,
       lightboxTimer: null,
       mainTimer: null,
       pollingTimer: null,
+
+      isLeft: false, // 是否在最左侧
     };
   },
   methods: {
     init() {
+      let that = this;
       if ($(".topicpreview").length < 1) {
         $("body").append(`<div class="topicpreview">
           <div class="topicpreview-opacity"></div>
@@ -38,11 +40,20 @@ export default {
       $(".topic-list .main-link a.title").each(function () {
         const id = $(this).attr("data-topic-id");
         if ($(this).parents(".link-top-line").find(".topicpreview-btn").length < 1) {
-          $(this)
-            .parents(".link-top-line")
-            .append(
-              `<button class="btn btn-icon-text btn-default topicpreview-btn" data-id="${id}">预览</button>`
-            );
+          if(that.isLeft) {
+            $(this)
+              .parents(".link-top-line")
+              .prepend(
+                `<button class="btn btn-default topicpreview-btn opacity1" data-id="${id}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-search-icon lucide-scan-search"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></svg></button>`
+              );
+          }
+          else {
+            $(this)
+              .parents(".link-top-line")
+              .append(
+                `<button class="btn btn-icon-text btn-default topicpreview-btn" data-id="${id}">预览</button>`
+              );
+          }
         }
       });
     },
@@ -138,11 +149,14 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     if (this.modelValue) {
+      // 打印一下 indexdb 中，linuxdoscriptssettingDMI 的 checked7_2 值
       // 使用新的 IndexedDB 存储系統
       const settingsData = getSafeSettings();
-      this.checked1 = settingsData ? settingsData.checked1 : false;
+      
+      // 打印 checked7_2 的值
+      this.isLeft = settingsData?.checked7_2;
       
       this.mainTimer = setInterval(() => {
         if (!isMutedPostPage()) {

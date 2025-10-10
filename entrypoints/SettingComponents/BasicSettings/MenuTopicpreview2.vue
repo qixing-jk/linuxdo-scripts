@@ -12,28 +12,39 @@
 <script>
 import $ from "jquery";
 import { isMutedPostPage } from "../../utilities/post";
+import { getSafeSettings } from "../../utilities/storageCompat.js";
 export default {
   props: ["modelValue", "sort"],
   emits: ["update:modelValue"],
   data() {
     return {
-      checked1: false,
       initTimer: null,
       observer: null,
       keydownHandler: null,
       wheelHandler: null,
+
+      isLeft: false, // 是否在最左侧
     };
   },
   methods: {
     init() {
+      let that = this;
       $(".topic-list .main-link a.title").each(function () {
         const id = $(this).attr("data-topic-id");
         if ($(this).parents(".link-top-line").find(".topicpreview-btn").length < 1) {
-          $(this)
-            .parents(".link-top-line")
-            .append(
-              `<button class="btn btn-icon-text btn-default topicpreview-btn" data-id="${id}">预览</button>`
-            );
+          if (that.isLeft) {
+            $(this)
+              .parents(".link-top-line")
+              .prepend(
+                `<button class="btn btn-default topicpreview-btn opacity1" data-id="${id}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-search-icon lucide-scan-search"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></svg></button>`
+              );
+          } else {
+            $(this)
+              .parents(".link-top-line")
+              .append(
+                `<button class="btn btn-icon-text btn-default topicpreview-btn" data-id="${id}">预览</button>`
+              );
+          }
         }
       });
     },
@@ -42,21 +53,21 @@ export default {
         clearInterval(this.initTimer);
         this.initTimer = null;
       }
-      
+
       if (this.observer) {
         this.observer.disconnect();
         this.observer = null;
       }
-      
+
       // 移除事件监听器
       if (this.keydownHandler) {
         $(document).off("keydown", this.keydownHandler);
       }
-      
+
       if (this.wheelHandler) {
         $(window).off("wheel touchmove", this.wheelHandler);
       }
-    }
+    },
   },
   created() {
     if (this.modelValue) {
@@ -68,6 +79,13 @@ export default {
 body.modal-open{overflow:hidden!important;padding-right:17px}
 html.modal-open-html{overflow:hidden!important}
       </style>`);
+
+      // 打印一下 indexdb 中，linuxdoscriptssettingDMI 的 checked7_2 值
+      // 使用新的 IndexedDB 存储系統
+      const settingsData = getSafeSettings();
+
+      // 打印 checked7_2 的值
+      this.isLeft = settingsData?.checked7_2;
 
       this.initTimer = setInterval(() => {
         if (!isMutedPostPage()) {
@@ -173,7 +191,7 @@ html.modal-open-html{overflow:hidden!important}
       });
 
       // ESC 键关闭模态窗口
-      this.keydownHandler = function(e) {
+      this.keydownHandler = function (e) {
         if (e.keyCode === 27) {
           closeModal();
         }
@@ -181,7 +199,7 @@ html.modal-open-html{overflow:hidden!important}
       $(document).keydown(this.keydownHandler);
 
       // 禁用外部滚动
-      this.wheelHandler = function(e) {
+      this.wheelHandler = function (e) {
         if ($("body").hasClass("modal-open")) {
           e.preventDefault();
           e.stopPropagation();

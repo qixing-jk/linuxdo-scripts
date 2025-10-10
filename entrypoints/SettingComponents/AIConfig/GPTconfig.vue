@@ -912,7 +912,6 @@ ${topic_contentdata}`;
     // 迁移 localStorage 中的缓存数据到 IndexedDB
     try {
       await dbStorage.migrateSummaryCacheFromLocalStorage();
-      console.log('✅ AI 总结缓存数据迁移完成');
     } catch (error) {
       console.error('❌ 迁移缓存数据失败：', error);
     }

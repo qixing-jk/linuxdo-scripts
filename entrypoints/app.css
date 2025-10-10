@@ -527,6 +527,22 @@
   margin-right: 5px !important;
 }
 
+.topicpreview-btn.opacity1 {
+  opacity: 1 !important;
+  width: 25px;
+  height: 25px;
+  padding: 3px !important;
+  vertical-align: sub;
+}
+
+.topicpreview-btn.opacity1 svg {
+  width: 20px;
+}
+
+.topicpreview-btn.opacity1+.topic-statuses {
+  float: none;
+}
+
 .topic-list-item:hover .topicpreview-btn,
 .topic-list-item:hover .donottopic-btn,
 .topic-list-item:hover .removedonottopic-btn {
