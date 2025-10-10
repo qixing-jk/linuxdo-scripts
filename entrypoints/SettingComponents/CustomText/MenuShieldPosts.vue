@@ -32,12 +32,26 @@ export default {
   data() {
     return {
       localChecked: this.value,
-      shieldPostsIntervalId: null, // 添加变量存储定时器ID
+      shieldPostsIntervalId: null, // 添加变量存储定时器 ID
     };
   },
   watch: {
     value(newValue) {
       this.localChecked = newValue;
+      // 当数据从 IndexedDB 加载完成后，重新初始化屏蔽功能
+      if (newValue && newValue.value1 && !this.shieldPostsIntervalId) {
+        this.startPolling();
+      } else if (newValue && !newValue.value1 && this.shieldPostsIntervalId) {
+        this.stopPolling();
+      }
+    },
+    "localChecked.value1"(newValue) {
+      // 监听开关状态变化
+      if (newValue && !this.shieldPostsIntervalId) {
+        this.startPolling();
+      } else if (!newValue && this.shieldPostsIntervalId) {
+        this.stopPolling();
+      }
     },
   },
   methods: {
@@ -107,9 +121,9 @@ export default {
         }
       }
     },
-  },
-  created() {
-    if (this.localChecked.value1) {
+    startPolling() {
+      if (this.shieldPostsIntervalId || !this.localChecked.value1) return;
+
       let pollinglength1 = 0;
       this.shieldPostsIntervalId = setInterval(() => {
         if (pollinglength1 != $(".topic-list-body tr").length) {
@@ -117,20 +131,31 @@ export default {
           this.GetTimestamp();
         }
       }, 1000);
-    }
+    },
+    stopPolling() {
+      if (this.shieldPostsIntervalId) {
+        clearInterval(this.shieldPostsIntervalId);
+        this.shieldPostsIntervalId = null;
+      }
+    },
+  },
+  mounted() {
+    // 使用 mounted 而不是 created，确保 DOM 已就绪
+    // 同时给父组件一些时间从 IndexedDB 加载数据
+    this.$nextTick(() => {
+      if (this.localChecked.value1) {
+        this.startPolling();
+      }
+    });
   },
   beforeUnmount() {
-    // 清除定时器
-    if (this.shieldPostsIntervalId) {
-      clearInterval(this.shieldPostsIntervalId);
-    }
+    // 清除定时器 (Vue 3)
+    this.stopPolling();
   },
   // Vue 2 兼容性
   beforeDestroy() {
-    // 清除定时器
-    if (this.shieldPostsIntervalId) {
-      clearInterval(this.shieldPostsIntervalId);
-    }
+    // 清除定时器 (Vue 2)
+    this.stopPolling();
   },
 };
 </script>

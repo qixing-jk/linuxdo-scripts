@@ -23,11 +23,22 @@ export default {
   data() {
     return {
       textarea: this.value,
+      pollingInterval: null, // 轮询定时器
     };
   },
   watch: {
     value(newValue) {
       this.textarea = newValue;
+      // 当数据从 IndexedDB 加载完成后，重新初始化屏蔽功能
+      if (newValue && !this.pollingInterval) {
+        this.startPolling();
+      }
+    },
+    textarea(newValue) {
+      // 当用户手动修改内容时，如果内容变为空，则停止轮询
+      if (!newValue && this.pollingInterval) {
+        this.stopPolling();
+      }
     },
   },
   methods: {
@@ -67,9 +78,9 @@ export default {
         console.error("init 方法出错：", error);
       }
     },
-  },
-  created() {
-    if (this.textarea) {
+    startPolling() {
+      if (this.pollingInterval || !this.textarea) return;
+      
       let previousTopicListLength = 0;
       let previousPostStreamLength = 0;
 
@@ -90,13 +101,26 @@ export default {
           console.error("轮询逻辑出错：", error);
         }
       }, 1000);
-    }
+    },
+    stopPolling() {
+      if (this.pollingInterval) {
+        clearInterval(this.pollingInterval);
+        this.pollingInterval = null;
+      }
+    },
+  },
+  mounted() {
+    // 使用 mounted 而不是 created，确保 DOM 已就绪
+    // 同时给父组件一些时间从 IndexedDB 加载数据
+    this.$nextTick(() => {
+      if (this.textarea) {
+        this.startPolling();
+      }
+    });
   },
   beforeDestroy() {
     // 在组件销毁前清除定时器，防止内存泄漏
-    if (this.pollingInterval) {
-      clearInterval(this.pollingInterval);
-    }
+    this.stopPolling();
   },
 };
 </script>

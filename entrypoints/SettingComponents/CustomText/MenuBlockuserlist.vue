@@ -29,6 +29,16 @@ export default {
   watch: {
     value(newValue) {
       this.textarea = newValue;
+      // 当数据从 IndexedDB 加载完成后，重新初始化屏蔽功能
+      if (newValue && !this.blockTimer) {
+        this.startPolling();
+      }
+    },
+    textarea(newValue) {
+      // 当用户手动修改内容时，如果内容变为空，则停止轮询
+      if (!newValue && this.blockTimer) {
+        this.stopPolling();
+      }
     },
   },
   methods: {
@@ -54,15 +64,9 @@ export default {
         .parents(".topic-post")
         .remove();
     },
-    clearTimer() {
-      if (this.blockTimer) {
-        clearInterval(this.blockTimer);
-        this.blockTimer = null;
-      }
-    }
-  },
-  created() {
-    if (this.textarea) {
+    startPolling() {
+      if (this.blockTimer || !this.textarea) return;
+      
       let pollinglength1 = 0;
       let pollinglength2 = 0;
       this.blockTimer = setInterval(() => {
@@ -75,7 +79,26 @@ export default {
           this.init();
         }
       }, 1000);
+    },
+    stopPolling() {
+      if (this.blockTimer) {
+        clearInterval(this.blockTimer);
+        this.blockTimer = null;
+      }
+    },
+    clearTimer() {
+      // 保留旧方法名以保持兼容性
+      this.stopPolling();
     }
+  },
+  mounted() {
+    // 使用 mounted 而不是 created，确保 DOM 已就绪
+    // 同时给父组件一些时间从 IndexedDB 加载数据
+    this.$nextTick(() => {
+      if (this.textarea) {
+        this.startPolling();
+      }
+    });
   },
   beforeUnmount() {
     this.clearTimer();
