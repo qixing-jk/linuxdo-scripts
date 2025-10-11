@@ -287,11 +287,6 @@ export default {
     tryInsertButton(buttonHtml, buttonClass) {
       const selectors = [
         "#topic-title",
-        ".topic-title",
-        "h1[data-topic-id]",
-        ".fancy-title",
-        ".topic-body .regular",
-        ".topic-header"
       ];
       
       for (let selector of selectors) {
