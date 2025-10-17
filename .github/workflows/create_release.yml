@@ -9,8 +9,6 @@ on:
 jobs:
   check-release:
     runs-on: ubuntu-latest
-    env:
-      NODE_OPTIONS: --max-old-space-size=6144
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -20,8 +18,15 @@ jobs:
       with:
         node-version: '22'
 
-    - name: Install dependencies
-      run: npm install
+    - name: Install dependencies (debug + retry + more memory/disk)
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: |
+          df -h
+          free -h
+          npm config set loglevel silly
+          npm install --foreground-scripts --no-audit || \
+          (sleep 5 && npm install --foreground-scripts --no-audit --prefer-offline)
 
     - name: Get package.json version
       id: get_version
