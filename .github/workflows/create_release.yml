@@ -18,16 +18,10 @@ jobs:
       with:
         node-version: '22'
 
-    - name: Install dependencies (debug)
+    - name: Install dependencies (show post-install logs)
       run: |
-        echo "--------  node/npm version  --------"
-        node -v
-        npm -v
-        echo "--------  npm config  --------"
-        npm config list
-        echo "--------  npm install  --------"
-        npm install --verbose   # 关键：--verbose 会把详细日志打到屏幕
-
+        npm config set loglevel verbose   # 已经开过，可保留
+        npm install --foreground-scripts  # 关键：把生命周期脚本输出打到终端
 
     - name: Get package.json version
       id: get_version
