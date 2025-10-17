@@ -35,6 +35,12 @@ export default {
   watch: {
     value(newValue) {
       this.textarea = newValue
+      // 当数据从 IndexedDB 加载后，需要启动定时器来插入按钮
+      if (newValue && !this.initTimer) {
+        this.initTimer = setInterval(() => {
+          this.init()
+        }, 1000)
+      }
     },
   },
   methods: {
