@@ -9,6 +9,8 @@ on:
 jobs:
   check-release:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=6144
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -18,10 +20,8 @@ jobs:
       with:
         node-version: '22'
 
-    - name: Install dependencies (show post-install logs)
-      run: |
-        npm config set loglevel verbose   # 已经开过，可保留
-        npm install --foreground-scripts  # 关键：把生命周期脚本输出打到终端
+    - name: Install dependencies
+      run: npm install
 
     - name: Get package.json version
       id: get_version
