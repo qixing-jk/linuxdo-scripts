@@ -42,6 +42,13 @@ features:
     details: 话题转图片分享、论坛文章导出、返回顶部、快速免打扰帖子等
 ---
 
+
+#### 1. 如何使用 LinuxDo Scripts 扩展设置？
+
+安装扩展，重新进入 linux.do 论坛，将鼠标移动至浏览器最左侧边缘区域，可以触发设置按钮显示。
+
+![Demonstration](./Demonstration.png)
+
 <style>
 .VPHero .text {
   font-size: 18px;
