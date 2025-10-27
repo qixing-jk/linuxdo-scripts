@@ -16,7 +16,7 @@
   <a-divider />
  
   <div class="item">
-    <div class="label">1.开启该设置时，会“隐藏”论坛网站中的设置按钮。</div>
+    <div class="label">1.开启该设置时，会“隐藏”论坛左侧触发的设置按钮。</div>
     <a-switch v-model="isShow" @change="ShowSettingConfig" />
   </div>
   <div style="height: 10px"></div>

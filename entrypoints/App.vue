@@ -1,5 +1,5 @@
 <template>
-  <div class="linuxdoscripts-setting-wrap" v-show="!isShow">
+  <div class="linuxdoscripts-setting-wrap" v-show="!isShow" :style="`height:${controlheight}vh`">
     <button class="linuxdoscripts-setting" title="设置" type="button" @click="setting">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
     </button>
@@ -83,6 +83,8 @@
               <div class="group-line">外观设置</div>
               <!-- 简洁模式 -->
               <MenuSimpleMode :sort="1" v-model="settingData.checked0" v-show="matchesSearch('简洁模式')"/>
+              <!-- 浏览器边缘触发设置按钮的范围 -->
+              <MenuControlHeight :sort="1.0" v-model="settingData.checked01" v-show="matchesSearch('按钮区域触发高度')"/>
               <!-- 智能限制楼层高度 -->
               <MenuFloorHeight :sort="2" v-model="settingData.checked10" v-show="matchesSearch('智能限制楼层高度')"/>
               <!-- 中英文混排优化显示 -->
@@ -246,6 +248,7 @@ import settingsManager from "./utilities/settingsManager.js";
 import packageJson from "../package.json";
 
 import MenuSimpleMode from "./SettingComponents/BasicSettings/MenuSimpleMode.vue";
+import MenuControlHeight from "./SettingComponents/BasicSettings/MenuControlHeight.vue";
 import MenuOpenpostblank from "./SettingComponents/BasicSettings/MenuOpenpostblank.vue";
 import MenuNewtopicreminder from "./SettingComponents/BasicSettings/MenuNewtopicreminder.vue";
 import MenuAutoexpandreply from "./SettingComponents/BasicSettings/MenuAutoexpandreply.vue";
@@ -355,6 +358,7 @@ export default {
     Setting6,
     Setting7,
     MenuSimpleMode,
+    MenuControlHeight,
     MenuOpenpostblank,
     MenuNewtopicreminder,
     MenuAutoexpandreply,
@@ -434,6 +438,7 @@ export default {
   data() {
     return {
       isShow: false,
+      controlheight: 100,
 
       opacity: false,
       showdialog: false,
@@ -447,6 +452,7 @@ export default {
       // 设置数据
       settingData: {
         checked0: false,
+        checked01: 100,
         checked1: false,
         checked2: false,
         checked3: false,
@@ -731,6 +737,7 @@ export default {
         this.showbookmarkbtn = this.settingData.checked52;
         this.showbookmarkfolderbtn = this.settingData.checked53;
         this.showviewhistorylist = this.settingData.checked56;
+        this.controlheight = this.settingData.checked01;
         
       } else {
         // 如果没有现有数据，保存默认设置
