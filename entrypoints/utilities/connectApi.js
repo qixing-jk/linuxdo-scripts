@@ -4,7 +4,7 @@
  * 通过 background script 绕过 CORS 限制
  */
 
-const browserAPI = (typeof browser !== 'undefined' ? browser : chrome);
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
 
 /**
  * 获取 connect.linux.do 的数据
@@ -16,27 +16,30 @@ const browserAPI = (typeof browser !== 'undefined' ? browser : chrome);
  * @returns {Promise} 返回 API 响应的 Promise
  */
 export async function fetchConnectData(endpoint = '', options = {}) {
-  return new Promise((resolve, reject) => {
-    // 发送消息到 background script，利用扩展权限绕过 CORS
-    browserAPI.runtime.sendMessage({
-      action: 'fetch_connect_data',
-      endpoint: endpoint,
-      options: options
-    }, (response) => {
-      if (browserAPI.runtime.lastError) {
-        reject(new Error(browserAPI.runtime.lastError.message));
-        return;
-      }
-      
-      if (response && response.success) {
-        resolve(response);
-      } else {
-        const errorMsg = response?.error || '未知错误';
-        const url = response?.url || `https://connect.linux.do${endpoint}`;
-        reject(new Error(`请求失败：${errorMsg} (URL: ${url})`));
-      }
-    });
-  });
+	return new Promise((resolve, reject) => {
+		// 发送消息到 background script，利用扩展权限绕过 CORS
+		browserAPI.runtime.sendMessage(
+			{
+				action: 'fetch_connect_data',
+				endpoint: endpoint,
+				options: options,
+			},
+			(response) => {
+				if (browserAPI.runtime.lastError) {
+					reject(new Error(browserAPI.runtime.lastError.message));
+					return;
+				}
+
+				if (response && response.success) {
+					resolve(response);
+				} else {
+					const errorMsg = response?.error || '未知错误';
+					const url = response?.url || `https://connect.linux.do${endpoint}`;
+					reject(new Error(`请求失败：${errorMsg} (URL: ${url})`));
+				}
+			}
+		);
+	});
 }
 
 /**
@@ -44,21 +47,21 @@ export async function fetchConnectData(endpoint = '', options = {}) {
  * @returns {Promise} 返回首页数据的 Promise
  */
 export async function getConnectHome() {
-  try {
-    const response = await fetchConnectData('/');
-    return {
-      success: true,
-      data: response.data,
-      status: response.status,
-      url: response.url
-    };
-  } catch (error) {
-    console.error('获取 Connect 首页数据失败：', error);
-    return {
-      success: false,
-      error: error.message
-    };
-  }
+	try {
+		const response = await fetchConnectData('/');
+		return {
+			success: true,
+			data: response.data,
+			status: response.status,
+			url: response.url,
+		};
+	} catch (error) {
+		console.error('获取 Connect 首页数据失败：', error);
+		return {
+			success: false,
+			error: error.message,
+		};
+	}
 }
 
 /**
@@ -67,23 +70,23 @@ export async function getConnectHome() {
  * @returns {Promise} 返回 API 数据的 Promise
  */
 export async function getConnectApiData(apiPath) {
-  try {
-    const response = await fetchConnectData(apiPath);
-    return {
-      success: true,
-      data: response.data,
-      status: response.status,
-      url: response.url,
-      headers: response.headers
-    };
-  } catch (error) {
-    console.error(`获取 Connect API 数据失败 (${apiPath}):`, error);
-    return {
-      success: false,
-      error: error.message,
-      path: apiPath
-    };
-  }
+	try {
+		const response = await fetchConnectData(apiPath);
+		return {
+			success: true,
+			data: response.data,
+			status: response.status,
+			url: response.url,
+			headers: response.headers,
+		};
+	} catch (error) {
+		console.error(`获取 Connect API 数据失败 (${apiPath}):`, error);
+		return {
+			success: false,
+			error: error.message,
+			path: apiPath,
+		};
+	}
 }
 
 /**
@@ -94,38 +97,38 @@ export async function getConnectApiData(apiPath) {
  * @returns {Promise} 返回 API 响应的 Promise
  */
 export async function postConnectData(endpoint, data, extraHeaders = {}) {
-  const options = {
-    method: 'POST',
-    headers: {
-      ...extraHeaders
-    }
-  };
-  
-  if (data) {
-    if (typeof data === 'object') {
-      options.body = JSON.stringify(data);
-      options.headers['Content-Type'] = 'application/json';
-    } else {
-      options.body = data;
-    }
-  }
-  
-  try {
-    const response = await fetchConnectData(endpoint, options);
-    return {
-      success: true,
-      data: response.data,
-      status: response.status,
-      url: response.url
-    };
-  } catch (error) {
-    console.error(`POST 请求到 Connect 失败 (${endpoint}):`, error);
-    return {
-      success: false,
-      error: error.message,
-      endpoint: endpoint
-    };
-  }
+	const options = {
+		method: 'POST',
+		headers: {
+			...extraHeaders,
+		},
+	};
+
+	if (data) {
+		if (typeof data === 'object') {
+			options.body = JSON.stringify(data);
+			options.headers['Content-Type'] = 'application/json';
+		} else {
+			options.body = data;
+		}
+	}
+
+	try {
+		const response = await fetchConnectData(endpoint, options);
+		return {
+			success: true,
+			data: response.data,
+			status: response.status,
+			url: response.url,
+		};
+	} catch (error) {
+		console.error(`POST 请求到 Connect 失败 (${endpoint}):`, error);
+		return {
+			success: false,
+			error: error.message,
+			endpoint: endpoint,
+		};
+	}
 }
 
 /**
@@ -133,23 +136,23 @@ export async function postConnectData(endpoint, data, extraHeaders = {}) {
  * @returns {Promise} 返回连接测试结果
  */
 export async function testConnectConnection() {
-  try {
-    const startTime = Date.now();
-    const response = await fetchConnectData('/');
-    const endTime = Date.now();
-    const responseTime = endTime - startTime;
-    
-    return {
-      success: true,
-      status: response.status,
-      responseTime: responseTime,
-      message: `连接成功 (${responseTime}ms)`
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message,
-      message: '连接失败'
-    };
-  }
+	try {
+		const startTime = Date.now();
+		const response = await fetchConnectData('/');
+		const endTime = Date.now();
+		const responseTime = endTime - startTime;
+
+		return {
+			success: true,
+			status: response.status,
+			responseTime: responseTime,
+			message: `连接成功 (${responseTime}ms)`,
+		};
+	} catch (error) {
+		return {
+			success: false,
+			error: error.message,
+			message: '连接失败',
+		};
+	}
 }

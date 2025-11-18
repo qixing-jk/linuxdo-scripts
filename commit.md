@@ -13,7 +13,7 @@ feat: 新增了 xx 功能
 - `feat:` 新增功能
 - `fix:` 修复 bug
 - `docs:` 文档更新
-- `style:`  ui 更新
+- `style:` ui 更新
 - `refactor:` 代码重构
 - `perf:` 性能优化
 - `test:` 增加测试

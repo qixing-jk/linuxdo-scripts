@@ -1,6 +1,6 @@
-title: "【功能请求】请输入简要标题"
+title: '【功能请求】请输入简要标题'
 labels: feature
-name: "💡 功能请求"
+name: '💡 功能请求'
 description: 为这个项目提出一个创意需求
 body:
   - type: markdown
@@ -12,7 +12,7 @@ body:
 
         1. 自动阅读
         2. ...
-        
+
   - type: textarea
     id: steps-to-reproduce
     attributes:

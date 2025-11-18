@@ -1,13 +1,13 @@
 <template>
-  <DialogComponents />
+	<DialogComponents />
 </template>
 
 <script>
-import DialogComponents from "../DialogComponents/index.vue";
+import DialogComponents from '../DialogComponents/index.vue';
 export default {
-  name: "App",
-  components: {
-    DialogComponents,
-  },
+	name: 'App',
+	components: {
+		DialogComponents,
+	},
 };
 </script>

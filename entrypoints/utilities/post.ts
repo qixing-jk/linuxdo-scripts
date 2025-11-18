@@ -1,4 +1,4 @@
-import {isQueryParamEqual} from './url';
+import { isQueryParamEqual } from './url';
 
 /**
  * 是否为免打扰帖子页面（即 state=muted）
@@ -6,5 +6,5 @@ import {isQueryParamEqual} from './url';
  * @returns {boolean}
  */
 export function isMutedPostPage(url?: string) {
-    return isQueryParamEqual('state', 'muted', url);
+	return isQueryParamEqual('state', 'muted', url);
 }
