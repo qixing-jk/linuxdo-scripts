@@ -8,7 +8,7 @@
 	"bracketSpacing": true,
 	"bracketSameLine": false,
 	"quoteProps": "as-needed",
-	"trailingComma": "es5",
+	"trailingComma": "all",
 	"singleAttributePerLine": true,
 	"rangeStart": 0,
 	"requirePragma": false,
