@@ -9,7 +9,7 @@
 	"bracketSameLine": false,
 	"quoteProps": "as-needed",
 	"trailingComma": "all",
-	"singleAttributePerLine": true,
+	"singleAttributePerLine": false,
 	"rangeStart": 0,
 	"requirePragma": false,
 	"insertPragma": false,
