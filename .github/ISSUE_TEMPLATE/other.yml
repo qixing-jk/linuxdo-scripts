@@ -20,7 +20,5 @@ body:
 
   - type: textarea
     id: steps-to-reproduce
-    attributes:
-      label: 想说点什么
     validations:
       required: false
