@@ -1,1 +1,1 @@
-- feat: 新增浏览器边缘触发设置按钮的范围设置 #273
+- refactor(share): 用 html2canvas 替换 snapdom 实现图片捕获与下载 #283
