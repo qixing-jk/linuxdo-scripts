@@ -1,74 +1,39 @@
 <template>
 	<div class="body">
 		<a-spin :loading="loading">
-			<div
-				class="images"
-				v-if="isShow"
-				ref="imagesContainer"
-			>
-				<div
-					class="images-box"
-					id="target"
-				>
+			<div class="images" v-if="isShow" ref="imagesContainer">
+				<div class="images-box" id="target">
 					<div class="title">{{ imagesData.title }}</div>
 					<div class="author">
 						<span>{{ imagesData.details.created_by.name || imagesData.details.created_by.username }}</span>
 						<span>{{ formatDate(imagesData.created_at) }}</span>
 					</div>
-					<div
-						class="markdown-body text"
-						v-html="imagesData.post_stream.posts[0].cooked"
-					></div>
+					<div class="markdown-body text" v-html="imagesData.post_stream.posts[0].cooked"></div>
 				</div>
 			</div>
-			<div
-				class="images"
-				v-else
-			>
+			<div class="images" v-else>
 				<a-empty />
 			</div>
 		</a-spin>
 		<div class="container">
-			<a-input
-				v-model="postslink"
-				placeholder="https://linux.do/t/topic/309543"
-			/>
-			<a-button
-				type="primary"
-				style="margin-top: 10px"
-				@click="parseLink"
-				:loading="loading"
-				>解析链接</a-button
-			>
+			<a-input v-model="postslink" placeholder="https://linux.do/t/topic/309543" />
+			<a-button type="primary" style="margin-top: 10px" @click="parseLink" :loading="loading">解析链接</a-button>
 			<div v-if="isShow">
 				<a-divider />
-				<p style="color: #999; font-size: 14px; margin-bottom: 10px">
-					建议下载图片更清晰，尚未解决复制到剪切板时失真问题。
-				</p>
+				<p style="color: #999; font-size: 14px; margin-bottom: 10px">✨ 使用 html2canvas 库，完美支持跨域图片渲染。</p>
 				<a-space>
-					<a-button
-						@click="copyToImageWithSnapdom"
-						:loading="loading1"
-						>复制图片</a-button
-					>
-					<a-button
-						@click="downloadWithSnapdom"
-						:loading="loading3"
-						>下载图片</a-button
-					>
+					<a-button @click="copyToImageWithHtml2canvas" :loading="loading1">复制图片</a-button>
+					<a-button @click="downloadWithHtml2canvas" :loading="loading3">下载图片</a-button>
 				</a-space>
 			</div>
 			<!-- 隐藏的输出区域 -->
-			<div
-				id="export-output"
-				style="display: none"
-			></div>
+			<div id="export-output" style="display: none"></div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { snapdom } from '@zumer/snapdom';
+import html2canvas from 'html2canvas';
 
 export default {
 	data() {
@@ -82,32 +47,43 @@ export default {
 		};
 	},
 	methods: {
-		// 使用 snapdom 捕获元素
-		async captureDemo(id, outputId, btn) {
+		// 使用 html2canvas 捕获元素
+		async captureDemo(id, outputId) {
 			const el = id === 'body' ? document.body : document.getElementById(id);
-
 			const output = document.getElementById(outputId);
+
 			if (!el || !output) return;
-			if (btn) btn.disabled = true;
 
-			const img = await snapdom.toImg(el, {
-				embedFonts: id === 'body' || id === 'fonts-box' ? true : false,
-				scale: 2,
-				width: 1000,
-				fast: id !== 'fonts-box' ? true : false,
-				compress: id !== 'fonts-box' ? true : false,
-			});
-			output.innerHTML = '';
-			output.appendChild(img);
+			try {
+				this.$message.loading('正在生成图片...');
 
-			if (btn) btn.disabled = false;
+				// 获取元素实际宽度
+				const elementWidth = el.offsetWidth;
 
-			this.copyImageToClipboard('#export-output img')
-				.then(() => {
-					this.$message.success('图片已复制到剪贴板');
-					this.loading1 = false;
-				})
-				.catch((err) => console.error('复制失败：', err));
+				const canvas = await html2canvas(el, {
+					scale: 2, // 2倍分辨率
+					useCORS: true, // 允许跨域图片
+					allowTaint: true, // 允许跨域污染
+					backgroundColor: '#F9F1E4', // 背景色
+					logging: false, // 关闭日志
+					// 使用元素实际宽度，不强制指定
+					// width: elementWidth,
+					// windowWidth: elementWidth,
+				});
+
+				// 将 canvas 转换为图片
+				const img = new Image();
+				img.src = canvas.toDataURL('image/png', 1.0);
+
+				output.innerHTML = '';
+				output.appendChild(img);
+
+				return canvas;
+			} catch (error) {
+				console.error('捕获图片失败：', error);
+				this.$message.error('生成图片失败：' + error.message);
+				throw error;
+			}
 		},
 
 		copyImageToClipboard(imgSelector) {
@@ -147,7 +123,7 @@ export default {
 						0,
 						0,
 						canvas.width,
-						canvas.height
+						canvas.height,
 					);
 
 					// 将 canvas 转换为 blob
@@ -169,12 +145,23 @@ export default {
 			});
 		},
 
-		copyToImageWithSnapdom() {
+		async copyToImageWithHtml2canvas() {
 			this.loading1 = true;
-			this.captureDemo('target', 'export-output', this);
+			try {
+				await this.captureDemo('target', 'export-output');
+
+				await this.copyImageToClipboard('#export-output img');
+				this.$message.success('图片已复制到剪贴板');
+			} catch (error) {
+				console.error('复制失败：', error);
+				this.$message.error('复制失败：' + error.message);
+			} finally {
+				this.loading1 = false;
+			}
 		},
-		// 使用 snapdom 下载图像
-		async downloadWithSnapdom() {
+
+		// 使用 html2canvas 下载图像
+		async downloadWithHtml2canvas() {
 			this.loading3 = true;
 			try {
 				const targetElement = document.getElementById('target');
@@ -182,30 +169,55 @@ export default {
 					throw new Error('目标元素不存在');
 				}
 
-				await snapdom.download(targetElement, {
-					format: 'png',
-					filename: this.imagesData.title || 'linux-do-post',
+				this.$message.loading('正在生成图片...');
+
+				const canvas = await html2canvas(targetElement, {
 					scale: 2,
-					quality: 1,
-					embedFonts: true,
+					useCORS: true,
+					allowTaint: true,
+					backgroundColor: '#F9F1E4',
+					logging: false,
+					// 不强制指定宽度，使用元素实际宽度
 				});
 
-				this.$message.success('开始下载');
+				// 转换为 Blob 并下载
+				canvas.toBlob(
+					(blob) => {
+						const url = URL.createObjectURL(blob);
+						const link = document.createElement('a');
+						link.href = url;
+						link.download = `${this.imagesData.title || 'linux-do-post'}.png`;
+						link.click();
+						URL.revokeObjectURL(url);
+
+						this.$message.success('开始下载');
+					},
+					'image/png',
+					1.0,
+				);
 			} catch (error) {
-				console.error('Snapdom 下载失败：', error);
-				this.$message.error('下载失败');
+				console.error('下载失败：', error);
+				this.$message.error('下载失败：' + error.message);
 			} finally {
 				this.loading3 = false;
 			}
 		},
 
-		// 使用 snapdom 导出为不同格式
+		// 使用 html2canvas 导出为不同格式（预留方法）
 		async exportToFormats(id) {
 			const el = document.getElementById(id);
 			if (!el) return null;
 
 			try {
-				const [png, jpg, webp] = await Promise.all([snapdom.toPng(el), snapdom.toJpg(el), snapdom.toWebp(el)]);
+				const canvas = await html2canvas(el, {
+					scale: 2,
+					useCORS: true,
+					allowTaint: true,
+				});
+
+				const png = canvas.toDataURL('image/png', 1.0);
+				const jpg = canvas.toDataURL('image/jpeg', 0.95);
+				const webp = canvas.toDataURL('image/webp', 0.95);
 
 				return { png, jpg, webp };
 			} catch (error) {
