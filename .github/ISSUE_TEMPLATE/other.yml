@@ -21,6 +21,6 @@ body:
   - type: textarea
     id: steps-to-reproduce
     attributes:
-      label: 
+      label: 详细描述
     validations:
       required: false
