@@ -1,0 +1,26 @@
+title: '【其他】请输入简要标题'
+labels: other
+name: '📝 其他'
+description: 问题咨询、使用疑问、改进建议或其他类型的反馈
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **感谢您的反馈！**
+
+        此模板适用于以下场景：
+        - 使用问题咨询
+        - 文档改进建议
+        - 项目改进意见
+        - 一般性讨论
+        - 其他不属于 Bug 或功能请求的内容
+
+        如果您要报告 Bug，请使用「🐞 错误报告」模板。
+        如果您要提出新功能，请使用「💡 功能请求」模板。
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: 想说点什么
+    validations:
+      required: false
