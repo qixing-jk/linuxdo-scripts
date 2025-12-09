@@ -210,8 +210,11 @@ export default {
       commentLevel = 0,
       fileName = "discourse_export"
     ) {
+      // 用于跟踪已处理的节点，避免重复输出
+      const processedNodes = new Set();
       // 递归转 Markdown，过滤.meta 和 .post-menu-area.clearfix
       function html2md(node) {
+        if (processedNodes.has(node)) return "";
         if (node.classList) {
           if (node.classList.contains("meta")) return "";
           if (
@@ -278,7 +281,26 @@ export default {
             const img = node.childNodes[0];
             return `![${img.alt}](${img.src})`;
           }
-          return `[${html2md_children(node)}](${node.href})`;
+          let linkText = html2md_children(node).trim();
+          // 如果链接文本为空，获取第一个非空兄弟节点的文本
+          if (!linkText) {
+            let sibling = node.nextSibling;
+            while (sibling && !linkText) {
+              if (sibling.nodeType === 3 || sibling.nodeType === 1) {
+                const text = sibling.textContent.trim();
+                if (text) {
+                  linkText = text;
+                  processedNodes.add(sibling); // 标记为已处理，避免重复输出
+                }
+              }
+              sibling = sibling.nextSibling;
+            }
+          }
+          // 如果仍然没有文本，使用 ↗ 符号
+          if (!linkText) {
+            linkText = "↗";
+          }
+          return `[${linkText}](${node.href})`;
         }
         if (node.tagName === "IMG") {
           return `![${node.alt}](${node.src})`;
@@ -294,6 +316,7 @@ export default {
       function html2md_children(node) {
         let text = "";
         node.childNodes.forEach((child) => {
+          if (processedNodes.has(child)) return; // 跳过已处理的节点
           if (child.nodeType === 3) {
             text += child.textContent;
           } else if (child.nodeType === 1) {
