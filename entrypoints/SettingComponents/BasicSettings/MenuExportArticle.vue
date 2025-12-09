@@ -226,7 +226,7 @@ export default {
         if (node.tagName === "PRE") {
           const codeBlock = node.querySelector("code");
           if (codeBlock) {
-            return `\n\`\`\`\n${codeBlock.textContent.replace(/\n$/, "")}\n\`\`\`\n\n`;
+            return "\n```\n" + codeBlock.textContent.replace(/\n$/, "") + "\n```\n";
           }
         }
         if (node.tagName === "CODE") {
@@ -238,26 +238,21 @@ export default {
           return "  \n";
         }
         if (node.tagName === "P") {
-          return "\n" + html2md_children(node) + "\n";
+          const content = html2md_children(node).trim();
+          return content ? "\n" + content + "\n" : "";
         }
         if (node.tagName === "UL") {
-          return (
-            "\n" +
-            Array.from(node.children)
-              .map((li) => html2md(li))
-              .join("") +
-            "\n"
-          );
+          const items = Array.from(node.children)
+            .map((li) => html2md(li))
+            .join("");
+          return items ? "\n" + items : "";
         }
         if (node.tagName === "OL") {
           let i = 1;
-          return (
-            "\n" +
-            Array.from(node.children)
-              .map((li) => `${i++}. ${html2md_children(li)}\n`)
-              .join("") +
-            "\n"
-          );
+          const items = Array.from(node.children)
+            .map((li) => `${i++}. ${html2md_children(li)}\n`)
+            .join("");
+          return items ? "\n" + items : "";
         }
         if (node.tagName === "LI") {
           const prefix =
@@ -265,11 +260,13 @@ export default {
           return prefix + html2md_children(node) + "\n";
         }
         if (node.tagName === "BLOCKQUOTE") {
-          return "\n> " + html2md_children(node).replace(/\n/g, "\n> ") + "\n";
+          const content = html2md_children(node).trim();
+          return content ? "\n> " + content.replace(/\n/g, "\n> ") + "\n" : "";
         }
         if (/^H[1-6]$/.test(node.tagName)) {
           const lv = node.tagName[1];
-          return "\n" + "#".repeat(lv) + " " + html2md_children(node) + "\n";
+          const content = html2md_children(node).trim();
+          return content ? "\n" + "#".repeat(lv) + " " + content + "\n" : "";
         }
         if (node.tagName === "A") {
           // 如果 a 标签只包含一个 img，直接导出为图片
@@ -347,6 +344,14 @@ export default {
           allText += html2md(allContents[i]);
         }
       }
+
+      // 清理多余的空行，按照标准 markdown 格式优化
+      // 1. 移除连续的多个空行，最多保留一个空行
+      allText = allText.replace(/\n{3,}/g, "\n\n");
+      // 2. 移除开头和结尾的空行
+      allText = allText.trim();
+      // 3. 确保文件末尾有一个换行符（标准 markdown 格式）
+      allText += "\n";
 
       // 使用页面标题作为文件名
       const safeFileName = fileName.replace(/[\\/:*?"<>|]/g, "-");

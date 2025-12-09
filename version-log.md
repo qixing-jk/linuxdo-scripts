@@ -1,3 +1,7 @@
+## 1.5.12
+
+- fix(markdown): 优化 markdown 生成逻辑及格式处理
+
 ## 1.5.11
 
 - refactor(share): 用 html2canvas 替换 snapdom 实现图片捕获与下载 #283
