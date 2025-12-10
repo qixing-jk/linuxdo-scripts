@@ -6,28 +6,69 @@ class IndexedDBStorage {
 		this.storeName = 'settings';
 		this.settingsKey = 'linuxdoscriptssettingDMI';
 		this.summaryCacheKey = 'summaryCacheData';
+		this.dbTimeout = 3000; // IndexedDB 操作超時時間（毫秒）
+	}
+
+	// 帶超時的 Promise 包裝器
+	withTimeout(promise, timeoutMs, errorMessage = 'Operation timed out') {
+		return Promise.race([
+			promise,
+			new Promise((_, reject) =>
+				setTimeout(() => reject(new Error(errorMessage)), timeoutMs)
+			),
+		]);
+	}
+
+	// 檢查 IndexedDB 是否可用
+	isIndexedDBAvailable() {
+		try {
+			return typeof indexedDB !== 'undefined' && indexedDB !== null;
+		} catch (e) {
+			return false;
+		}
 	}
 
 	// 1. 打開（或創建）數據庫
 	openDB() {
 		return new Promise((resolve, reject) => {
-			const req = indexedDB.open(this.dbName, this.version);
-			req.onerror = () => reject(req.error);
-			req.onsuccess = () => resolve(req.result);
+			// 檢查 IndexedDB 是否可用
+			if (!this.isIndexedDBAvailable()) {
+				reject(new Error('IndexedDB is not available'));
+				return;
+			}
 
-			// 第一次運行會自動執行
-			req.onupgradeneeded = () => {
-				const db = req.result;
-				if (!db.objectStoreNames.contains(this.storeName)) {
-					db.createObjectStore(this.storeName, { keyPath: 'key' });
-				}
-			};
+			try {
+				const req = indexedDB.open(this.dbName, this.version);
+				
+				req.onerror = () => reject(req.error);
+				req.onsuccess = () => resolve(req.result);
+				req.onblocked = () => reject(new Error('IndexedDB is blocked'));
+
+				// 第一次運行會自動執行
+				req.onupgradeneeded = () => {
+					const db = req.result;
+					if (!db.objectStoreNames.contains(this.storeName)) {
+						db.createObjectStore(this.storeName, { keyPath: 'key' });
+					}
+				};
+			} catch (error) {
+				reject(error);
+			}
 		});
+	}
+
+	// 帶超時保護的 openDB
+	async openDBWithTimeout() {
+		return this.withTimeout(
+			this.openDB(),
+			this.dbTimeout,
+			'IndexedDB open timeout'
+		);
 	}
 
 	// 2. 存儲設置數據
 	async saveSettings(settingsObj, customKey = null) {
-		const db = await this.openDB();
+		const db = await this.openDBWithTimeout();
 		const keyToUse = customKey || this.settingsKey;
 		return new Promise((resolve, reject) => {
 			try {
@@ -51,7 +92,7 @@ class IndexedDBStorage {
 
 	// 3. 讀取設置數據
 	async getSettings(customKey = null) {
-		const db = await this.openDB();
+		const db = await this.openDBWithTimeout();
 		const keyToUse = customKey || this.settingsKey;
 		return new Promise((resolve, reject) => {
 			const req = db.transaction(this.storeName).objectStore(this.storeName).get(keyToUse);
@@ -62,7 +103,7 @@ class IndexedDBStorage {
 
 	// 4. 刪除設置數據
 	async removeSettings() {
-		const db = await this.openDB();
+		const db = await this.openDBWithTimeout();
 		return new Promise((resolve, reject) => {
 			const tx = db.transaction(this.storeName, 'readwrite');
 			const req = tx.objectStore(this.storeName).delete(this.settingsKey);
@@ -134,7 +175,25 @@ class IndexedDBStorage {
 
 			return settings;
 		} catch (error) {
-			console.error('獲取設置數據時出錯：', error);
+			console.error('獲取設置數據時出錯（嘗試回退到 localStorage）：', error);
+			// 回退到 localStorage
+			return this.fallbackToLocalStorage();
+		}
+	}
+
+	// 回退到 localStorage（當 IndexedDB 不可用時）
+	fallbackToLocalStorage() {
+		try {
+			const oldKey = 'linxudoscriptssettingDMI';
+			const newKey = 'linuxdoscriptssettingDMI';
+			
+			let data = localStorage.getItem(newKey) || localStorage.getItem(oldKey);
+			if (data) {
+				return JSON.parse(data);
+			}
+			return null;
+		} catch (error) {
+			console.error('從 localStorage 回退獲取數據失敗：', error);
 			return null;
 		}
 	}
