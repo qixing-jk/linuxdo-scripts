@@ -41,6 +41,13 @@ jobs:
             echo "create_release=false" >> $GITHUB_ENV
           fi
 
+      - name: Build and package extensions
+        if: env.create_release == 'true'
+        run: |
+          npm run build
+          npm run zip
+          npm run zip:firefox
+
       - name: Create new release
         if: env.create_release == 'true'
         run: |
@@ -61,6 +68,7 @@ jobs:
           | **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | 推荐     |
           | **国内用户**                    | [Crx 商店](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)          | 无需翻墙 |
 
-          发布于：$CURRENT_DATE"
+          发布于：$CURRENT_DATE" \
+          .output/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
