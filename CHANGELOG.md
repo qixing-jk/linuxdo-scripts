@@ -1,1 +1,1 @@
-- style(ui): 优化手机端显示问题 #288
+- feat(export): 支持HTML表格转换为Markdown格式 #289

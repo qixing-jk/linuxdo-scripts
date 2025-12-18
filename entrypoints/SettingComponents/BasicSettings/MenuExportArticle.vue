@@ -302,6 +302,92 @@ export default {
         if (node.tagName === "IMG") {
           return `![${node.alt}](${node.src})`;
         }
+        // 处理表格
+        if (node.tagName === "TABLE") {
+          const rows = [];
+          const headerRow = [];
+          let hasHeader = false;
+
+          // 查找表头
+          const thead = node.querySelector("thead");
+          if (thead) {
+            const thCells = thead.querySelectorAll("th");
+            thCells.forEach((th) => {
+              headerRow.push(html2md_children(th).trim().replace(/\|/g, "\\|").replace(/\n/g, " "));
+            });
+            if (headerRow.length > 0) hasHeader = true;
+          }
+
+          // 如果没有 thead，尝试从第一行获取表头
+          if (!hasHeader) {
+            const firstRow = node.querySelector("tr");
+            if (firstRow) {
+              const thCells = firstRow.querySelectorAll("th");
+              if (thCells.length > 0) {
+                thCells.forEach((th) => {
+                  headerRow.push(html2md_children(th).trim().replace(/\|/g, "\\|").replace(/\n/g, " "));
+                });
+                hasHeader = true;
+              }
+            }
+          }
+
+          // 获取所有数据行
+          const allRows = node.querySelectorAll("tr");
+          let startIndex = 0;
+
+          // 如果有表头但没有 thead，跳过第一行
+          if (hasHeader && !thead) {
+            startIndex = 1;
+          }
+          // 如果有 thead，从 tbody 开始处理
+          if (thead) {
+            const tbody = node.querySelector("tbody");
+            if (tbody) {
+              const tbodyRows = tbody.querySelectorAll("tr");
+              tbodyRows.forEach((tr) => {
+                const cells = [];
+                tr.querySelectorAll("td, th").forEach((cell) => {
+                  cells.push(html2md_children(cell).trim().replace(/\|/g, "\\|").replace(/\n/g, " "));
+                });
+                if (cells.length > 0) rows.push(cells);
+              });
+            }
+          } else {
+            for (let i = startIndex; i < allRows.length; i++) {
+              const tr = allRows[i];
+              const cells = [];
+              tr.querySelectorAll("td, th").forEach((cell) => {
+                cells.push(html2md_children(cell).trim().replace(/\|/g, "\\|").replace(/\n/g, " "));
+              });
+              if (cells.length > 0) rows.push(cells);
+            }
+          }
+
+          // 如果没有表头，使用第一行作为表头
+          if (!hasHeader && rows.length > 0) {
+            headerRow.push(...rows.shift());
+          }
+
+          // 如果仍然没有表头，返回空
+          if (headerRow.length === 0) return "";
+
+          // 构建 Markdown 表格
+          let tableText = "\n";
+          tableText += "| " + headerRow.join(" | ") + " |\n";
+          tableText += "| " + headerRow.map(() => "---").join(" | ") + " |\n";
+          rows.forEach((row) => {
+            // 确保每行的列数与表头一致
+            while (row.length < headerRow.length) row.push("");
+            tableText += "| " + row.slice(0, headerRow.length).join(" | ") + " |\n";
+          });
+
+          return tableText;
+        }
+        // 跳过表格内部元素的单独处理（已在 TABLE 中处理）
+        if (["THEAD", "TBODY", "TR", "TH", "TD"].includes(node.tagName)) {
+          return "";
+        }
         if (node.tagName === "STRONG" || node.tagName === "B") {
           return `**${html2md_children(node)}**`;
         }
