@@ -100,6 +100,121 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 });
 
+// AI API 代理请求监听器（绕过 CORS 限制）
+browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
+	if (request.action === 'ai_api_proxy') {
+		const { url, method = 'POST', headers = {}, body } = request;
+
+		fetch(url, {
+			method,
+			headers,
+			body: body ? JSON.stringify(body) : undefined,
+		})
+			.then(async (response) => {
+				const contentType = response.headers.get('content-type');
+				let data;
+
+				if (contentType && contentType.includes('application/json')) {
+					data = await response.json();
+				} else {
+					data = await response.text();
+				}
+
+				sendResponse({
+					success: response.ok,
+					status: response.status,
+					statusText: response.statusText,
+					data,
+				});
+			})
+			.catch((error) => {
+				sendResponse({
+					success: false,
+					error: error.message,
+				});
+			});
+
+		return true; // 保持消息通道打开
+	}
+});
+
+// AI API 流式请求代理（用于流式响应）
+browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
+	if (request.action === 'ai_api_stream_proxy') {
+		const { url, method = 'POST', headers = {}, body, tabId } = request;
+
+		// 获取发送者的 tab ID
+		const targetTabId = tabId || sender.tab?.id;
+
+		fetch(url, {
+			method,
+			headers,
+			body: body ? JSON.stringify(body) : undefined,
+		})
+			.then(async (response) => {
+				if (!response.ok) {
+					const errorData = await response.json().catch(() => ({ message: response.statusText }));
+					if (targetTabId) {
+						browserAPI.tabs.sendMessage(targetTabId, {
+							action: 'ai_stream_error',
+							error: errorData.error?.message || errorData.message || `HTTP error! status: ${response.status}`,
+						});
+					}
+					return;
+				}
+
+				const reader = response.body?.getReader();
+				if (!reader) {
+					if (targetTabId) {
+						browserAPI.tabs.sendMessage(targetTabId, {
+							action: 'ai_stream_error',
+							error: '无法获取响应流',
+						});
+					}
+					return;
+				}
+
+				const decoder = new TextDecoder();
+
+				const processStream = async (): Promise<void> => {
+					const { done, value } = await reader.read();
+
+					if (done) {
+						if (targetTabId) {
+							browserAPI.tabs.sendMessage(targetTabId, {
+								action: 'ai_stream_done',
+							});
+						}
+						return;
+					}
+
+					const chunk = decoder.decode(value, { stream: true });
+					if (targetTabId) {
+						browserAPI.tabs.sendMessage(targetTabId, {
+							action: 'ai_stream_chunk',
+							chunk,
+						});
+					}
+
+					return processStream();
+				};
+
+				processStream();
+			})
+			.catch((error) => {
+				if (targetTabId) {
+					browserAPI.tabs.sendMessage(targetTabId, {
+						action: 'ai_stream_error',
+						error: error.message || '网络错误',
+					});
+				}
+			});
+
+		sendResponse({ started: true });
+		return true;
+	}
+});
+
 // 获取 connect.linux.do 接口数据的事件监听器
 browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.action === 'fetch_connect_data') {

@@ -15,9 +15,6 @@
 export default {
   props: ['modelValue', 'sort'],
   emits: ['update:modelValue'],
-  created() {
-    console.log(this.modelValue);
-  },
   methods: {
     // 提示组件
     messageToast(message) {
