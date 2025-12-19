@@ -227,6 +227,10 @@ This project is licensed under the [Apache License 2.0](https://github.com/anghu
 ![](https://invidget.wdh.app/3wDmhCsVeU)
 
 <div align="center">
-  <p>If this project is helpful to you, please consider giving us a ⭐ Star!</p>
+  <p>
+  If this project is helpful to you, please consider giving us a ⭐ Star!
+  
+  Or [buy me a coffee](./Sponsor.md)
+  </p>
   <p>Made with ❤️ by <a href="https://github.com/anghunk">@anghunk</a> and <a href="https://github.com/anghunk/linuxdo-scripts/graphs/contributors">contributors</a></p>
 </div>
