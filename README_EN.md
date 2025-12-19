@@ -230,7 +230,7 @@ This project is licensed under the [Apache License 2.0](https://github.com/anghu
   <p>
   If this project is helpful to you, please consider giving us a ⭐ Star!
   
-  Or [buy me a coffee](./Sponsor.md)
+  Or [buy me a coffee](https://github.com/anghunk/anghunk/blob/main/Sponsor.md)
   </p>
   <p>Made with ❤️ by <a href="https://github.com/anghunk">@anghunk</a> and <a href="https://github.com/anghunk/linuxdo-scripts/graphs/contributors">contributors</a></p>
 </div>

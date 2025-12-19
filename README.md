@@ -231,7 +231,7 @@ npm run dev
   <p>
   如果这个项目对您有帮助，请考虑给我们一个 ⭐ Star！
     
-  或者 [打赏一杯咖啡](./Sponsor.md) 
+  或者 [打赏一杯咖啡](https://github.com/anghunk/anghunk/blob/main/Sponsor.md) 
   </p>
   <p>Made with ❤️ by <a href="https://github.com/anghunk">@anghunk</a> and <a href="https://github.com/anghunk/linuxdo-scripts/graphs/contributors">contributors</a></p>
 </div>
