@@ -350,7 +350,7 @@ export default {
 	position: fixed;
 	bottom: 20px;
 	right: 90px;
-	width: calc(100% - 100px);
+	width: 100%;
 	max-width: 450px;
 	background-color: var(--secondary);
 	padding: 20px;
@@ -459,6 +459,12 @@ export default {
 
 	&:hover {
 		background: var(--primary-low);
+	}
+}
+
+@media(max-width:768px) {
+	#linuxDoLevelPopupContent {
+		width: calc(100vw - 100px);
 	}
 }
 </style>

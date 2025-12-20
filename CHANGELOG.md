@@ -1,1 +1,1 @@
-- feat(export): 支持HTML表格转换为Markdown格式 #289
+- style(leveldialog): 修正弹窗宽度及添加响应式样式 #290

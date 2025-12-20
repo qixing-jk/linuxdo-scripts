@@ -1,3 +1,7 @@
+## 1.5.16
+
+- style(leveldialog): 修正弹窗宽度及添加响应式样式 #290
+
 ## 1.5.15
 
 - feat(export): 支持HTML表格转换为Markdown格式 #289
