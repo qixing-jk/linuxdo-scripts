@@ -353,6 +353,8 @@
   height: 100%;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  flex: 1;
 }
 
 #linuxdoscripts .menu-body-item .item input {

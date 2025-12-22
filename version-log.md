@@ -1,3 +1,7 @@
+## 1.5.17
+
+- style(App): 添加 showAuthorName 配置项并更新样式代码
+
 ## 1.5.16
 
 - style(leveldialog): 修正弹窗宽度及添加响应式样式 #290
