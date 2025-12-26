@@ -17,12 +17,12 @@
 			<div class="tit">3. 是否显示手动总结按钮</div>
 			<input type="checkbox" v-model="localChecked.btn" @change="handleChange" />
 		</div>
-		<div class="item">
+		<!-- <div class="item">
 			<div class="tit">4. 是否开启 AI 生成回复推荐</div>
 			<input type="checkbox" v-model="localChecked.value2" @change="handleChange" />
-		</div>
+		</div> -->
 		<div class="item">
-			<div class="tit">5. 新建话题使用 AI 生成标题</div>
+			<div class="tit">4. 新建话题使用 AI 生成标题</div>
 			<input type="checkbox" v-model="localChecked.title" @change="handleChange" />
 		</div>
 
@@ -166,7 +166,7 @@ export default {
 			type: Object,
 			default: {
 				value1: false,
-				value2: false,
+				// value2: false,
 				title: false,
 				summaryAll: false,
 				btn: true,
@@ -324,7 +324,7 @@ export default {
 					this.localChecked &&
 					(this.localChecked.apikey ||
 						this.localChecked.value1 !== false ||
-						this.localChecked.value2 !== false ||
+						// this.localChecked.value2 !== false ||
 						this.localChecked.summaryAll !== false)
 				) {
 					return true;
@@ -475,29 +475,29 @@ export default {
 
 		// 初始化按钮插入逻辑
 		initializeButtonLogic() {
-			// AI 回复按钮
-			if (this.localChecked.value2) {
-				$('body').append(`
-          <div class="aireply-popup">
-            <textarea class="aireply-popup-text"></textarea>
-            <button class="aireply-popup-close">关闭</button>
-          </div>
-        `);
+			// // AI 回复按钮
+			// if (this.localChecked.value2) {
+			// 	$('body').append(`
+      //     <div class="aireply-popup">
+      //       <textarea class="aireply-popup-text"></textarea>
+      //       <button class="aireply-popup-close">关闭</button>
+      //     </div>
+      //   `);
 
-				this.checkIntervalId = setInterval(() => {
-					if ($('.aireplay-btn').length < 1) {
-						const buttonHtml = `<button class="aireplay-btn" type="button" style="display:inline-flex!important;">AI 回复</button>`;
-						this.tryInsertButton(buttonHtml, 'aireplay-btn');
-						$('.aireplay-btn').click(() => {
-							this.setAIRelpy();
-						});
-						$('.aireply-popup-close').click(() => {
-							$('.aireply-popup').hide();
-							$('.aireply-popup-text').html('AI 推荐回复正在生成中，请稍后。。。');
-						});
-					}
-				}, 1000);
-			}
+			// 	this.checkIntervalId = setInterval(() => {
+			// 		if ($('.aireplay-btn').length < 1) {
+			// 			const buttonHtml = `<button class="aireplay-btn" type="button" style="display:inline-flex!important;">AI 回复</button>`;
+			// 			this.tryInsertButton(buttonHtml, 'aireplay-btn');
+			// 			$('.aireplay-btn').click(() => {
+			// 				this.setAIRelpy();
+			// 			});
+			// 			$('.aireply-popup-close').click(() => {
+			// 				$('.aireply-popup').hide();
+			// 				$('.aireply-popup-text').html('AI 推荐回复正在生成中，请稍后。。。');
+			// 			});
+			// 		}
+			// 	}, 1000);
+			// }
 
 			// 主贴总结功能
 			if (this.localChecked.value1) {

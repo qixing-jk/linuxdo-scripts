@@ -1,1 +1,2 @@
-- style(App): 添加 showAuthorName 配置项并更新样式代码
+- delete: 取消 AI 相关功能
+- style: 优化黑夜模式视觉效果

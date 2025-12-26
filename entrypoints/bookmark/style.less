@@ -2,6 +2,10 @@
   cursor: pointer;
 }
 
+body {
+  background: var(--color-bg-3) !important;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 4px
@@ -51,7 +55,6 @@ body {
   overflow-y: scroll;
   font-size: 16px;
   padding: 10px;
-  background-color: var(--color-bg-1);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", SegoeUI, "Noto Sans", NotoSans, Helvetica, Arial, sans-serif;
 }
 
@@ -60,7 +63,7 @@ body {
   left: 0;
   top: 0;
   width: 50px;
-  background-color: #272E3B;
+  background-color: var(--color-menu-dark-bg);
   height: 100vh;
   color: #fff;
   display: flex;
@@ -104,7 +107,7 @@ body {
 
   .aside {
     width: 300px;
-    background: var(--color-neutral-1);
+    background: var(--color-neutral-2);
     height: 100vh;
     padding-bottom: 66px;
     overflow-y: auto;

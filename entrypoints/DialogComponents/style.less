@@ -4,12 +4,11 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #FFFFFF;
   border-radius: 0px
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CCCCCC;
+  background: var(--color-neutral-4);
   border-radius: 2px;
   transition: all .1s linear
 }
@@ -25,7 +24,7 @@ body {
   overflow-y: scroll;
   line-height: 1.6;
   color: var(--color-neutral-9);
-  background-color: var(--color-bg-1);
+  background-color: var(--color-neutral-1);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", SegoeUI, "Noto Sans", NotoSans, Helvetica, Arial, sans-serif;
   padding-top: 55px;
 }
@@ -65,7 +64,6 @@ a {
   display: flex;
   align-items: center;
   user-select: none;
-  overflow-x: scroll;
   padding-right: 50px;
 
   li {
@@ -104,7 +102,7 @@ a {
 .list {
   li {
     padding: 2px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-primary-light-2);
     display: flex;
     align-items: flex-start;
     position: relative;
@@ -142,7 +140,6 @@ a {
   right: 5px;
   top: 6px;
   z-index: 999999;
-  background: #F2F3F5;
   width: 40px;
   height: 40px;
   display: flex;

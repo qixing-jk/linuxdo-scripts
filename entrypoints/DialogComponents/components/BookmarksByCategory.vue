@@ -87,11 +87,11 @@ export default {
     justify-content: space-between;
     font-weight: 600;
     margin-bottom: 6px;
-    background: #F2F3F5;
+    background: var(--color-border-2);
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 14px;
-    color: #333;
+    color: var(--color-fill-0);
     cursor: pointer;
    
   }
