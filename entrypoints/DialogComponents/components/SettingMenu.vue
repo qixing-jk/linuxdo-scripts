@@ -174,11 +174,11 @@ export default {
   justify-content: space-between;
 
   .label {
-    color: var(--color-neutral-6);
     font-size: 14px;
     margin-right: 10px;
     display: inline-flex;
     align-items: center;
+    opacity: 0.8;
 
     svg {
       width: 20px;
