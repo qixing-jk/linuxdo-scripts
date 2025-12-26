@@ -1,3 +1,8 @@
+## 1.5.18
+
+- delete: 取消 AI 相关功能
+- style: 优化黑夜模式视觉效果
+
 ## 1.5.17
 
 - style(App): 添加 showAuthorName 配置项并更新样式代码
