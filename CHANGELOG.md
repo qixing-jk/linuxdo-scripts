@@ -1,1 +1,2 @@
-- fix: 修复 LevelDialog 组件显示异常的问题 #294
+- fix(LevelDialog): 修复 LevelDialog 组件显示异常问题 #294
+- chore: 优化 AI API 代理请求
