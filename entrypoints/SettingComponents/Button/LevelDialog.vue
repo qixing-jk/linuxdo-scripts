@@ -350,8 +350,7 @@ export default {
 	position: fixed;
 	bottom: 20px;
 	right: 90px;
-	width: 100%;
-	max-width: 450px;
+	width: 450px;
 	background-color: var(--secondary);
 	padding: 20px;
 	z-index: 10000;
@@ -462,9 +461,11 @@ export default {
 	}
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
 	#linuxDoLevelPopupContent {
-		width: calc(100vw - 100px);
+		width: calc(100vw - 80px);
+		right: auto;
+		left: 10px;
 	}
 }
 </style>

@@ -105,6 +105,14 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.action === 'ai_api_proxy') {
 		const { url, method = 'POST', headers = {}, body } = request;
 
+		// 调试日志：请求信息
+		console.log('[AI API Proxy] 请求开始:', {
+			url,
+			method,
+			headers,
+			body,
+		});
+
 		fetch(url, {
 			method,
 			headers,
@@ -114,11 +122,22 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 				const contentType = response.headers.get('content-type');
 				let data;
 
+				// 调试日志：响应状态
+				console.log('[AI API Proxy] 响应状态:', {
+					status: response.status,
+					statusText: response.statusText,
+					contentType,
+					ok: response.ok,
+				});
+
 				if (contentType && contentType.includes('application/json')) {
 					data = await response.json();
 				} else {
 					data = await response.text();
 				}
+
+				// 调试日志：响应数据
+				console.log('[AI API Proxy] 响应数据:', data);
 
 				sendResponse({
 					success: response.ok,
@@ -128,6 +147,8 @@ browserAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
 				});
 			})
 			.catch((error) => {
+				// 调试日志：请求错误
+				console.error('[AI API Proxy] 请求错误:', error);
 				sendResponse({
 					success: false,
 					error: error.message,

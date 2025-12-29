@@ -34,8 +34,7 @@
 				<div class="label">选择服务商：</div>
 				<div class="info">
 					<select v-model="localChecked.provider" @change="handleProviderChange">
-						<option value="openai">OpenAI</option>
-						<!-- <option value="gemini">Gemini(暂不可用测试中)</option> -->
+						<option value="openai">OpenAI 通用格式</option>
 						<option value="deepseek">DeepSeek</option>
 					</select>
 				</div>
@@ -245,7 +244,6 @@ export default {
 		getApiKeyPlaceholder() {
 			const placeholders = {
 				openai: 'sk-xxxxxxxx',
-				gemini: 'AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
 				deepseek: 'sk-xxxxxxxx',
 			};
 			return placeholders[this.localChecked.provider] || 'Enter API Key';
@@ -253,7 +251,6 @@ export default {
 		getApiUrlPlaceholder() {
 			const placeholders = {
 				openai: 'https://api.openai.com/v1/chat/completions',
-				gemini: 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent',
 				deepseek: 'https://api.deepseek.com/v1/chat/completions',
 			};
 			return placeholders[this.localChecked.provider] || 'Enter API URL';
@@ -261,7 +258,6 @@ export default {
 		getModelPlaceholder() {
 			const placeholders = {
 				openai: '模型，如：gpt-4o-mini',
-				gemini: '模型，如：gemini-1.5-flash',
 				deepseek: '模型，如：deepseek-chat',
 			};
 			return placeholders[this.localChecked.provider] || 'Enter Model Name';
@@ -630,9 +626,6 @@ export default {
 					case 'deepseek':
 						headers.Authorization = `Bearer ${config.apikey}`;
 						break;
-					case 'gemini':
-						apiUrl += `?key=${config.apikey}`;
-						break;
 				}
 
 				// 构建请求体
@@ -647,14 +640,6 @@ export default {
 							stream: true,
 							...(config.isTemPer ? { temperature: Number(config.temperature) } : {}),
 							...customParams,
-						};
-						break;
-					case 'gemini':
-						requestBody = {
-							contents: [{ parts: [{ text: str }] }],
-							generationConfig: {
-								...(config.isTemPer ? { temperature: Number(config.temperature) } : {}),
-							},
 						};
 						break;
 				}
@@ -752,9 +737,6 @@ ${str}`;
 					case 'deepseek':
 						headers.Authorization = `Bearer ${config.apikey}`;
 						break;
-					case 'gemini':
-						apiUrl += `?key=${config.apikey}`;
-						break;
 				}
 
 				// 构建请求体
@@ -767,15 +749,6 @@ ${str}`;
 							model: config.model,
 							messages: [{ role: 'user', content: prompt }],
 							...(config.isTemPer ? { temperature: Number(config.temperature) } : {}),
-							...customParams,
-						};
-						break;
-					case 'gemini':
-						requestBody = {
-							contents: [{ parts: [{ text: prompt }] }],
-							generationConfig: {
-								...(config.isTemPer ? { temperature: Number(config.temperature) } : {}),
-							},
 							...customParams,
 						};
 						break;
@@ -799,11 +772,7 @@ ${str}`;
 
 						if (response.success) {
 							let content = '';
-							if (config.provider === 'gemini') {
-								content = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '无法获取回复内容';
-							} else {
-								content = response.data?.choices?.[0]?.message?.content || '无法获取回复内容';
-							}
+							content = response.data?.choices?.[0]?.message?.content || '无法获取回复内容';
 							this.AIReplyPopup(content);
 							resolve();
 						} else {
@@ -837,10 +806,6 @@ ${str}`;
 					case 'deepseek':
 						headers.Authorization = `Bearer ${this.localChecked.apikey}`;
 						break;
-					case 'gemini':
-						// Gemini 使用 URL 参数传递 key
-						apiUrl += `?key=${this.localChecked.apikey}`;
-						break;
 				}
 
 				// 构建请求体
@@ -853,11 +818,6 @@ ${str}`;
 							model: this.localChecked.model,
 							messages: [{ role: 'user', content: '你好！' }],
 							...customParams,
-						};
-						break;
-					case 'gemini':
-						requestBody = {
-							contents: [{ parts: [{ text: '你好！' }] }],
 						};
 						break;
 				}
@@ -934,9 +894,6 @@ ${topic_contentdata}`;
 					case 'deepseek':
 						headers.Authorization = `Bearer ${config.apikey}`;
 						break;
-					case 'gemini':
-						apiUrl += `?key=${config.apikey}`;
-						break;
 				}
 
 				// 构建请求体
@@ -949,15 +906,6 @@ ${topic_contentdata}`;
 							model: config.model,
 							messages: [{ role: 'user', content: prompt }],
 							...(config.isTemPer ? { temperature: Number(config.temperature) } : {}),
-							...customParams,
-						};
-						break;
-					case 'gemini':
-						requestBody = {
-							contents: [{ parts: [{ text: prompt }] }],
-							generationConfig: {
-								...(config.isTemPer ? { temperature: Number(config.temperature) } : {}),
-							},
 							...customParams,
 						};
 						break;
@@ -981,11 +929,7 @@ ${topic_contentdata}`;
 
 						if (response.success) {
 							let title = '';
-							if (config.provider === 'gemini') {
-								title = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '无法获取标题';
-							} else {
-								title = response.data?.choices?.[0]?.message?.content || '无法获取标题';
-							}
+							title = response.data?.choices?.[0]?.message?.content || '无法获取标题';
 							$('#reply-title').val(title);
 							resolve();
 						} else {

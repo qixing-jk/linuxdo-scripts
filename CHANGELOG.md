@@ -1,1 +1,1 @@
-- style: 优化黑夜模式视觉效果
+- fix: 修复 LevelDialog 组件显示异常的问题 #294
