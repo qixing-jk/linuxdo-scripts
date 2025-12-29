@@ -1,3 +1,8 @@
+## 1.5.20
+
+- fix(LevelDialog): 修复 LevelDialog 组件显示异常问题 #294
+- chore: 优化 AI API 代理请求
+
 ## 1.5.19
 
 - style: 优化黑夜模式视觉效果
