@@ -311,8 +311,8 @@ export default {
 		const Timestamp = localStorage.getItem('Timestamp', Date.now());
 		if (Timestamp) {
 			const timeDiff = new Date() - Timestamp;
-			if (timeDiff > 600000) {
-				// 超过 10 分钟
+			if (timeDiff > 5 * 60* 1000) {
+				// 超过 5分钟
 				localStorage.removeItem('hotlist');
 				localStorage.removeItem('newslist');
 				localStorage.removeItem('ldcUserInfo');

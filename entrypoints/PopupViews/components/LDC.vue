@@ -18,6 +18,10 @@
 					<span class="balance-label">今日剩余额度：</span>
 					<span>{{ userInfo.remain_quota || '加载中...' }}</span>
 				</div>
+				<div class="ldc-balance">
+					<span class="balance-label">Leaderboard 点数：</span>
+					<span>{{ userInfo.community_balance || '加载中...' }}</span>
+				</div>
 			</div>
 			<div class="ldc-box">
 				<div class="ldc-header">
