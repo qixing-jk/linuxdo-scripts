@@ -1,3 +1,7 @@
+## 1.5.21
+
+- feat(LDC): 新增LDC账户信息及积分统计面板
+
 ## 1.5.20
 
 - fix(LevelDialog): 修复 LevelDialog 组件显示异常问题 #294
