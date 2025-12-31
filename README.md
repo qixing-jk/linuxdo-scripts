@@ -1,12 +1,12 @@
 [简体中文](README.md) | [English](README_EN.md)
 
 ```
-  _     _                  ____          ____            _       _       
- | |   (_)_ __  _   ___  _|  _ \  ___   / ___|  ___ _ __(_)_ __ | |_ ___ 
+  _     _                  ____          ____            _       _
+ | |   (_)_ __  _   ___  _|  _ \  ___   / ___|  ___ _ __(_)_ __ | |_ ___
  | |   | | '_ \| | | \ \/ / | | |/ _ \  \___ \ / __| '__| | '_ \| __/ __|
  | |___| | | | | |_| |>  <| |_| | (_) |  ___) | (__| |  | | |_) | |_\__ \
  |_____|_|_| |_|\__,_/_/\_\____/ \___/  |____/ \___|_|  |_| .__/ \__|___/
-                                                          |_|            
+                                                          |_|
 ```
 
 <div align="center">
@@ -17,20 +17,21 @@
   <h1>LinuxDo Scripts</h1>
 
   <p>
-    <a href="https://discord.gg/3wDmhCsVeU">Discord</a>
-    ·
-    <a href="https://linuxdo-scripts.zishu.me">使用文档</a>
-    ·
-    <a href="https://github.com/anghunk/linuxdo-scripts/issues/new/choose">问题反馈</a>
-    ·
-    <a href="https://github.com/anghunk/linuxdo-scripts/releases/latest">最新版本</a>
-  </p>
 
+[Discord](https://discord.gg/3wDmhCsVeU) ·
+[使用文档](https://linuxdo-scripts.zishu.me) ·
+[问题反馈](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
+[最新版本](https://github.com/anghunk/linuxdo-scripts/releases/latest)
+
+  </p>
+  
   <p>
-    <img src="https://img.shields.io/github/v/release/anghunk/linuxdo-scripts?logo=github&label=Version">
-    <img src="https://img.shields.io/github/stars/anghunk/linuxdo-scripts?logo=github&style=flat&label=Stars">
-    <img src="https://img.shields.io/chrome-web-store/users/fbgblmjbeebanackldpbmpacppflgmlj?style=flat&logo=googlechrome&label=ChromeWebStore">
-    <img src="https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache">
+
+[![](https://img.shields.io/github/v/release/anghunk/linuxdo-scripts?logo=github&label=Version)](https://github.com/anghunk/linuxdo-scripts/releases)
+![](https://img.shields.io/github/stars/anghunk/linuxdo-scripts?logo=github&style=flat&label=Stars)
+[![](https://img.shields.io/chrome-web-store/users/fbgblmjbeebanackldpbmpacppflgmlj?style=flat&logo=googlechrome&label=ChromeWebStore)](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj)
+![](https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache)
+
   </p>
 </div>
 
@@ -44,6 +45,7 @@ LinuxDo Scripts 是一个功能丰富的浏览器扩展，专为提升 LinuxDo �
 > 已同步兼容 [idcflare.com](https://idcflare.com) 网站。
 
 ### 1. 核心亮点
+
 - 🎨 **界面美化** - 多种主题皮肤，个性化定制
 - 🤖 **AI 智能** - 话题总结、智能回复生成
 - 📚 **内容管理** - 收藏夹、用户标签、内容过滤
@@ -72,6 +74,7 @@ LinuxDo Scripts 是一个功能丰富的浏览器扩展，专为提升 LinuxDo �
 | **国内用户**                    | [Crx 商店](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)          | 无需翻墙 |
 
 ### 2. 安装步骤
+
 1. 点击上方对应浏览器的安装链接
 2. 在扩展商店中点击"添加到浏览器"
 3. 确认安装权限
@@ -149,10 +152,10 @@ LinuxDo Scripts 是一个功能丰富的浏览器扩展，专为提升 LinuxDo �
 
 </details>
 
-
 ## 🛠️ 四、开发指南
 
 ### 1. 环境要求
+
 - **Node.js**: `v22.12.0`
 
 ### 2. 本地开发
@@ -170,6 +173,7 @@ npm run dev
 ```
 
 ### 3. 加载扩展
+
 1. 打开浏览器扩展管理页面
    - Chrome: `chrome://extensions/`
    - Firefox: `about:addons`
@@ -178,6 +182,7 @@ npm run dev
 4. 选择项目根目录下的 `.output/chrome-mv3` 文件夹
 
 ### 4. 开发规范
+
 - 🧩 **组件化开发**: 每个功能独立组件，避免冲突
 - 🔄 **提交流程**: PR → 代码审核 → 合并
 - 📚 **文档更新**: 新功能需同步更新文档
@@ -185,12 +190,14 @@ npm run dev
 ## 🤝 五、参与贡献
 
 ### 1. 贡献方式
+
 - 🐛 [报告 Bug](https://github.com/anghunk/linuxdo-scripts/issues/new?template=bug_report.yml)
 - 💡 [功能建议](https://github.com/anghunk/linuxdo-scripts/issues/new?template=feature_report.yml)
 - 🔧 [提交代码](https://github.com/anghunk/linuxdo-scripts/pulls)
 - 🙍‍♂️ [加入讨论](https://discord.gg/3wDmhCsVeU)
 
 ### 2. 贡献列表
+
 ![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts)
 
 ### 3. 参考项目
@@ -208,11 +215,13 @@ npm run dev
 本项目采用 [Apache License 2.0](https://github.com/anghunk/linuxdo-scripts/blob/main/LICENSE) 开源协议。
 
 **您可以自由地：**
+
 - ✅ 使用、复制、修改和分发本软件
 - ✅ 用于商业目的
 - ✅ 在遵循协议的前提下重新授权
 
 **但需要：**
+
 - 📋 保留原始版权声明
 - 📋 标明对原始代码的修改
 

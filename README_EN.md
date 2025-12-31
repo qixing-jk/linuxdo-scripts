@@ -1,12 +1,12 @@
-[Chinese Simplified](README.md) | [English](README_EN.md)
+[Chinese](README.md) | [English](README_EN.md)
 
 ```
-  _     _                  ____          ____            _       _       
- | |   (_)_ __  _   ___  _|  _ \  ___   / ___|  ___ _ __(_)_ __ | |_ ___ 
+  _     _                  ____          ____            _       _
+ | |   (_)_ __  _   ___  _|  _ \  ___   / ___|  ___ _ __(_)_ __ | |_ ___
  | |   | | '_ \| | | \ \/ / | | |/ _ \  \___ \ / __| '__| | '_ \| __/ __|
  | |___| | | | | |_| |>  <| |_| | (_) |  ___) | (__| |  | | |_) | |_\__ \
  |_____|_|_| |_|\__,_/_/\_\____/ \___/  |____/ \___|_|  |_| .__/ \__|___/
-                                                          |_|            
+                                                          |_|
 ```
 
 <div align="center">
@@ -17,20 +17,21 @@
   <h1>LinuxDo Scripts</h1>
 
   <p>
-    <a href="https://discord.gg/3wDmhCsVeU">Discord</a>
-    ·
-    <a href="https://linuxdo-scripts.zishu.me">Documentation</a>
-    ·
-    <a href="https://github.com/anghunk/linuxdo-scripts/issues/new/choose">Feedback</a>
-    ·
-    <a href="https://github.com/anghunk/linuxdo-scripts/releases/latest">Latest Version</a>
+
+[Discord](https://discord.gg/3wDmhCsVeU) ·
+[Documentation](https://linuxdo-scripts.zishu.me) ·
+[Feedback](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
+[Latest Version](https://github.com/anghunk/linuxdo-scripts/releases/latest)
+
   </p>
 
   <p>
-    <img src="https://img.shields.io/github/v/release/anghunk/linuxdo-scripts?logo=github&label=Version">
-    <img src="https://img.shields.io/github/stars/anghunk/linuxdo-scripts?logo=github&style=flat&label=Stars">
-    <img src="https://img.shields.io/chrome-web-store/users/fbgblmjbeebanackldpbmpacppflgmlj?style=flat&logo=googlechrome&label=ChromeWebStore">
-    <img src="https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache">
+   
+[![](https://img.shields.io/github/v/release/anghunk/linuxdo-scripts?logo=github&label=Version)](https://github.com/anghunk/linuxdo-scripts/releases)
+![](https://img.shields.io/github/stars/anghunk/linuxdo-scripts?logo=github&style=flat&label=Stars)
+[![](https://img.shields.io/chrome-web-store/users/fbgblmjbeebanackldpbmpacppflgmlj?style=flat&logo=googlechrome&label=ChromeWebStore)](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj)
+![](https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache)
+
   </p>
 </div>
 
@@ -44,6 +45,7 @@ LinuxDo Scripts is a feature-rich browser extension designed to enhance the user
 > Already compatible with [idcflare.com](https://idcflare.com) website.
 
 ### 1. Key Features
+
 - 🎨 **Interface Enhancement** - Multiple theme skins for personalization
 - 🤖 **AI Intelligence** - Topic summary, intelligent reply generation
 - 📚 **Content Management** - Favorites, user tags, content filtering
@@ -65,13 +67,14 @@ LinuxDo Scripts is a feature-rich browser extension designed to enhance the user
 
 ### 1. Supported Browsers
 
-| Browser                          | Install Link                                                                                      | Notes     |
-| ------------------------------- | --------------------------------------------------------------------------------------------- | -------- |
-| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended |
-| **Firefox**                     | [Firefox Add-ons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | Recommended |
-| **Chinese Users**               | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)          | No need to cross the wall |
+| Browser                         | Install Link                                                                                  | Notes                     |
+| ------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------- |
+| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended               |
+| **Firefox**                     | [Firefox Add-ons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)           | Recommended               |
+| **Chinese Users**               | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)         | No need to cross the wall |
 
 ### 2. Installation Steps
+
 1. Click the installation link for the corresponding browser above
 2. Click "Add to Browser" in the extension store
 3. Confirm the installation permissions
@@ -152,6 +155,7 @@ LinuxDo Scripts is a feature-rich browser extension designed to enhance the user
 ## 🛠️ IV. Development Guide
 
 ### 1. Environment Requirements
+
 - **Node.js**: `v22.12.0`
 
 ### 2. Local Development
@@ -169,6 +173,7 @@ npm run dev
 ```
 
 ### 3. Load Extension
+
 1. Open the browser extension management page
    - Chrome: `chrome://extensions/`
    - Firefox: `about:addons`
@@ -177,6 +182,7 @@ npm run dev
 4. Select the `.output/chrome-mv3` folder in the project root directory
 
 ### 4. Development Specifications
+
 - 🧩 **Component-based Development**: Each function has an independent component, avoiding conflicts
 - 🔄 **Pull Request Process**: PR → Code review → Merge
 - 📚 **Documentation Update**: New features require documentation updates
@@ -184,12 +190,14 @@ npm run dev
 ## 🤝 V. Contributing
 
 ### 1. Contribution Methods
+
 - 🐛 [Report Bug](https://github.com/anghunk/linuxdo-scripts/issues/new?template=bug_report.yml)
 - 💡 [Feature Suggestion](https://github.com/anghunk/linuxdo-scripts/issues/new?template=feature_report.yml)
 - 🔧 [Submit Code](https://github.com/anghunk/linuxdo-scripts/pulls)
 - 🙍‍♂️ [Join Discussion](https://discord.gg/3wDmhCsVeU)
 
 ### 2. Contribution List
+
 ![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts)
 
 ### 3. Reference Projects
@@ -207,11 +215,13 @@ npm run dev
 This project is licensed under the [Apache License 2.0](https://github.com/anghunk/linuxdo-scripts/blob/main/LICENSE).
 
 **You are free to:**
+
 - ✅ Use, copy, modify, and distribute this software
 - ✅ Use for commercial purposes
 - ✅ Re-license under the terms of this license
 
 **But must:**
+
 - 📋 Retain the original copyright statement
 - 📋 State modifications to the original code
 
