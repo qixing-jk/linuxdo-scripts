@@ -1,3 +1,7 @@
+## 1.5.22
+
+- feat(popupviews): 增加 Leaderboard 点数显示并优化样式和缓存逻辑
+
 ## 1.5.21
 
 - feat(LDC): 新增LDC账户信息及积分统计面板
