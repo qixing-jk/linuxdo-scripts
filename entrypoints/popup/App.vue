@@ -1,13 +1,13 @@
 <template>
-	<DialogComponents />
+	<PopupViews />
 </template>
 
 <script>
-import DialogComponents from '../DialogComponents/index.vue';
+import PopupViews from '../PopupViews/index.vue';
 export default {
 	name: 'App',
 	components: {
-		DialogComponents,
+		PopupViews,
 	},
 };
 </script>
