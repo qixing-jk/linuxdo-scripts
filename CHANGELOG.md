@@ -1,1 +1,1 @@
-- feat(popupviews): 增加 Leaderboard 点数显示并优化样式和缓存逻辑
+- fix(ldc): 修正账户信息显示条件判断

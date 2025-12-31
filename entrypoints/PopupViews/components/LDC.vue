@@ -1,6 +1,6 @@
 <template>
 	<div class="ldc-container">
-		<template v-if="userInfo.username">
+		<template v-if="userInfo">
 			<div class="ldc-box">
 				<div class="ldc-header">
 					<div class="ldc-title">账户信息</div>

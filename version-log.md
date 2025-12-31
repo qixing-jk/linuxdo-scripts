@@ -1,3 +1,7 @@
+## 1.5.23
+
+- fix(ldc): 修正账户信息显示条件判断
+
 ## 1.5.22
 
 - feat(popupviews): 增加 Leaderboard 点数显示并优化样式和缓存逻辑
