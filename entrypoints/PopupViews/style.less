@@ -240,10 +240,6 @@ a {
   margin-top: 4px;
 }
 
-body[arco-theme='dark'] {
-  background: #4C5767;
-}
-
 /* LDC style*/
 .ldc-container {
 
@@ -295,7 +291,7 @@ body[arco-theme='dark'] {
     .balance-value {
       font-size: 16px;
       font-weight: 600;
-      color: #165dff;
+      color: #eb7d13;
     }
   }
 
@@ -313,7 +309,6 @@ body[arco-theme='dark'] {
   }
 
   .bar-wrapper {
-    flex: 1;
     height: 8px;
     background-color: #eee;
     border-radius: 10px;
@@ -356,5 +351,26 @@ body[arco-theme='dark'] {
     color: #9ca3af;
     padding: 20px;
     font-size: 14px;
+  }
+}
+
+body[arco-theme='dark'] {
+  background: #4C5767;
+
+  .ldc-container .ldc-box {
+    background: #303b4b;
+  }
+
+  .ldc-container .ldc-header .ldc-title {
+    color: #fff;
+  }
+
+  .ldc-container .bar-label,
+  .ldc-container .ldc-balance .balance-label {
+    color: #ccc;
+  }
+
+  .ldc-container .bar-wrapper {
+    background-color: #445267;
   }
 }
