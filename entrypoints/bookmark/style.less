@@ -62,8 +62,8 @@ body {
   position: fixed;
   left: 0;
   top: 0;
-  width: 50px;
-  background-color: var(--color-menu-dark-bg);
+  width: 190px;
+  background-color: #272A3B;
   height: 100vh;
   color: #fff;
   display: flex;
@@ -71,20 +71,37 @@ body {
   justify-content: flex-start;
   align-items: center;
   padding: 30px 10px;
-  z-index: 9;
+  z-index: 999;
 
   .item {
-    margin-bottom: 1em;
+    margin-bottom: 10px;
     cursor: pointer;
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    min-width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     border-radius: 5px;
+    padding: 0 10px;
+
+    svg {
+      width: 20px;
+      height: auto;
+    }
+
+    span {
+      margin-left: 6px;
+      white-space: nowrap;
+      font-size: 15px;
+    }
 
     &.active {
       background: var(--color-neutral-1);
+
+      span {
+        color: var(--color-neutral-9);
+      }
 
       svg {
         color: var(--color-neutral-9);
@@ -102,7 +119,7 @@ body {
 
 .flex {
   position: relative;
-  padding-left: 370px;
+  padding-left: 490px;
   height: 100%;
 
   .aside {
@@ -112,8 +129,7 @@ body {
     padding-bottom: 66px;
     overflow-y: auto;
     position: fixed;
-    border-right: 1px solid #fff;
-    left: 50px;
+    left: 190px;
     top: 0;
     z-index: 9;
 
@@ -209,7 +225,7 @@ body {
   position: fixed;
   top: 0;
   right: 0;
-  width: calc(100% - 350px);
+  width: calc(100% - 490px);
   height: 50px;
   background: var(--color-neutral-1);
   display: flex;

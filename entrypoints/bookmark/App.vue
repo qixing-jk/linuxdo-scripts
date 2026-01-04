@@ -1,170 +1,13 @@
 <template>
+	<SidebarMenu
+		:menutype="menutype"
+		@toggleMenu="toggleMenu"
+		@openAddPostDialog="openAddPostDialog"
+		@openWebdavDialog="openWebdavDialog"
+	/>
 	<div class="flex">
-		<div class="fixed">
-			<!-- 文件夹 -->
-			<div
-				class="item"
-				@click="toggleMenu('folder')"
-				:class="{ active: menutype == 'folder' }"
-				title="文件夹"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="lucide lucide-folder-closed-icon lucide-folder-closed"
-				>
-					<path
-						d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"
-					/>
-					<path d="M2 10h20" />
-				</svg>
-			</div>
-			<!-- 分类 -->
-			<div
-				class="item"
-				@click="toggleMenu('cate')"
-				:class="{ active: menutype == 'cate' }"
-				title="话题分类"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="lucide lucide-chart-column-stacked-icon lucide-chart-column-stacked"
-				>
-					<path d="M11 13H7" />
-					<path d="M19 9h-4" />
-					<path d="M3 3v16a2 2 0 0 0 2 2h16" />
-					<rect
-						x="15"
-						y="5"
-						width="4"
-						height="12"
-						rx="1"
-					/>
-					<rect
-						x="7"
-						y="8"
-						width="4"
-						height="9"
-						rx="1"
-					/>
-				</svg>
-			</div>
-			<!-- 标签 -->
-			<div
-				class="item"
-				@click="toggleMenu('tags')"
-				:class="{ active: menutype == 'tags' }"
-				title="标签"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="lucide lucide-tags-icon lucide-tags"
-				>
-					<path
-						d="M13.172 2a2 2 0 0 1 1.414.586l6.71 6.71a2.4 2.4 0 0 1 0 3.408l-4.592 4.592a2.4 2.4 0 0 1-3.408 0l-6.71-6.71A2 2 0 0 1 6 9.172V3a1 1 0 0 1 1-1z"
-					/>
-					<path d="M2 7v6.172a2 2 0 0 0 .586 1.414l6.71 6.71a2.4 2.4 0 0 0 3.191.193" />
-					<circle
-						cx="10.5"
-						cy="6.5"
-						r=".5"
-						fill="currentColor"
-					/>
-				</svg>
-			</div>
-			<!-- 手动新增 -->
-			<div
-				class="item"
-				@click="openAddPostDialog"
-				title="添加书签"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="lucide lucide-bookmark-plus-icon lucide-bookmark-plus"
-				>
-					<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
-					<line
-						x1="12"
-						x2="12"
-						y1="7"
-						y2="13"
-					/>
-					<line
-						x1="15"
-						x2="9"
-						y1="10"
-						y2="10"
-					/>
-				</svg>
-			</div>
-			<!-- Webdav 同步 -->
-			<div
-				class="item"
-				@click="openWebdavDialog"
-				title="WebDAV 同步"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="lucide lucide-settings-icon lucide-settings"
-				>
-					<path
-						d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"
-					/>
-					<circle
-						cx="12"
-						cy="12"
-						r="3"
-					/>
-				</svg>
-			</div>
-		</div>
-
 		<div class="head-search">
-			<a-input
-				v-model="search"
-				style="width: 300px"
-				@input="searchPosts"
-				placeholder="全局搜索标题..."
-			/>
+			<a-input v-model="search" style="width: 300px" @input="searchPosts" placeholder="全局搜索标题..." />
 		</div>
 
 		<div class="aside">
@@ -172,11 +15,7 @@
 				<div class="page-title">文件夹</div>
 				<ul>
 					<a-space>
-						<a-button
-							type="primary"
-							@click="openCate"
-							>新建文件夹</a-button
-						>
+						<a-button type="primary" @click="openCate">新建文件夹</a-button>
 						<a-button @click="openAdminCate">管理文件夹</a-button>
 					</a-space>
 				</ul>
@@ -200,11 +39,7 @@
 						@click="selectItemCate(item.id)"
 						:class="{ selected: item.id === selectItemCateId }"
 					>
-						<img
-							v-if="item.logo"
-							:src="`${item.logo}`"
-							class="category-icon"
-						/>
+						<img v-if="item.logo" :src="`${item.logo}`" class="category-icon" />
 						<span :style="{ color: '#' + item.color }">{{ item.name }}</span>
 						<em>{{ item.list.length }}</em>
 					</li>
@@ -226,30 +61,15 @@
 		</div>
 
 		<div class="container">
-			<a-table
-				:data="sortedTableData"
-				:loading="loading"
-				:pagination="false"
-			>
+			<a-table :data="sortedTableData" :loading="loading" :pagination="false">
 				<template #columns>
-					<a-table-column
-						title="标题"
-						data-index="title"
-					>
+					<a-table-column title="标题" data-index="title">
 						<template #cell="{ record }">
-							<a
-								:href="record.url"
-								target="_blank"
-								>{{ record.title }}</a
-							>
+							<a :href="record.url" target="_blank">{{ record.title }}</a>
 						</template>
 					</a-table-column>
 
-					<a-table-column
-						title="类别"
-						data-index="cate"
-						:width="200"
-					>
+					<a-table-column title="类别" data-index="cate" :width="200">
 						<template #cell="{ record }">
 							<div class="category-cell">
 								<img
@@ -262,11 +82,7 @@
 						</template>
 					</a-table-column>
 
-					<a-table-column
-						title="标签"
-						data-index="tags"
-						:width="200"
-					>
+					<a-table-column title="标签" data-index="tags" :width="200">
 						<template #cell="{ record }">
 							{{ record.tags.join('，') }}
 						</template>
@@ -284,20 +100,10 @@
             </template>
           </a-table-column> -->
 
-					<a-table-column
-						v-if="menutype === 'folder'"
-						title="操作"
-						:width="180"
-						fixed="right"
-					>
+					<a-table-column v-if="menutype === 'folder'" title="操作" :width="180" fixed="right">
 						<template #cell="{ record }">
 							<a-tag @click="openMoveDialog(record)">修改</a-tag>
-							<a-tag
-								style="margin-left: 10px"
-								color="red"
-								@click="openDelDialog(record)"
-								>删除</a-tag
-							>
+							<a-tag style="margin-left: 10px" color="red" @click="openDelDialog(record)">删除</a-tag>
 						</template>
 					</a-table-column>
 				</template>
@@ -306,11 +112,7 @@
 	</div>
 
 	<transition name="fade">
-		<div
-			class="gotop"
-			v-show="showGoTop"
-			@click="gotop"
-		>
+		<div class="gotop" v-show="showGoTop" @click="gotop">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="50"
@@ -319,11 +121,7 @@
 				fill="currentColor"
 				class="icon icon-tabler icons-tabler-filled icon-tabler-square-chevron-up"
 			>
-				<path
-					stroke="none"
-					d="M0 0h24v24H0z"
-					fill="none"
-				/>
+				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 				<path
 					d="M19 2a3 3 0 0 1 3 3v14a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-14a3 3 0 0 1 3 -3zm-6.387 7.21a1 1 0 0 0 -1.32 .083l-3 3l-.083 .094a1 1 0 0 0 .083 1.32l.094 .083a1 1 0 0 0 1.32 -.083l2.293 -2.292l2.293 2.292l.094 .083a1 1 0 0 0 1.32 -1.497l-3 -3z"
 				/>
@@ -332,52 +130,26 @@
 	</transition>
 
 	<!-- 新增文件夹 -->
-	<a-modal
-		v-model:visible="dialogVisible"
-		title="新建文件夹"
-		width="500px"
-	>
+	<a-modal v-model:visible="dialogVisible" title="新建文件夹" width="500px">
 		<p style="margin-bottom: 5px">请输入文件夹名称</p>
-		<a-input
-			v-model="newcatename"
-			style="width: 240px"
-		/>
+		<a-input v-model="newcatename" style="width: 240px" />
 		<template #footer>
 			<div class="dialog-footer">
 				<a-space>
 					<a-button @click="dialogVisible = false">取消</a-button>
-					<a-button
-						type="primary"
-						@click="addCate"
-						>确认</a-button
-					>
+					<a-button type="primary" @click="addCate">确认</a-button>
 				</a-space>
 			</div>
 		</template>
 	</a-modal>
 
 	<!-- 管理文件夹 -->
-	<a-modal
-		v-model:visible="AdmindialogVisible"
-		title="管理文件夹"
-		width="500px"
-		:footer="false"
-	>
+	<a-modal v-model:visible="AdmindialogVisible" title="管理文件夹" width="500px" :footer="false">
 		<p style="color: #e00; margin-bottom: 10px">删除文件夹时会连同该文件夹下的帖子一起删除，无法恢复请谨慎操作！</p>
-		<a-table
-			:data="sortedBookmarklist"
-			:pagination="false"
-		>
+		<a-table :data="sortedBookmarklist" :pagination="false">
 			<template #columns>
-				<a-table-column
-					title="文件夹名称"
-					data-index="name"
-					min-width="120"
-				/>
-				<a-table-column
-					title="排序"
-					width="140"
-				>
+				<a-table-column title="文件夹名称" data-index="name" min-width="120" />
+				<a-table-column title="排序" width="140">
 					<template #cell="{ record }">
 						<a-input
 							v-if="!editingId || editingId !== record.id"
@@ -398,21 +170,11 @@
 						/>
 					</template>
 				</a-table-column>
-				<a-table-column
-					title="操作"
-					min-width="140"
-				>
+				<a-table-column title="操作" min-width="140">
 					<template #cell="{ record }">
 						<a-tag @click="openEditDialog(record)">修改</a-tag>
-						<a-popconfirm
-							content="最后确认删除？"
-							@ok="deleteSelected(record)"
-						>
-							<a-tag
-								style="margin-left: 10px"
-								color="red"
-								>删除</a-tag
-							>
+						<a-popconfirm content="最后确认删除？" @ok="deleteSelected(record)">
+							<a-tag style="margin-left: 10px" color="red">删除</a-tag>
 						</a-popconfirm>
 					</template>
 				</a-table-column>
@@ -420,45 +182,25 @@
 		</a-table>
 
 		<!-- 修改文件夹名称对话框 -->
-		<a-modal
-			v-model:visible="editDialogVisible"
-			title="修改文件夹名称"
-			width="400px"
-		>
-			<a-input
-				v-model="editCateName"
-				placeholder="请输入新的文件夹名称"
-			></a-input>
+		<a-modal v-model:visible="editDialogVisible" title="修改文件夹名称" width="400px">
+			<a-input v-model="editCateName" placeholder="请输入新的文件夹名称"></a-input>
 			<template #footer>
 				<div class="dialog-footer">
-					<a-button
-						type="primary"
-						@click="updateCateName"
-						>修改</a-button
-					>
+					<a-button type="primary" @click="updateCateName">修改</a-button>
 				</div>
 			</template>
 		</a-modal>
 	</a-modal>
 
 	<!-- 修改对话框 -->
-	<a-modal
-		v-model:visible="moveDialogVisible"
-		title="修改书签"
-		width="500px"
-		class="modify-box"
-	>
+	<a-modal v-model:visible="moveDialogVisible" title="修改书签" width="500px" class="modify-box">
 		<div class="item">
 			<label>修改名称</label>
 			<a-input v-model="editname" />
 		</div>
 		<div class="item">
 			<label>迁移至</label>
-			<a-select
-				v-model="targetCategoryId"
-				placeholder="选择目标文件夹"
-				style="width: 100%"
-			>
+			<a-select v-model="targetCategoryId" placeholder="选择目标文件夹" style="width: 100%">
 				<a-option
 					v-for="category in filteredCategories"
 					:key="category.id"
@@ -471,90 +213,48 @@
 			<div class="dialog-footer">
 				<a-space>
 					<a-button @click="moveDialogVisible = false">取消</a-button>
-					<a-button
-						type="primary"
-						@click="moveItem"
-						>确认</a-button
-					>
+					<a-button type="primary" @click="moveItem">确认</a-button>
 				</a-space>
 			</div>
 		</template>
 	</a-modal>
 
 	<!-- 删除指定帖子的对话框 -->
-	<a-modal
-		v-model:visible="delDialogVisible"
-		title="删除收藏贴子"
-		width="400px"
-	>
+	<a-modal v-model:visible="delDialogVisible" title="删除收藏贴子" width="400px">
 		<p>是否真的删除？</p>
 		<template #footer>
 			<div class="dialog-footer">
 				<a-space>
 					<a-button @click="delDialogVisible = false">取消</a-button>
-					<a-button
-						status="danger"
-						@click="confirmDelete"
-						>删除</a-button
-					>
+					<a-button status="danger" @click="confirmDelete">删除</a-button>
 				</a-space>
 			</div>
 		</template>
 	</a-modal>
 
 	<!-- Webdav 同步 -->
-	<a-modal
-		v-model:visible="WebdavDialog"
-		title="收藏夹设置"
-		:footer="false"
-		width="550px"
-	>
+	<a-modal v-model:visible="WebdavDialog" title="收藏夹设置" :footer="false" width="550px">
 		<div class="item-title">Webdav 同步</div>
-		<a-form
-			:model="webdavConfig"
-			label-width="100px"
-		>
+		<a-form :model="webdavConfig" label-width="100px">
 			<a-form-item label="服务器地址：">
-				<a-input
-					v-model="webdavConfig.serverUrl"
-					placeholder="https://example.com/dav/"
-				/>
+				<a-input v-model="webdavConfig.serverUrl" placeholder="https://example.com/dav/" />
 			</a-form-item>
 			<a-form-item label="用户名：">
-				<a-input
-					v-model="webdavConfig.username"
-					placeholder="用户名"
-				/>
+				<a-input v-model="webdavConfig.username" placeholder="用户名" />
 			</a-form-item>
 			<a-form-item label="密码：">
-				<a-input
-					type="password"
-					v-model="webdavConfig.password"
-					placeholder="密码"
-				/>
+				<a-input type="password" v-model="webdavConfig.password" placeholder="密码" />
 			</a-form-item>
 		</a-form>
 		<div class="webdav-actions">
-			<a-button
-				type="primary"
-				@click="saveWebDAVConfig"
-				>保存配置</a-button
-			>
+			<a-button type="primary" @click="saveWebDAVConfig">保存配置</a-button>
 		</div>
 
 		<a-divider>云端同步操作</a-divider>
 		<div class="webdav-sync-actions">
 			<a-space>
-				<a-button
-					@click="exportToWebDAV"
-					:loading="exporting"
-					>导出到 WebDAV</a-button
-				>
-				<a-button
-					@click="importFromWebDAV"
-					:loading="importing"
-					>从 WebDAV 导入</a-button
-				>
+				<a-button @click="exportToWebDAV" :loading="exporting">导出到 WebDAV</a-button>
+				<a-button @click="importFromWebDAV" :loading="importing">从 WebDAV 导入</a-button>
 			</a-space>
 		</div>
 		<a-divider>手动同步操作</a-divider>
@@ -565,22 +265,13 @@
 				class="arco-btn arco-btn-secondary arco-btn-shape-square arco-btn-size-medium arco-btn-status-normal"
 				>导入 json 文件</label
 			>
-			<input
-				id="file-upload"
-				type="file"
-				@change="importData"
-				style="display: none"
-			/>
+			<input id="file-upload" type="file" @change="importData" style="display: none" />
 		</a-space>
 		<br /><br />
 		<div class="item-title">其他设置</div>
 		<div class="item">
 			<label>主题风格：</label>
-			<a-radio-group
-				type="button"
-				v-model="themes"
-				@change="setThemes"
-			>
+			<a-radio-group type="button" v-model="themes" @change="setThemes">
 				<a-radio value="light">明亮</a-radio>
 				<a-radio value="dark">黑夜</a-radio>
 			</a-radio-group>
@@ -588,22 +279,9 @@
 	</a-modal>
 
 	<!-- 手动新增收藏链接 -->
-	<a-modal
-		v-model:visible="addPostDialogVisible"
-		title="添加书签"
-		width="550px"
-		class="addPost"
-	>
-		<a-input
-			v-model="autoaccessstr"
-			placeholder="https://linux.do/t/topic/309543/372"
-		/>
-		<a-button
-			type="primary"
-			@click="autoAccess"
-			:loading="autoAccessLoading"
-			>自动解析</a-button
-		>
+	<a-modal v-model:visible="addPostDialogVisible" title="添加书签" width="550px" class="addPost">
+		<a-input v-model="autoaccessstr" placeholder="https://linux.do/t/topic/309543/372" />
+		<a-button type="primary" @click="autoAccess" :loading="autoAccessLoading">自动解析</a-button>
 		<a-divider />
 		<div class="item">
 			<label>URL：<span>*</span></label>
@@ -619,20 +297,13 @@
 		</div>
 		<div class="item">
 			<label>标签：</label>
-			<a-input
-				v-model="addPost.tags"
-				placeholder="使用英文逗号,相连"
-			/>
+			<a-input v-model="addPost.tags" placeholder="使用英文逗号,相连" />
 		</div>
 		<template #footer>
 			<div class="dialog-footer">
 				<a-space>
 					<a-button @click="addPostDialogVisible = false">取消</a-button>
-					<a-button
-						type="primary"
-						@click="setAddAccess"
-						>添加</a-button
-					>
+					<a-button type="primary" @click="setAddAccess">添加</a-button>
 				</a-space>
 			</div>
 		</template>
@@ -725,7 +396,12 @@ class WebDAVClient {
 }
 
 import categoryMap from './data/categoryMap.js';
+import SidebarMenu from './components/SidebarMenu.vue';
+
 export default {
+	components: {
+		SidebarMenu,
+	},
 	data() {
 		return {
 			loading: false,
@@ -1534,7 +1210,7 @@ export default {
 					JSON.stringify({
 						...config,
 						password: btoa(config.password),
-					})
+					}),
 				);
 
 				this.$message.success('WebDAV 配置保存成功');
@@ -1735,7 +1411,7 @@ export default {
 			if (result.bookmarkData) {
 				// 检查是否已有相同的 URL
 				const isUrlExist = vm.bookmarklist.some((bookmarkGroup) =>
-					bookmarkGroup.list.some((item) => item.url === result.bookmarkData.url)
+					bookmarkGroup.list.some((item) => item.url === result.bookmarkData.url),
 				);
 
 				// 先检查是否存在 id 为 0 的列表
@@ -1787,7 +1463,7 @@ export default {
 				result.bookmarks.forEach((bookmark) => {
 					// 检查是否已有相同的 URL
 					const existingBookmarkGroup = vm.bookmarklist.find((bookmarkGroup) =>
-						bookmarkGroup.list.some((item) => item.url === bookmark.url)
+						bookmarkGroup.list.some((item) => item.url === bookmark.url),
 					);
 
 					if (existingBookmarkGroup) {
