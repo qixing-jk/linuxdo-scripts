@@ -6,7 +6,7 @@
           :href="'https://linux.do/t/topic/' + item.id"
           @click="handleLinkClick($event, item.id)"
           class="news-link">
-          {{ item.title }}
+          {{ formatTitle(item.title) }}
         </a>
       </div>
       <div class="news-meta">
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import pangu from 'pangu';
+
 export default {
   props: ['list'],
   emits: ['remove-item'],
@@ -25,6 +27,9 @@ export default {
     return {};
   },
   methods: {
+    formatTitle(title) {
+      return pangu.spacing(title);
+    },
     async handleLinkClick(event, itemId) {
       // 阻止默认的链接行为
       event.preventDefault();
