@@ -1,13 +1,4 @@
-[Chinese](README.md) | [English](README_EN.md)
-
-```
-  _     _                  ____          ____            _       _
- | |   (_)_ __  _   ___  _|  _ \  ___   / ___|  ___ _ __(_)_ __ | |_ ___
- | |   | | '_ \| | | \ \/ / | | |/ _ \  \___ \ / __| '__| | '_ \| __/ __|
- | |___| | | | | |_| |>  <| |_| | (_) |  ___) | (__| |  | | |_) | |_\__ \
- |_____|_|_| |_|\__,_/_/\_\____/ \___/  |____/ \___|_|  |_| .__/ \__|___/
-                                                          |_|
-```
+[简体中文](README.md) | [English](README_EN.md)
 
 <div align="center">
   <a href="https://github.com/anghunk/linuxdo-scripts">
@@ -20,13 +11,13 @@
 
 [Discord](https://discord.gg/3wDmhCsVeU) ·
 [Documentation](https://linuxdo-scripts.zishu.me) ·
-[Feedback](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
-[Latest Version](https://github.com/anghunk/linuxdo-scripts/releases/latest)
+[Issue Feedback](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
+[Latest Release](https://github.com/anghunk/linuxdo-scripts/releases/latest)
 
   </p>
-
+  
   <p>
-   
+
 [![](https://img.shields.io/github/v/release/anghunk/linuxdo-scripts?logo=github&label=Version)](https://github.com/anghunk/linuxdo-scripts/releases)
 ![](https://img.shields.io/github/stars/anghunk/linuxdo-scripts?logo=github&style=flat&label=Stars)
 [![](https://img.shields.io/chrome-web-store/users/fbgblmjbeebanackldpbmpacppflgmlj?style=flat&logo=googlechrome&label=ChromeWebStore)](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj)
@@ -35,126 +26,48 @@
   </p>
 </div>
 
-## 📖 I. Project Overview
+## 1. Project Introduction
 
-LinuxDo Scripts is a feature-rich browser extension designed to enhance the user experience on the LinuxDo forum. It integrates a variety of practical features ranging from basic interface optimization to advanced AI assistance, making your forum browsing and interaction experience more smooth and efficient.
+LinuxDo Scripts is a feature-rich browser extension designed to enhance the user experience of the LinuxDo forum. It integrates multiple practical functions, ranging from basic UI optimizations to advanced AI assistance, making your forum browsing and interaction experience smoother and more efficient.
 
 > [!note]
-> Forum discussion post: [LinuxDo Enhancement Plugin, continues to update, welcome feedback - LINUX DO](https://linux.do/t/topic/170951), QQ Communication Group: 1035556246
+> Forum discussion thread: [linuxdo enhanced plugin, continuous updates welcome for feedback - LINUX DO](https://linux.do/t/topic/170951), QQ exchange group: 1035556246
 >
-> Already compatible with [idcflare.com](https://idcflare.com) website.
+> It is also compatible with [idcflare.com](https://idcflare.com).
 
-### 1. Key Features
-
-- 🎨 **Interface Enhancement** - Multiple theme skins for personalization
-- 🤖 **AI Intelligence** - Topic summary, intelligent reply generation
-- 📚 **Content Management** - Favorites, user tags, content filtering
-- ⚡ **Experience Optimization** - Quick actions, automated features
-- 🔧 **Highly Customizable** - Supports custom CSS, quick replies, etc.
+For more features, please visit [LinuxDo Scripts Documentation](https://linuxdo-scripts.zishu.me)
 
 ![Main Image](https://github.com/user-attachments/assets/1b0039de-3f3e-420b-9a91-6bc651e8c8e5)
 
 <details>
 <summary>More Screenshots</summary>
   
-![Usage Method](https://github.com/user-attachments/assets/514b92b7-deb3-4eee-80cd-c2203f4661b8)
-![Favorites Enhanced](https://github.com/user-attachments/assets/0523929c-c825-40b8-817e-1f9ea06a01ea)
+![Usage](https://github.com/user-attachments/assets/514b92b7-deb3-4eee-80cd-c2203f4661b8)
+![Favorites Enhancement](https://github.com/user-attachments/assets/0523929c-c825-40b8-817e-1f9ea06a01ea)
 ![Share Post](https://github.com/user-attachments/assets/07728ccc-4032-431d-bf70-e32b7a8e2289)
 
 </details>
 
-## 📥 II. Quick Installation
+## 2. Quick Installation
 
 ### 1. Supported Browsers
 
-| Browser                         | Install Link                                                                                  | Notes                     |
-| ------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------- |
-| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended               |
-| **Firefox**                     | [Firefox Add-ons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)           | Recommended               |
-| **Chinese Users**               | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)         | No need to cross the wall |
+| Browser                         | Installation Link                                                                             | Note            |
+| ------------------------------- | --------------------------------------------------------------------------------------------- | --------------- |
+| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended     |
+| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | Recommended     |
+| **Users in China**              | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)         | No VPN required |
 
 ### 2. Installation Steps
 
-1. Click the installation link for the corresponding browser above
+1. Click the installation link for your browser above
 2. Click "Add to Browser" in the extension store
 3. Confirm the installation permissions
-4. Go to [LinuxDo Forum](https://linux.do) to start using it
+4. Visit [LinuxDo Forum](https://linux.do) to start using
 
-## ✨ III. Features
+## 4. Development Guide
 
-<details>
-<summary>🔍 Browser Experience Optimization</summary>
-
-- ⏰ Topic list shows creation time
-- 🏢 Display floor count and original poster identifier
-- 🏢 Open topic in a new tab
-- 👀 Directly preview details and comments in the topic list
-- 📝 Optimize display of mixed Chinese and English text
-- 🖼️ Optimize signature image display, prevent image damage
-- 🌙 Automatically switch to dark mode
-- 📱 Optimize for ultra-wide screen width
-
-</details>
-
-<details>
-<summary>📚 Content Management</summary>
-
-- ⭐ Comprehensive favorites feature
-- 🏷️ User tag system
-- 🚫 Force block specific user topics
-- 👑 Only view the original poster switch feature
-- 🔍 Keyword and tag filtering
-- 📅 Block old posts by time
-
-</details>
-
-<details>
-<summary>💬 Interaction Enhancement</summary>
-
-- ⚡ Quick reply to topics (supports custom templates)
-- 😊 Optimized comment box emojis
-- 📊 Level information query
-- 👍 Quick like button
-- 🔄 Automatically expand replies
-
-</details>
-
-<details>
-<summary>🤖 AI Assistant</summary>
-
-- 📋 AI topic summary
-- 💡 Intelligent reply generation
-- 🤝 AI-assisted post replies
-- 🎯 Intelligent content analysis
-
-</details>
-
-<details>
-<summary>🎨 Personalization</summary>
-
-- 🎭 Multiple forum theme skins
-- 😀 Switch forum emoji style
-- 🎨 Support for custom CSS styles
-- ☁️ Set data cloud synchronization
-- 🖼️ Custom forum logo
-- 📑 Custom tab icon and title
-
-</details>
-
-<details>
-<summary>🔧 Useful Tools</summary>
-
-- 📸 Topic to image sharing
-- 📄 Forum article export
-- ⬆️ Back to top/direct to the first floor
-- 🔕 Quick no-disturbance post
-- 🎯 View your reply floor
-
-</details>
-
-## 🛠️ IV. Development Guide
-
-### 1. Environment Requirements
+### 1. Requirements
 
 - **Node.js**: `v22.12.0`
 
@@ -168,43 +81,43 @@ cd linuxdo-scripts
 # 2. Install dependencies
 npm install
 
-# 3. Start the development service
+# 3. Start development server
 npm run dev
 ```
 
-### 3. Load Extension
+### 3. Loading the Extension
 
-1. Open the browser extension management page
+1. Open the browser's extension management page
    - Chrome: `chrome://extensions/`
    - Firefox: `about:addons`
-2. Enable "Developer mode"
-3. Click "Load unpacked extension"
+2. Enable "Developer Mode"
+3. Click "Load Unpacked"
 4. Select the `.output/chrome-mv3` folder in the project root directory
 
-### 4. Development Specifications
+### 4. Development Standards
 
-- 🧩 **Component-based Development**: Each function has an independent component, avoiding conflicts
-- 🔄 **Pull Request Process**: PR → Code review → Merge
-- 📚 **Documentation Update**: New features require documentation updates
+- 🧩 **Component-based Development**: Each feature is an independent component to avoid conflicts
+- 🔄 **Submission Process**: PR → Code Review → Merge
+- 📚 **Documentation Update**: New features must be accompanied by documentation updates
 
-## 🤝 V. Contributing
+## 5. Contributing
 
-### 1. Contribution Methods
+### 1. Ways to Contribute
 
 - 🐛 [Report Bug](https://github.com/anghunk/linuxdo-scripts/issues/new?template=bug_report.yml)
-- 💡 [Feature Suggestion](https://github.com/anghunk/linuxdo-scripts/issues/new?template=feature_report.yml)
+- 💡 [Feature Request](https://github.com/anghunk/linuxdo-scripts/issues/new?template=feature_report.yml)
 - 🔧 [Submit Code](https://github.com/anghunk/linuxdo-scripts/pulls)
 - 🙍‍♂️ [Join Discussion](https://discord.gg/3wDmhCsVeU)
 
-### 2. Contribution List
+### 2. Contributors
 
 ![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts)
 
 ### 3. Reference Projects
 
-- https://linux.do/t/topic/850824 - Emperor Juice Emojis Feature
+- https://linux.do/t/topic/850824 - Shihuang Emoticon Feature
 
-## 📄 VI. Other Information
+## 6. Other Information
 
 ### 1. Star History
 
@@ -212,25 +125,25 @@ npm run dev
 
 ### 2. Open Source License
 
-This project is licensed under the [Apache License 2.0](https://github.com/anghunk/linuxdo-scripts/blob/main/LICENSE).
+This project uses the [Apache License 2.0](https://github.com/anghunk/linuxdo-scripts/blob/main/LICENSE) open source license.
 
 **You are free to:**
 
 - ✅ Use, copy, modify, and distribute this software
 - ✅ Use for commercial purposes
-- ✅ Re-license under the terms of this license
+- ✅ Re-license under the terms of the agreement
 
-**But must:**
+**But you must:**
 
-- 📋 Retain the original copyright statement
-- 📋 State modifications to the original code
+- 📋 Retain the original copyright notice
+- 📋 Indicate any changes made to the original code
 
 ### 3. Disclaimer
 
-- This project is a **free and open-source project** and does not guarantee absolute perfection and accuracy
-- Please evaluate the risks and comply with relevant laws and regulations before use
-- Prohibit any form of abuse
-- If there is any infringement, please contact [@anghunk](https://github.com/anghunk) for timely handling
+- This project is **free and open source**, and is not guaranteed to be absolutely perfect or error-free
+- Please assess the risks yourself before use and comply with relevant laws and regulations
+- Any form of abuse is strictly prohibited
+- If there are any infringement issues, please contact [@anghunk](https://github.com/anghunk) for timely processing
 
 ---
 
@@ -239,8 +152,8 @@ This project is licensed under the [Apache License 2.0](https://github.com/anghu
 <div align="center">
   <p>
   If this project is helpful to you, please consider giving us a ⭐ Star!
-  
-  Or [buy me a coffee](https://github.com/anghunk/anghunk/blob/main/Sponsor.md)
+    
+  Or [buy us a coffee](https://github.com/anghunk/anghunk/blob/main/Sponsor.md) 
   </p>
   <p>Made with ❤️ by <a href="https://github.com/anghunk">@anghunk</a> and <a href="https://github.com/anghunk/linuxdo-scripts/graphs/contributors">contributors</a></p>
 </div>
