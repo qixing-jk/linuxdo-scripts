@@ -35,7 +35,7 @@ LinuxDo Scripts 是一个功能丰富的浏览器扩展，专为提升 LinuxDo �
 >
 > 已同步兼容 [idcflare.com](https://idcflare.com) 网站。
 
-更多功能功能查看前往 [LinuxDo Scripts 文档](https://linuxdo-scripts.zishu.me)
+更多功能查看前往 [LinuxDo Scripts 文档](https://linuxdo-scripts.zishu.me)
 
 ![主图](https://github.com/user-attachments/assets/1b0039de-3f3e-420b-9a91-6bc651e8c8e5)
 
