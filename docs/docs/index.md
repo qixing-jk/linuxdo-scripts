@@ -49,6 +49,78 @@ features:
 
 ![Demonstration](./Demonstration.png)
 
+#### 2. 扩展有哪些功能特性？
+
+<details>
+<summary>🔍 浏览体验优化</summary>
+
+- ⏰ 话题列表显示创建时间
+- 🏢 显示楼层数和楼主标识
+- 🆕 新标签页打开话题
+- 👀 话题列表直接预览详情及评论
+- 📝 中英文混排优化显示
+- 🖼️ 优化签名图显示，防止图片损坏
+- 🌙 自动切换黑夜模式
+- 📱 超长显示器宽度优化
+
+</details>
+
+<details>
+<summary>📚 内容管理</summary>
+
+- ⭐ 完善的收藏夹功能
+- 🏷️ 用户标签系统
+- 🚫 强制屏蔽指定用户话题
+- 👑 只看楼主切换功能
+- 🔍 关键词和标签过滤
+- 📅 按时间屏蔽旧帖子
+
+</details>
+
+<details>
+<summary>💬 互动增强</summary>
+
+- ⚡ 话题快捷回复（支持自定义模板）
+- 😊 评论框表情优化
+- 📊 等级信息查询
+- 👍 快捷点赞按钮
+- 🔄 自动展开回复
+
+</details>
+
+<details>
+<summary>🤖 AI 智能助手</summary>
+
+- 📋 AI 话题总结
+- 💡 智能生成回复
+- 🤝 AI 辅助回帖
+- 🎯 内容智能分析
+
+</details>
+
+<details>
+<summary>🎨 个性化定制</summary>
+
+- 🎭 多种论坛主题皮肤
+- 😀 论坛表情风格切换
+- 🎨 自定义 CSS 样式支持
+- ☁️ 设置数据云端同步
+- 🖼️ 自定义论坛 Logo
+- 📑 自定义标签页图标和标题
+
+</details>
+
+<details>
+<summary>🔧 实用工具</summary>
+
+- 📸 话题转图片分享
+- 📄 论坛文章导出
+- ⬆️ 返回顶部/直达一楼
+- 🔕 快速免打扰帖子
+- 🎯 查看自己的回复楼层
+
+</details>
+
 <style>
 .VPHero .text {
   font-size: 18px;
