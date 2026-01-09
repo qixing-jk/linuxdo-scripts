@@ -113,6 +113,10 @@ npm run dev
 
 ![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts)
 
+![Stargazers repo roster for @anghunk/linuxdo-scripts](https://reporoster.com/stars/dark/anghunk/linuxdo-scripts)
+
+![Forkers repo roster for @anghunk/linuxdo-scripts](https://reporoster.com/forks/dark/anghunk/linuxdo-scripts)
+
 ### 3. 参考项目
 
 - https://linux.do/t/topic/850824 - 始皇酱表情包功能
