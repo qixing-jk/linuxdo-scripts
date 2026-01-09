@@ -50,7 +50,7 @@ export default {
     lastUpdatedText: '最后更新于',
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright 2024 anghunk'
+      copyright: 'Copyright 2026 anghunk'
     },
     search: {
       provider: 'local',
