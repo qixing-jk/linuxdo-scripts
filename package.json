@@ -15,7 +15,8 @@
     "compile": "vue-tsc --noEmit",
     "postinstall": "wxt prepare",
     "publish": "wxt build && wxt zip && wxt zip -b firefox && py scripts/build.py",
-    "rf": "rimraf node_modules"
+    "rf": "rimraf node_modules",
+    "tran": "py scripts/translate_md.py"
   },
   "dependencies": {
     "@arco-themes/vue-indigo-sky": "^0.0.1",

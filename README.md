@@ -11,6 +11,7 @@
 
 [Discord](https://discord.gg/3wDmhCsVeU) ·
 [使用文档](https://linuxdo-scripts.zishu.me) ·
+[更新日志](http://linuxdo-scripts.zishu.me/version-log) ·
 [问题反馈](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
 [最新版本](https://github.com/anghunk/linuxdo-scripts/releases/latest)
 

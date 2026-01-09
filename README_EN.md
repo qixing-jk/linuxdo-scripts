@@ -11,6 +11,7 @@
 
 [Discord](https://discord.gg/3wDmhCsVeU) ·
 [Documentation](https://linuxdo-scripts.zishu.me) ·
+[Changelog](http://linuxdo-scripts.zishu.me/version-log) ·
 [Issue Feedback](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
 [Latest Release](https://github.com/anghunk/linuxdo-scripts/releases/latest)
 
@@ -28,14 +29,14 @@
 
 ## 1. Project Introduction
 
-LinuxDo Scripts is a feature-rich browser extension designed to enhance the user experience of the LinuxDo forum. It integrates multiple practical functions, ranging from basic UI optimizations to advanced AI assistance, making your forum browsing and interaction experience smoother and more efficient.
+LinuxDo Scripts is a feature-rich browser extension designed to enhance the user experience of the LinuxDo forum. It integrates multiple practical functions, from basic UI optimizations to advanced AI assistance, making your forum browsing and interaction experience smoother and more efficient.
 
 > [!note]
-> Forum discussion thread: [linuxdo enhanced plugin, continuous updates welcome for feedback - LINUX DO](https://linux.do/t/topic/170951), QQ exchange group: 1035556246
+> Forum discussion thread: [LinuxDo Enhanced Plugin, Continuous Updates Welcome for Feedback - LINUX DO](https://linux.do/t/topic/170951), QQ Exchange Group: 1035556246
 >
-> It is also compatible with [idcflare.com](https://idcflare.com).
+> Synchronously compatible with [idcflare.com](https://idcflare.com) website.
 
-For more features, please visit [LinuxDo Scripts Documentation](https://linuxdo-scripts.zishu.me)
+For more features, visit [LinuxDo Scripts Documentation](https://linuxdo-scripts.zishu.me)
 
 ![Main Image](https://github.com/user-attachments/assets/1b0039de-3f3e-420b-9a91-6bc651e8c8e5)
 
@@ -52,17 +53,17 @@ For more features, please visit [LinuxDo Scripts Documentation](https://linuxdo-
 
 ### 1. Supported Browsers
 
-| Browser                         | Installation Link                                                                             | Note            |
-| ------------------------------- | --------------------------------------------------------------------------------------------- | --------------- |
-| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended     |
-| **Firefox**                     | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/)            | Recommended     |
-| **Users in China**              | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj)         | No VPN required |
+| Browser | Installation Link | Notes |
+| ------------------------------- | --------------------------------------------------------------------------------------------- | -------- |
+| **Chrome / Edge / Arc / Brave** | [Chrome Web Store](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj) | Recommended |
+| **Firefox** | [Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/linux_do-scripts/) | Recommended |
+| **Users in China** | [Crx Store](https://www.crxsoso.com/webstore/detail/fbgblmjbeebanackldpbmpacppflgmlj) | No VPN required |
 
 ### 2. Installation Steps
 
 1. Click the installation link for your browser above
 2. Click "Add to Browser" in the extension store
-3. Confirm the installation permissions
+3. Confirm installation permissions
 4. Visit [LinuxDo Forum](https://linux.do) to start using
 
 ## 4. Development Guide
@@ -87,18 +88,18 @@ npm run dev
 
 ### 3. Loading the Extension
 
-1. Open the browser's extension management page
+1. Open the browser extension management page
    - Chrome: `chrome://extensions/`
    - Firefox: `about:addons`
 2. Enable "Developer Mode"
-3. Click "Load Unpacked"
+3. Click "Load Unpacked Extension"
 4. Select the `.output/chrome-mv3` folder in the project root directory
 
 ### 4. Development Standards
 
 - 🧩 **Component-based Development**: Each feature is an independent component to avoid conflicts
 - 🔄 **Submission Process**: PR → Code Review → Merge
-- 📚 **Documentation Update**: New features must be accompanied by documentation updates
+- 📚 **Documentation Update**: New features must update documentation simultaneously
 
 ## 5. Contributing
 
@@ -109,7 +110,7 @@ npm run dev
 - 🔧 [Submit Code](https://github.com/anghunk/linuxdo-scripts/pulls)
 - 🙍‍♂️ [Join Discussion](https://discord.gg/3wDmhCsVeU)
 
-### 2. Contributors
+### 2. Contributors List
 
 ![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts)
 
@@ -135,17 +136,17 @@ This project uses the [Apache License 2.0](https://github.com/anghunk/linuxdo-sc
 
 - ✅ Use, copy, modify, and distribute this software
 - ✅ Use for commercial purposes
-- ✅ Re-license under the terms of the agreement
+- ✅ Reauthorize under the terms of the license
 
 **But you must:**
 
-- 📋 Retain the original copyright notice
-- 📋 Indicate any changes made to the original code
+- 📋 Retain original copyright notices
+- 📋 Indicate modifications to the original code
 
 ### 3. Disclaimer
 
-- This project is **free and open source**, and is not guaranteed to be absolutely perfect or error-free
-- Please assess the risks yourself before use and comply with relevant laws and regulations
+- This project is **free and open source**, not guaranteed to be absolutely perfect
+- Please assess risks yourself before use and comply with relevant laws and regulations
 - Any form of abuse is strictly prohibited
 - If there are any infringement issues, please contact [@anghunk](https://github.com/anghunk) for timely processing
 
@@ -157,7 +158,7 @@ This project uses the [Apache License 2.0](https://github.com/anghunk/linuxdo-sc
   <p>
   If this project is helpful to you, please consider giving us a ⭐ Star!
     
-  Or [buy us a coffee](https://github.com/anghunk/anghunk/blob/main/Sponsor.md) 
+  Or [Buy us a coffee](https://github.com/anghunk/anghunk/blob/main/Sponsor.md) 
   </p>
   <p>Made with ❤️ by <a href="https://github.com/anghunk">@anghunk</a> and <a href="https://github.com/anghunk/linuxdo-scripts/graphs/contributors">contributors</a></p>
 </div>

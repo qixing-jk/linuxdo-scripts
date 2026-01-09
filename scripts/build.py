@@ -3,7 +3,7 @@ import os
 import json
 import shutil
 
-version_log_file = 'version-log.md'
+version_log_file = 'docs/docs/version-log.md'
 changelog_file = 'CHANGELOG.md'
 package_file = 'package.json'
 
@@ -20,14 +20,16 @@ else:
         print(f"文件 {version_log_file} 不存在，请检查路径。")
     else:
         with open(version_log_file, 'r', encoding='utf-8') as f:
-            # 读取第一行
-            version_log_first_line = f.readline().strip()
+            lines = f.readlines()
 
-        # 处理第一行不符合预期的情况
-        if version_log_first_line.startswith('##'):
-            version_log_version = version_log_first_line.split(' ')[-1]
-        else:
-            version_log_version = '0.0.0'
+        # 查找第一个版本标题（## 开头）
+        version_log_version = '0.0.0'
+        for line in lines:
+            stripped_line = line.strip()
+            if stripped_line.startswith('##'):
+                # 提取版本号（例如：## 1.5.24 -> 1.5.24）
+                version_log_version = stripped_line.split(' ')[-1]
+                break
 
         # 仅在版本号不一致时才更新 version-log.md
         if version != version_log_version:
@@ -37,10 +39,28 @@ else:
                 with open(changelog_file, 'r', encoding='utf-8') as f:
                     changelog_content = f.read()
 
-                with open(version_log_file, 'r+', encoding='utf-8') as f:
-                    existing_content = f.read()
-                    f.seek(0, 0)
-                    f.write(f"## {version}\n\n" + changelog_content + '\n\n' + existing_content)
+                # 读取现有文件内容
+                with open(version_log_file, 'r', encoding='utf-8') as f:
+                    lines = f.readlines()
+
+                # 构建新内容：在一级标题后插入新版本
+                new_lines = []
+                inserted = False
+
+                for line in lines:
+                    new_lines.append(line)
+                    # 在一级标题后插入新版本内容
+                    if line.strip().startswith('# ') and not inserted:
+                        new_lines.append(f'\n## {version}\n\n{changelog_content}\n\nhttps://github.com/anghunk/linuxdo-scripts/releases/tag/{version}\n')
+                        inserted = True
+
+                # 如果没有找到一级标题，则在文件开头插入
+                if not inserted:
+                    new_lines.insert(0, f'## {version}\n\n{changelog_content}\n\nhttps://github.com/anghunk/linuxdo-scripts/releases/tag/{version}\n\n')
+
+                # 写回文件
+                with open(version_log_file, 'w', encoding='utf-8') as f:
+                    f.writelines(new_lines)
 
                 print(f"已更新 {version_log_file} 文件，版本号为 {version}。")
         else:

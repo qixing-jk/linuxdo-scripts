@@ -1,8 +1,12 @@
+# Changelog / 更新日志
+
 ## 1.5.24
 
 - refactor(bookmark): 重构收藏夹侧边栏结构与样式
 - chore(i18n): 删除所有语言的 README 文档
 - feat(popupviews): 优化热门话题与最新话题标题格式化
+
+https://github.com/anghunk/linuxdo-scripts/releases/tag/1.5.24
 
 ## 1.5.23
 
@@ -14,7 +18,7 @@
 
 ## 1.5.21
 
-- feat(LDC): 新增LDC账户信息及积分统计面板
+- feat(LDC): 新增 LDC 账户信息及积分统计面板
 
 ## 1.5.20
 
@@ -40,7 +44,7 @@
 
 ## 1.5.15
 
-- feat(export): 支持HTML表格转换为Markdown格式 #289
+- feat(export): 支持 HTML 表格转换为 Markdown 格式 #289
 
 ## 1.5.14
 
