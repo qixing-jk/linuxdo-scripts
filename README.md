@@ -19,10 +19,10 @@
   
   <p>
 
-[![](https://img.shields.io/github/v/release/anghunk/linuxdo-scripts?logo=github&label=Version)](https://github.com/anghunk/linuxdo-scripts/releases)
-![](https://img.shields.io/github/stars/anghunk/linuxdo-scripts?logo=github&style=flat&label=Stars)
-[![](https://img.shields.io/chrome-web-store/users/fbgblmjbeebanackldpbmpacppflgmlj?style=flat&logo=googlechrome&label=ChromeWebStore)](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj)
-![](https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache)
+[![](https://img.shields.io/github/v/release/anghunk/linuxdo-scripts?logo=github&label=Version&style=flat-square)](https://github.com/anghunk/linuxdo-scripts/releases)
+![](https://img.shields.io/github/stars/anghunk/linuxdo-scripts?logo=github&style=flat-square&label=Stars)
+[![](https://img.shields.io/chrome-web-store/users/fbgblmjbeebanackldpbmpacppflgmlj?style=flat-square&logo=googlechrome&label=ChromeWebStore)](https://chromewebstore.google.com/detail/fbgblmjbeebanackldpbmpacppflgmlj)
+![](https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache&style=flat-square)
 
   </p>
 </div>
