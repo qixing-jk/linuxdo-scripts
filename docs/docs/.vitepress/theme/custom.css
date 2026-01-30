@@ -143,4 +143,39 @@ html {
   display: none;
 }
 
-/* 自定义侧边栏 */
+.github-star-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  margin-left: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--vp-c-border);
+  font-size: 12px;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.github-star-link:hover {
+  background-color: var(--vp-c-bg-soft);
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+.github-star-icon svg {
+  width: 16px;
+}
+
+.github-star-text {
+  display: inline-flex;
+  align-items: center;
+}
+
+.github-star-count {
+  margin-left: 4px;
+  font-weight: 600;
+}
