@@ -9,7 +9,7 @@
 
   <p>
 
-[Discord](https://discord.gg/3wDmhCsVeU) ·
+[Discord](https://discord.gg/n2pErsD7Kg) ·
 [使用文档](https://linuxdo-scripts.zishu.me) ·
 [更新日志](http://linuxdo-scripts.zishu.me/version-log) ·
 [问题反馈](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
@@ -108,7 +108,7 @@ npm run dev
 - 🐛 [报告 Bug](https://github.com/anghunk/linuxdo-scripts/issues/new?template=bug_report.yml)
 - 💡 [功能建议](https://github.com/anghunk/linuxdo-scripts/issues/new?template=feature_report.yml)
 - 🔧 [提交代码](https://github.com/anghunk/linuxdo-scripts/pulls)
-- 🙍‍♂️ [加入讨论](https://discord.gg/3wDmhCsVeU)
+- 🙍‍♂️ [加入讨论](https://discord.gg/n2pErsD7Kg)
 
 ### 2. 贡献列表
 

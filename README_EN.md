@@ -9,7 +9,7 @@
 
   <p>
 
-[Discord](https://discord.gg/3wDmhCsVeU) ·
+[Discord](https://discord.gg/n2pErsD7Kg) ·
 [Documentation](https://linuxdo-scripts.zishu.me) ·
 [Changelog](http://linuxdo-scripts.zishu.me/version-log) ·
 [Issue Feedback](https://github.com/anghunk/linuxdo-scripts/issues/new/choose) ·
@@ -108,7 +108,7 @@ npm run dev
 - 🐛 [Report Bug](https://github.com/anghunk/linuxdo-scripts/issues/new?template=bug_report.yml)
 - 💡 [Feature Request](https://github.com/anghunk/linuxdo-scripts/issues/new?template=feature_report.yml)
 - 🔧 [Submit Code](https://github.com/anghunk/linuxdo-scripts/pulls)
-- 🙍‍♂️ [Join Discussion](https://discord.gg/3wDmhCsVeU)
+- 🙍‍♂️ [Join Discussion](https://discord.gg/n2pErsD7Kg)
 
 ### 2. Contributors List
 
