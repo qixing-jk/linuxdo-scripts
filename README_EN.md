@@ -120,9 +120,9 @@ Made with [contributors](https://github.com/jaywcjlove/github-action-contributor
 
 <!-- ![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts) -->
 
-![Stargazers repo roster for @anghunk/linuxdo-scripts](https://reporoster.com/stars/dark/anghunk/linuxdo-scripts)
+<!-- ![Stargazers repo roster for @anghunk/linuxdo-scripts](https://reporoster.com/stars/dark/anghunk/linuxdo-scripts)
 
-![Forkers repo roster for @anghunk/linuxdo-scripts](https://reporoster.com/forks/dark/anghunk/linuxdo-scripts)
+![Forkers repo roster for @anghunk/linuxdo-scripts](https://reporoster.com/forks/dark/anghunk/linuxdo-scripts) -->
 
 ### 3. Reference Projects
 
