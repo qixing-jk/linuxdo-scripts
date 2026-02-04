@@ -22,4 +22,4 @@ jobs:
         uses: jaywcjlove/github-action-modify-file-content@main
         with:
           path: README.md
-          body: '${{steps.contributors.outputs.htmlList}}'
+          replacement: '${{steps.contributors.outputs.htmlList}}'
