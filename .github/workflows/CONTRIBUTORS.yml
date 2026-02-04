@@ -1,13 +1,12 @@
-- run: mkdir -p build
 - name: Generate Contributors Images
   uses: jaywcjlove/github-action-contributors@main
+  id: contributors
   with:
     filter-author: (renovate\[bot\]|renovate-bot|dependabot\[bot\])
-    output: build/CONTRIBUTORS.svg
     avatarSize: 42
 
-- name: Deploy
-  uses: peaceiris/actions-gh-pages@v3
+- name: Modify README.md
+  uses: jaywcjlove/github-action-modify-file-content@main
   with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    publish_dir: ./build
+    path: README.md
+    body: '${{steps.contributors.outputs.htmlList}}'
