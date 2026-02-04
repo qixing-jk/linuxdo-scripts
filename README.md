@@ -112,7 +112,13 @@ npm run dev
 
 ### 2. 贡献列表
 
-![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts)
+一如既往，感谢我们出色的贡献者们！
+
+<!--GAMFC_DELIMITER-->will be replaced here<!--GAMFC_DELIMITER-END-->
+
+Made with [contributors](https://github.com/jaywcjlove/github-action-contributors).
+
+<!-- ![Contributors](https://contrib.rocks/image?repo=anghunk/linuxdo-scripts) -->
 
 ![Stargazers repo roster for @anghunk/linuxdo-scripts](https://reporoster.com/stars/dark/anghunk/linuxdo-scripts)
 
