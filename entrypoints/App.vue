@@ -144,6 +144,8 @@
               <MenuSelectedShare :sort="13" v-model="settingData.checked23" v-show="matchesSearch('禁用选中文字分享功能')"/>
               <!-- 查看话题内自己回复的楼层数（抽奖贴适用） -->
               <MenuViewOwnReply :sort="14" v-model="settingData.checked44" v-show="matchesSearch('查看话题内自己回复的楼层数')"/>
+              <!-- 是否自动打开外链（请谨慎操作，避免打开恶意链接） -->
+              <MenuAutoOpenLink :sort="15" v-model="settingData.checked58" v-show="matchesSearch('自动打开外链')"/>
 
               <div class="group-line">编辑器设置</div>
               <!-- 编辑器切换 ja 字体 -->
@@ -197,6 +199,7 @@
             <MenuIconTitle :sort="2" v-model:value="settingData.IconTitle" />
             <!-- 自定义快捷回复 -->
             <MenuCreatereply :sort="3" v-model:value="settingData.QuickReply" />
+            <MenuCreatereplyisDropdown v-model="settingData.QuickReplyisDropdown" />
             <!-- 关键词屏蔽功能 -->
             <MenuBlockKeyword :sort="4" v-model:value="settingData.blockkeywrod" />
             <!-- 标签屏蔽功能 -->
@@ -299,12 +302,14 @@ import MenuBookmarkFolderBtn from "./SettingComponents/BasicSettings/MenuBookmar
 import MenuAutoLoadTopic from "./SettingComponents/BasicSettings/MenuAutoLoadTopic.vue";
 import MenuViewHistoryRead from "./SettingComponents/BasicSettings/MenuViewHistoryRead.vue";
 import MenuObsidianCallouts from "./SettingComponents/BasicSettings/MenuObsidianCallouts.vue";
+import MenuAutoOpenLink from "./SettingComponents/BasicSettings/MenuAutoOpenLink.vue";
 
 // 自定义文字
 import MenuOtherCss from "./SettingComponents/CustomText/MenuOtherCss.vue";
 import MenuLogoUrl from "./SettingComponents/CustomText/MenuLogoUrl.vue";
 import MenuIconTitle from "./SettingComponents/CustomText/MenuIconTitle.vue";
 import MenuCreatereply from "./SettingComponents/CustomText/MenuCreatereply.vue";
+import MenuCreatereplyisDropdown from "./SettingComponents/CustomText/MenuCreatereplyisDropdown.vue";
 import MenuBlockuserlist from "./SettingComponents/CustomText/MenuBlockuserlist.vue";
 import MenuBlockKeyword from "./SettingComponents/CustomText/MenuBlockKeyword.vue";
 import MenuShieldPosts from "./SettingComponents/CustomText/MenuShieldPosts.vue";
@@ -371,6 +376,7 @@ export default {
     MenuTopicpreview2,
     MenuTopicpreview3,
     MenuCreatereply,
+    MenuCreatereplyisDropdown,
     MenuBlockuserlist,
     Updates,
     MenuLookOP,
@@ -434,6 +440,7 @@ export default {
     MenuViewHistoryRead,
     ViewHistoryList,
     MenuObsidianCallouts,
+    MenuAutoOpenLink,
   },
   data() {
     return {
@@ -466,6 +473,7 @@ export default {
         checked7_2: false,
         checked9: true,
         QuickReply: "",
+        QuickReplyisDropdown: false,
         blockList: "",
         blockkeywrod: "",
         blocktags: "",

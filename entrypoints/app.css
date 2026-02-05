@@ -1262,3 +1262,10 @@ body.body-preview #main-outlet-wrapper {
   margin-bottom: 10px;
   cursor: pointer;
 }
+
+.createreply-select {
+  border: var(--d-button-default-border);
+  border-radius: var(--d-button-border-radius);
+  background-color: var(--d-button-default-bg-color);
+  height: 38px;
+}
