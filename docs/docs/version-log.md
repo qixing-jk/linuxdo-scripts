@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.5.25
+
+- feat: 切换下拉菜单模式显示自定义快捷回复
+- feat: 是否自动打开外链（请谨慎操作，避免打开恶意链接）
+
+https://github.com/anghunk/linuxdo-scripts/releases/tag/1.5.25
+
 ## 1.5.24
 
 - refactor(bookmark): 重构收藏夹侧边栏结构与样式

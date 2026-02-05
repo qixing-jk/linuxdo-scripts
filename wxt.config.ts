@@ -3,17 +3,6 @@ import pkg from './package.json';
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-	vite: () => ({
-		css: {
-			preprocessorOptions: {
-				less: {
-					modifyVars: {
-						'arcoblue-6': '#2C3E50',
-					},
-				},
-			},
-		},
-	}),
 	extensionApi: 'chrome',
 	modules: ['@wxt-dev/module-vue'],
 	manifest: {

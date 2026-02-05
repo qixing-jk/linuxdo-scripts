@@ -1,3 +1,2 @@
-- refactor(bookmark): 重构收藏夹侧边栏结构与样式
-- chore(i18n): 删除所有语言的 README 文档
-- feat(popupviews): 优化热门话题与最新话题标题格式化
+- feat: 切换下拉菜单模式显示自定义快捷回复
+- feat: 是否自动打开外链（请谨慎操作，避免打开恶意链接）
