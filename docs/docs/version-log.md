@@ -1,5 +1,11 @@
 # Changelog / 更新日志
 
+## 1.5.26
+
+- feat: 重构等级对话框为卡片式 UI 并添加可视化样式
+
+https://github.com/anghunk/linuxdo-scripts/releases/tag/1.5.26
+
 ## 1.5.25
 
 - feat: 切换下拉菜单模式显示自定义快捷回复
